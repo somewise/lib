@@ -630,7 +630,7 @@ do
         table.insert(self._tab_order,name)
 
         local ms=st:Section('Menu')
-        local mk=ms:Toggle('Custom Menu Key (F1-F12/any)',self._overwrite_menu_key,function(v) self._overwrite_menu_key=v end)
+        local mk=ms:Toggle('Menu Key',self._overwrite_menu_key,function(v) self._overwrite_menu_key=v end)
         mk:AddKeybind(self._menu_key,function(v) self._menu_key=self:_KeyIDToName(v) end)
         ms:Toggle('Watermark',true,function(v) self:SetWatermarkEnabled(v) end)
         ms:Toggle('Custom watermark',self._custom_title_enabled,function(v) self._custom_title_enabled=v end)
