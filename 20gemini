@@ -1,0 +1,2161 @@
+UILib = {
+    _font_face = Drawing.Fonts.SystemBold,
+    _font_size = 13,
+    _pool      = { Square = {}, Text = {}, Triangle = {}, Circle = {}, Line = {} },
+    _pIdx      = { Square = 0, Text = 0, Triangle = 0, Circle = 0, Line = 0 },
+    _tree      = {},
+    _tab_order = {},
+    _menu_open        = true,
+    _watermark_enabled = true,
+    _notifications     = {},
+    _notifications_spawned = 0,
+    _open_tab     = nil,
+    _next_tab     = nil,
+    _tab_changing = false,
+    _tab_fade     = 1,
+    -- Global search across all tabs
+    _search_query  = "",
+    _search_typing = false,
+    _search_w_anim = 22,
+    _inputs = {['m1']={id=0x01,held=false,click=false},['m2']={id=0x02,held=false,click=false},['mb']={id=0x04,held=false,click=false},['backspace']={id=0x08,held=false,click=false},['tab']={id=0x09,held=false,click=false},['enter']={id=0x0D,held=false,click=false},['shift']={id=0x10,held=false,click=false},['ctrl']={id=0x11,held=false,click=false},['alt']={id=0x12,held=false,click=false},['pause']={id=0x13,held=false,click=false},['capslock']={id=0x14,held=false,click=false},['esc']={id=0x1B,held=false,click=false},['space']={id=0x20,held=false,click=false},['pageup']={id=0x21,held=false,click=false},['pagedown']={id=0x22,held=false,click=false},['end']={id=0x23,held=false,click=false},['home']={id=0x24,held=false,click=false},['left']={id=0x25,held=false,click=false},['up']={id=0x26,held=false,click=false},['right']={id=0x27,held=false,click=false},['down']={id=0x28,held=false,click=false},['insert']={id=0x2D,held=false,click=false},['delete']={id=0x2E,held=false,click=false},['0']={id=0x30,held=false,click=false},['1']={id=0x31,held=false,click=false},['2']={id=0x32,held=false,click=false},['3']={id=0x33,held=false,click=false},['4']={id=0x34,held=false,click=false},['5']={id=0x35,held=false,click=false},['6']={id=0x36,held=false,click=false},['7']={id=0x37,held=false,click=false},['8']={id=0x38,held=false,click=false},['9']={id=0x39,held=false,click=false},['a']={id=0x41,held=false,click=false},['b']={id=0x42,held=false,click=false},['c']={id=0x43,held=false,click=false},['d']={id=0x44,held=false,click=false},['e']={id=0x45,held=false,click=false},['f']={id=0x46,held=false,click=false},['g']={id=0x47,held=false,click=false},['h']={id=0x48,held=false,click=false},['i']={id=0x49,held=false,click=false},['j']={id=0x4A,held=false,click=false},['k']={id=0x4B,held=false,click=false},['l']={id=0x4C,held=false,click=false},['m']={id=0x4D,held=false,click=false},['n']={id=0x4E,held=false,click=false},['o']={id=0x4F,held=false,click=false},['p']={id=0x50,held=false,click=false},['q']={id=0x51,held=false,click=false},['r']={id=0x52,held=false,click=false},['s']={id=0x53,held=false,click=false},['t']={id=0x54,held=false,click=false},['u']={id=0x55,held=false,click=false},['v']={id=0x56,held=false,click=false},['w']={id=0x57,held=false,click=false},['x']={id=0x58,held=false,click=false},['y']={id=0x59,held=false,click=false},['z']={id=0x5A,held=false,click=false},['f1']={id=0x70,held=false,click=false},['f2']={id=0x71,held=false,click=false},['f3']={id=0x72,held=false,click=false},['f4']={id=0x73,held=false,click=false},['f5']={id=0x74,held=false,click=false},['f6']={id=0x75,held=false,click=false},['f7']={id=0x76,held=false,click=false},['f8']={id=0x77,held=false,click=false},['f9']={id=0x78,held=false,click=false},['f10']={id=0x79,held=false,click=false},['f11']={id=0x7A,held=false,click=false},['f12']={id=0x7B,held=false,click=false}},
+    _slider_drag        = nil,
+    _dd_drag            = nil,
+    _slider_disp        = {},
+    _menu_drag          = nil,
+    _input_ctx          = nil,
+    _key_repeat         = {},
+    _overwrite_menu_key = false,
+    _menu_key           = 'f5',
+    _active_dropdown    = nil,
+    _dropdown_scroll    = 0,
+    _dropdown_scroll_v  = 0,
+    _active_colorpicker = nil,
+    _copied_color       = nil,
+    _activities         = {},
+    _toggle_anim        = {},
+    _dd_arrow_anim      = {},
+    _frame_tooltip      = nil,
+    _menu_scale         = 0,
+    _current_h          = 500,
+    _KB_W               = 52,
+    _unloaded           = false,
+    _unloading_sequence = false,
+    _unload_phase       = 'sections',
+    _unload_section_alpha = 1,
+    _last_step_time     = 0,
+    _real_m1_click      = false,
+    _sec_scroll         = {},
+    _sec_slide          = {},
+    _item_vis           = {},
+    _tab_scroll         = {},
+    _config_folder      = "prodordie",
+    _config_name        = "default",
+    _config_refs        = {},
+    _config_callbacks   = {},
+    -- Autosave: debounced, minimum 2s gap
+    _autosave_dirty     = false,
+    _autosave_timer     = 0,
+    _autosave_delay     = 3.0,
+    _autosave_last      = 0,
+    _config_list        = {},
+    title                 = 'prodordie',
+    _custom_title_enabled = false,
+    _custom_title         = 'prodordie',
+    w=420, h=500, x=20, y=100,
+    _padding = 10,
+    _tab_h   = 36,
+    _corner  = 10,
+    _theme_name = 'Dark',
+    _themes = {
+        Light      = {accent=Color3.fromRGB(0,122,255),  unsafe=Color3.fromRGB(255,59,48),   body=Color3.fromRGB(236,236,236), text=Color3.fromRGB(28,28,28),    subtext=Color3.fromRGB(142,142,147), border1=Color3.fromRGB(198,198,203), border0=Color3.fromRGB(212,212,216), surface1=Color3.fromRGB(218,218,223), surface0=Color3.fromRGB(250,250,252), crust=Color3.fromRGB(175,175,180),  shadow=Color3.fromRGB(150,150,160)},
+        Dark       = {accent=Color3.fromRGB(10,132,255),  unsafe=Color3.fromRGB(255,69,58),   body=Color3.fromRGB(28,28,30),   text=Color3.fromRGB(255,255,255), subtext=Color3.fromRGB(99,99,102),   border1=Color3.fromRGB(56,56,58),    border0=Color3.fromRGB(44,44,46),    surface1=Color3.fromRGB(44,44,46),   surface0=Color3.fromRGB(36,36,38),   crust=Color3.fromRGB(18,18,18),     shadow=Color3.fromRGB(5,5,5)},
+        Catppuccin = {accent=Color3.fromRGB(137,180,250), unsafe=Color3.fromRGB(243,139,168), body=Color3.fromRGB(30,30,46),   text=Color3.fromRGB(205,214,244), subtext=Color3.fromRGB(166,173,200), border1=Color3.fromRGB(54,58,79),    border0=Color3.fromRGB(45,50,68),    surface1=Color3.fromRGB(49,50,68),   surface0=Color3.fromRGB(36,39,58),   crust=Color3.fromRGB(17,17,27),     shadow=Color3.fromRGB(5,5,10)},
+        Dracula    = {accent=Color3.fromRGB(189,147,249), unsafe=Color3.fromRGB(255,85,85),   body=Color3.fromRGB(40,42,54),   text=Color3.fromRGB(248,248,242), subtext=Color3.fromRGB(98,114,164),  border1=Color3.fromRGB(68,71,90),    border0=Color3.fromRGB(58,60,78),    surface1=Color3.fromRGB(68,71,90),   surface0=Color3.fromRGB(48,50,65),   crust=Color3.fromRGB(21,22,30),     shadow=Color3.fromRGB(5,5,8)},
+        Nord       = {accent=Color3.fromRGB(136,192,208), unsafe=Color3.fromRGB(191,97,106),  body=Color3.fromRGB(46,52,64),   text=Color3.fromRGB(236,239,244), subtext=Color3.fromRGB(129,161,193), border1=Color3.fromRGB(67,76,94),    border0=Color3.fromRGB(59,66,82),    surface1=Color3.fromRGB(67,76,94),   surface0=Color3.fromRGB(59,66,82),   crust=Color3.fromRGB(36,41,51),     shadow=Color3.fromRGB(10,12,16)},
+        Rose       = {accent=Color3.fromRGB(235,111,146), unsafe=Color3.fromRGB(235,111,146), body=Color3.fromRGB(25,23,36),   text=Color3.fromRGB(224,222,244), subtext=Color3.fromRGB(110,106,134), border1=Color3.fromRGB(64,61,82),    border0=Color3.fromRGB(57,53,74),    surface1=Color3.fromRGB(64,61,82),   surface0=Color3.fromRGB(42,39,60),   crust=Color3.fromRGB(14,12,23),     shadow=Color3.fromRGB(5,4,10)},
+        Midnight   = {accent=Color3.fromRGB(59,130,246),   unsafe=Color3.fromRGB(239,68,68),   body=Color3.fromRGB(17,17,19),   text=Color3.fromRGB(232,232,236), subtext=Color3.fromRGB(90,90,98),    border1=Color3.fromRGB(42,42,46),    border0=Color3.fromRGB(34,34,38),    surface1=Color3.fromRGB(20,20,22),   surface0=Color3.fromRGB(26,26,29),   crust=Color3.fromRGB(13,13,15),     shadow=Color3.fromRGB(0,0,0)},
+    },
+    _theming = nil,
+    _ctx_menu           = nil,   
+    _search_tab_results = {},    
+    _tab_content_alpha  = 1,     
+    _tab_pill_w_anim    = {},    
+}
+
+local MAC_RED=Color3.fromRGB(255,95,86);  local MAC_RED_B=Color3.fromRGB(196,68,62)
+local MAC_YEL=Color3.fromRGB(255,189,46); local MAC_YEL_B=Color3.fromRGB(196,146,30)
+local MAC_GRN=Color3.fromRGB(39,201,63);  local MAC_GRN_B=Color3.fromRGB(22,160,44)
+
+UILib._theming = UILib._themes[UILib._theme_name]
+
+local function safeNum(v, fallback) return (type(v) == "number" and v == v) and v or (fallback or 0) end
+local function lerp(a,b,t)    return a+(b-a)*t end
+local function clamp(x,a,b)   if x>b then return b elseif x<a then return a else return x end end
+local function lerpC(c1,c2,t) return Color3.new(lerp(c1.R,c2.R,t),lerp(c1.G,c2.G,t),lerp(c1.B,c2.B,t)) end
+local function easeOut(t)      return 1-(1-t)*(1-t) end
+local function getDictLen(d)   local i=0 for _ in pairs(d) do i=i+1 end return i end
+local function fmtNum(v)
+    local f=math.floor(safeNum(v))
+    if v==f then return tostring(f) end
+    return tostring(math.floor(safeNum(v)*100+0.5)/100)
+end
+
+local _MODIFIERS={lshift=true,rshift=true,lctrl=true,rctrl=true,lalt=true,ralt=true,shift=true,ctrl=true,alt=true}
+local _F_KEYS={f1=true,f2=true,f3=true,f4=true,f5=true,f6=true,f7=true,f8=true,f9=true,f10=true,f11=true,f12=true}
+local _NAV_KEYS={left=true,right=true,up=true,down=true,pageup=true,pagedown=true,home=true,end_=true,insert=true,delete=true,tab=true,enter=true,backspace=true,esc=true,capslock=true,pause=true,space=true}
+local _MOUSE_KEYS={m1=true,m2=true,mb=true}
+local _Players=game:GetService('Players')
+
+local _textBoundsCache={}
+local function cachedTextBounds(lib,text,fontFace,fontSize)
+    text = text or ""
+    local key=tostring(fontFace or lib._font_face)..':'..tostring(fontSize or lib._font_size)..':'..text
+    local cached=_textBoundsCache[key]
+    if cached then return cached end
+    local result=lib:_GetTextBounds(text,fontFace,fontSize)
+    _textBoundsCache[key]=result
+    return result
+end
+
+local function dlp(base,dt) return 1-(1-base)^(dt*60) end
+
+local function rgbToHsv(r,g,b)
+    local max,min=math.max(r,g,b),math.min(r,g,b)
+    local d=max-min
+    local h,s,v=0,0,max
+    if max>0 then s=d/max end
+    if d>0 then
+        if max==r then h=(g-b)/d; if g<b then h=h+6 end
+        elseif max==g then h=(b-r)/d+2
+        elseif max==b then h=(r-g)/d+4 end
+        h=h/6
+    end
+    return h,s,v
+end
+
+UILib._scroll_delta = 0
+pcall(function()
+    local lp = _Players.LocalPlayer
+    if lp then
+        local m = lp:GetMouse()
+        if m then
+            m.WheelForward:Connect(function() UILib._scroll_delta = UILib._scroll_delta + 60 end)
+            m.WheelBackward:Connect(function() UILib._scroll_delta = UILib._scroll_delta - 60 end)
+        end
+    end
+end)
+
+-- ══════════════════════════════════════════════════════════════════
+-- CONFIG / FILESYSTEM
+-- ══════════════════════════════════════════════════════════════════
+do
+    local function _hasFsApi() return type(writefile)=='function' and type(readfile)=='function' end
+    local function _mkfolder(path) if type(makefolder)=='function' then pcall(makefolder,path) end end
+    local function _isfile(path) if type(isfile)=='function' then local ok,v=pcall(isfile,path); return ok and v end return false end
+    local function _write(path,data) if type(writefile)=='function' then pcall(writefile,path,data) end end
+    local function _read(path) if type(readfile)=='function' then local ok,v=pcall(readfile,path); if ok then return v end end return nil end
+    local function _listfiles(path) if type(listfiles)=='function' then local ok,v=pcall(listfiles,path); if ok and type(v)=='table' then return v end end return {} end
+    local function jsonEncode(t) local hs=game:GetService('HttpService'); local ok,r=pcall(function() return hs:JSONEncode(t) end); return ok and r or nil end
+    local function jsonDecode(s) local hs=game:GetService('HttpService'); local ok,r=pcall(function() return hs:JSONDecode(s) end); return ok and r or nil end
+
+    function UILib:_RegisterConfigRef(tN,sN,item)
+        self._config_refs = self._config_refs or {}
+        table.insert(self._config_refs,{tab=tN,sec=sN,label=item.label,item=item})
+    end
+
+    local function colorToHex(c)
+        if not c then return nil end
+        return string.format('%02X%02X%02X', math.floor(c.R*255+0.5), math.floor(c.G*255+0.5), math.floor(c.B*255+0.5))
+    end
+    local function hexToColor(h)
+        if not h or #h < 6 then return nil end
+        h = h:match('^#?(%x%x%x%x%x%x)$')
+        if not h then return nil end
+        return Color3.fromRGB(tonumber(h:sub(1,2),16), tonumber(h:sub(3,4),16), tonumber(h:sub(5,6),16))
+    end
+    function UILib:_BuildConfigData()
+        local data={}
+        for _,ref in ipairs(self._config_refs or {}) do
+            local key=ref.tab..'/'..ref.sec..'/'..ref.label
+            local item=ref.item
+            if item.type_=='toggle' then data[key]=item.value
+            elseif item.type_=='slider' then data[key]=item.value
+            elseif item.type_=='dropdown' then data[key]=type(item.value)=='table' and table.concat(item.value,',') or tostring(item.value or '')
+            elseif item.type_=='textbox' then data[key]=item.value or '' end
+            if item.keybind then data[key..'__kb']=item.keybind.value or '' end
+            if item.colorpicker then data[key..'__cp']=colorToHex(item.colorpicker.value) end
+        end
+        data['__theme']=self._theme_name
+        data['__menukey']=self._menu_key
+        return data
+    end
+
+    function UILib:_ApplyConfigData(data)
+        if type(data)~='table' then return end
+        for _,ref in ipairs(self._config_refs or {}) do
+            local key=ref.tab..'/'..ref.sec..'/'..ref.label
+            local item=ref.item; local v=data[key]
+            local rawCb = item._rawcb
+            if v~=nil then
+                if item.type_=='toggle' then
+                    item.value=(v==true or v=='true')
+                    if rawCb then pcall(rawCb,item.value) end
+                    local ak=ref.tab..ref.sec..ref.label
+                    self._toggle_anim[ak]=item.value and 1 or 0
+                elseif item.type_=='slider' then
+                    local n=tonumber(v); if n then item.value=n; if rawCb then pcall(rawCb,n) end end
+                elseif item.type_=='dropdown' then
+                    local parts={}; for p in tostring(v):gmatch('[^,]+') do table.insert(parts,p) end
+                    item.value=parts; if rawCb then pcall(rawCb,item.value) end
+                elseif item.type_=='textbox' then
+                    item.value=tostring(v); if rawCb then pcall(rawCb,item.value) end
+                end
+            end
+            if item.keybind then
+                local kbv=data[key..'__kb']
+                if kbv~=nil then item.keybind.value=tostring(kbv) end
+            end
+            if item.colorpicker then
+                local cpv=data[key..'__cp']
+                if cpv then
+                    local restored=hexToColor(tostring(cpv))
+                    if restored then item.colorpicker.value=restored; if item.colorpicker.callback then pcall(item.colorpicker.callback,restored) end end
+                end
+            end
+        end
+        if data['__theme'] and self._themes[data['__theme']] then self:_ApplyTheme(data['__theme']) end
+        if data['__menukey'] and self._inputs[data['__menukey']] then self._menu_key=data['__menukey'] end
+        for _,cb in ipairs(self._config_callbacks or {}) do pcall(cb,data) end
+    end
+
+    function UILib:_AutoSaveTick(dt)
+        if not self._autosave_dirty then return end
+        self._autosave_timer = self._autosave_timer + safeNum(dt, 0.016)
+        if self._autosave_timer < self._autosave_delay then return end
+        self._autosave_dirty = false
+        self._autosave_timer = 0
+        self._autosave_last  = os.clock()
+        if not _hasFsApi() then return end
+        _mkfolder(self._config_folder)
+        local data = self:_BuildConfigData()
+        local json = jsonEncode(data)
+        if not json then return end
+        _write(self._config_folder..'/_last.json', json)
+    end
+
+    function UILib:_RefreshConfigList()
+        local names=self:ListConfigs()
+        local filtered={}
+        local hasDefault=false
+        for _,n in ipairs(names or {}) do
+            if n~='_last' then
+                table.insert(filtered,n)
+                if n=='default' then hasDefault=true end
+            end
+        end
+        if not hasDefault then table.insert(filtered,1,'default') end
+        self._config_list=filtered
+        return filtered
+    end
+
+    function UILib:SaveConfig(name)
+        name=tostring(name or self._config_name or 'default')
+        if name=='default' or name=='' then
+            self:Notification('Set a config name first (Config & Theme → New config name)',5); return
+        end
+        if not _hasFsApi() then self:Notification('No filesystem API',5); return end
+        _mkfolder(self._config_folder)
+        local data=self:_BuildConfigData()
+        local json=jsonEncode(data)
+        if not json then self:Notification('Encode failed',4); return end
+        _write(self._config_folder..'/'..name..'.json',json)
+        self._config_name=name
+        self:_RefreshConfigList()
+        self:Notification('Saved: '..name,4)
+    end
+
+    function UILib:LoadConfig(name)
+        name=tostring(name or self._config_name or 'default')
+        if not _hasFsApi() then self:Notification('No filesystem API',5); return end
+        local path=self._config_folder..'/'..name..'.json'
+        if not _isfile(path) then self:Notification('Not found: '..name,4); return end
+        local raw=_read(path)
+        if not raw then self:Notification('Read failed',4); return end
+        local data=jsonDecode(raw)
+        if not data then self:Notification('Parse failed',4); return end
+        self:_ApplyConfigData(data)
+        if name~='_last' then self._config_name=name end
+        self:_RefreshConfigList()
+        if name~='_last' then self:Notification('Loaded: '..name,4) end
+    end
+
+    function UILib:DeleteConfig(name)
+        name=tostring(name or self._config_name or 'default')
+        if name=='default' then self:Notification('Cannot delete default config',4); return end
+        if not _hasFsApi() then return end
+        local path=self._config_folder..'/'..name..'.json'
+        if type(delfile)=='function' then pcall(delfile,path) end
+        self:_RefreshConfigList()
+        self:Notification('Deleted: '..name,4)
+    end
+
+    function UILib:ListConfigs()
+        if not _hasFsApi() then return {} end
+        _mkfolder(self._config_folder)
+        local files=_listfiles(self._config_folder); local names={}
+        for _,f in ipairs(files or {}) do
+            local norm=tostring(f):gsub('\\','/')
+            local n=norm:match('([^/]+)%.json$')
+            if n then table.insert(names,n) end
+        end
+        return names
+    end
+
+    function UILib:_MarkDirty()
+        if not self._autosave_dirty then
+            self._autosave_timer = 0
+        end
+        self._autosave_dirty = true
+    end
+
+    function UILib:AutoLoadConfig()
+        if not _hasFsApi() then return end
+        local defPath=self._config_folder..'/default.json'
+        if not _isfile(defPath) then
+            _mkfolder(self._config_folder)
+            local data=self:_BuildConfigData()
+            local json=jsonEncode(data)
+            if json then _write(defPath,json) end
+        end
+        local lastPath=self._config_folder..'/_last.json'
+        if _isfile(lastPath) then self:LoadConfig('_last'); return end
+        if _isfile(defPath) then self:LoadConfig('default') end
+    end
+end
+
+-- ══════════════════════════════════════════════════════════════════
+-- SCROLL
+-- ══════════════════════════════════════════════════════════════════
+do
+    function UILib:_GetSec(sdid)
+        self._sec_scroll = self._sec_scroll or {}
+        if not self._sec_scroll[sdid] then self._sec_scroll[sdid]={offset=0,target=0,maxScroll=0} end
+        return self._sec_scroll[sdid]
+    end
+    function UILib:_TickScroll(sdid,dt)
+        local s=self:_GetSec(sdid)
+        s.offset=lerp(s.offset,s.target,dlp(0.12,dt))
+        if math.abs(s.offset-s.target)<0.5 then s.offset=s.target end
+        return s.offset
+    end
+    function UILib:_ScrollSection(sdid,delta)
+        local s=self:_GetSec(sdid); s.target=clamp(s.target+delta,0,s.maxScroll)
+    end
+end
+
+-- ══════════════════════════════════════════════════════════════════
+-- CORE HELPERS
+-- ══════════════════════════════════════════════════════════════════
+do
+    function UILib:_KeyIDToName(id) for n,k in pairs(self._inputs or {}) do if k.id==id then return n end end return nil end
+    function UILib:_IsKeyPressed(k) return self._inputs and self._inputs[k] and self._inputs[k].click end
+    function UILib:_IsKeyHeld(k)    return self._inputs and self._inputs[k] and self._inputs[k].held end
+    function UILib:_GetScreenSize()
+        local now2=os.clock()
+        if not self._cached_ss or now2-(self._cached_ss_at or 0)>1 then
+            local ss=Vector2.new(1920,1080); local cam=workspace.CurrentCamera
+            if cam and cam.ViewportSize then ss=cam.ViewportSize end
+            self._cached_ss=ss; self._cached_ss_at=now2
+        end
+        return self._cached_ss
+    end
+    function UILib:_GetMousePos() return self._cached_mouse or Vector2.new() end
+    function UILib:_PollMousePos()
+        local lp=_Players.LocalPlayer
+        if lp then
+            local m=lp:GetMouse()
+            if m then
+                local mx,my=m.X,m.Y; local cm=self._cached_mouse
+                if not cm or cm.x~=mx or cm.y~=my then self._cached_mouse=Vector2.new(mx,my) end
+                return
+            end
+        end
+        if not self._cached_mouse then self._cached_mouse=Vector2.new() end
+    end
+    function UILib:_IsMouseWithinBounds(o,s)
+        local m=self:_GetMousePos()
+        return m.x>=o.x and m.x<=o.x+s.x and m.y>=o.y and m.y<=o.y+s.y
+    end
+    function UILib:_ApplyTheme(name) self._theme_name=name; self._theming=self._themes[name] or self._themes.Light end
+end
+
+-- ══════════════════════════════════════════════════════════════════
+-- STATE DIFFING IMMEDIATE MODE DRAWING POOL
+-- ══════════════════════════════════════════════════════════════════
+do
+    function UILib:_GetTextBounds(text,fontFace,fontSize)
+        text = text or ""
+        fontFace=fontFace or self._font_face; fontSize=fontSize or self._font_size
+        if fontFace==Drawing.Fonts.UI then return Vector2.new(#text*fontSize*0.53846,fontSize) end
+        return Vector2.new(#text*fontSize*0.58,fontSize)
+    end
+
+    function UILib:_Draw(dt, dc, dz, dop, ...)
+        local pType = dt == 'rect' and 'Square' or (dt == 'text' and 'Text' or (dt == 'circle' and 'Circle' or (dt == 'triangle' and 'Triangle' or 'Line')))
+
+        if dt == 'gradient' then
+            local dir, orig, sz = ...
+            local colors = {select(4, ...)}
+            local ns = #colors - 1
+            local lod = 22
+            for i = 1, ns do
+                local cc, nc = colors[i], colors[i+1]
+                local slx, sly = math.max(1, sz.x)/ns, math.max(1, sz.y)/ns
+                for j = 1, lod do
+                    local t2 = (j-1)/(lod-1)
+                    local tc2 = Color3.new(lerp(cc.R,nc.R,t2), lerp(cc.G,nc.G,t2), lerp(cc.B,nc.B,t2))
+                    local ta = lerp(cc.A or 1, nc.A or 1, t2) * dop
+                    local sp, ss
+                    if dir == 'horizontal' then
+                        ss = Vector2.new(slx/lod, sz.y)
+                        sp = Vector2.new(orig.x + (i-1)*slx + (j-1)*ss.x, orig.y)
+                    elseif dir == 'vertical' then
+                        ss = Vector2.new(sz.x, sly/lod)
+                        sp = Vector2.new(orig.x, orig.y + (i-1)*sly + (j-1)*ss.y)
+                    end
+                    self:_Draw('rect', tc2, dz, ta, sp, ss, true)
+                end
+            end
+            return
+        end
+
+        self._pIdx[pType] = self._pIdx[pType] + 1
+        local idx = self._pIdx[pType]
+        local d = self._pool[pType][idx]
+
+        if not d then
+            d = Drawing.new(pType)
+            d.Visible = false
+            d._Visible = false
+            self._pool[pType][idx] = d
+        end
+
+        if d._ZIndex ~= dz then d.ZIndex = dz; d._ZIndex = dz end
+        if dc ~= nil and d._Color ~= dc then d.Color = dc; d._Color = dc end
+        local t_val = clamp(dop, 0, 1)
+        if d._Transparency ~= t_val then d.Transparency = t_val; d._Transparency = t_val end
+        if d._Visible ~= true then d.Visible = true; d._Visible = true end
+
+        if dt == 'rect' then
+            local pos, sz, filled, corner = ...
+            if d._Position ~= pos then d.Position = pos; d._Position = pos end
+            if d._Size ~= sz then d.Size = sz; d._Size = sz end
+            if d._Filled ~= filled then d.Filled = filled; d._Filled = filled end
+            if corner and corner > 0 then
+                if d._Corner ~= corner then pcall(function() d.Corner = corner end); d._Corner = corner end
+            else
+                if d._Corner ~= 0 then pcall(function() d.Corner = 0 end); d._Corner = 0 end
+            end
+        elseif dt == 'text' then
+            local pos, content, outline, align, sz, face = ...
+            local isCenter = (align == 'center')
+            if d._Center ~= isCenter then d.Center = isCenter; d._Center = isCenter end
+            if d._Position ~= pos then d.Position = pos; d._Position = pos end
+            if d._Text ~= content then d.Text = content; d._Text = content end
+            if d._Outline ~= outline then d.Outline = outline; d._Outline = outline end
+            local fFace = face or self._font_face
+            if d._Font ~= fFace then d.Font = fFace; d._Font = fFace end
+            local fSz = sz or self._font_size
+            if d._Size ~= fSz then d.Size = fSz; d._Size = fSz end
+        elseif dt == 'triangle' then
+            local f, a, b, c = ...
+            if d._Filled ~= f then d.Filled = f; d._Filled = f end
+            if d._PointA ~= a then d.PointA = a; d._PointA = a end
+            if d._PointB ~= b then d.PointB = b; d._PointB = b end
+            if d._PointC ~= c then d.PointC = c; d._PointC = c end
+        elseif dt == 'circle' then
+            local pos, r, filled = ...
+            if d._Position ~= pos then d.Position = pos; d._Position = pos end
+            if d._Radius ~= r then d.Radius = r; d._Radius = r end
+            if d._Filled ~= filled then d.Filled = filled; d._Filled = filled end
+        elseif dt == 'line' then
+            local f, t, th = ...
+            if d._From ~= f then d.From = f; d._From = f end
+            if d._To ~= t then d.To = t; d._To = t end
+            local thVal = th or 1
+            if d._Thickness ~= thVal then d.Thickness = thVal; d._Thickness = thVal end
+        end
+    end
+
+    function UILib:_FullWipe()
+        for _, pList in pairs(self._pool or {}) do
+            for _, d in ipairs(pList) do pcall(function() d.Visible = false; d:Remove() end) end
+        end
+        self._pool = { Square = {}, Text = {}, Triangle = {}, Circle = {}, Line = {} }
+    end
+end
+
+-- ══════════════════════════════════════════════════════════════════
+-- SPAWNERS
+-- ══════════════════════════════════════════════════════════════════
+do
+    function UILib:_SpawnColorpicker(pos,label,val,cb)
+        local h,s,v=rgbToHsv(val.R,val.G,val.B)
+        self._active_colorpicker={position=pos or Vector2.new(self.x+self.w+self._padding,self.y),label=label,callback=cb,_h=h,_s=s,_v=v,_anim=0,_closing=false}
+    end
+    function UILib:_RemoveColorpicker()
+        if self._active_colorpicker then self._active_colorpicker._closing=true end
+    end
+    function UILib:_SpawnDropdown(pos,width,val,choices,multi,cb)
+        self._active_dropdown={position=pos,width=width,value=val,choices=choices,multi=multi,callback=cb,_spawned_at=os.clock(),_anim=0}
+        self._dropdown_scroll_target=0
+        self._dropdown_scroll_v=0
+    end
+    function UILib:_RemoveDropdown() self._active_dropdown=nil end
+
+    -- Textbox context menu
+    function UILib:_SpawnCtxMenu(x, y, siid, sItem)
+        self._ctx_menu = {
+            x=x, y=y, siid=siid, sItem=sItem,
+            _anim=0,
+            items={
+                {label='Copy',  action='copy'},
+                {label='Clear', action='clear'},
+            }
+        }
+    end
+    function UILib:_RemoveCtxMenu() self._ctx_menu = nil end
+end
+
+-- ══════════════════════════════════════════════════════════════════
+-- ITEM CONSTRUCTORS
+-- ══════════════════════════════════════════════════════════════════
+do
+    function UILib:_Toggle(tN,sN,label,val,cb,isNew,tooltip)
+        if type(label) == "table" then
+            local c = label
+            label = c.Label or c.label; val = c.Value or c.value; cb = c.Callback or c.callback
+            isNew = c.IsNew or c.isNew; tooltip = c.Tooltip or c.tooltip
+        end
+        self._tree = self._tree or {}
+        self._tree[tN] = self._tree[tN] or {_items={}, _searchQuery=""}
+        self._tree[tN]._items[sN] = self._tree[tN]._items[sN] or {_items={}, _count=0}
+        local id=#self._tree[tN]._items[sN]._items+1
+        local function wrappedCb(v) self:_MarkDirty(); if cb then cb(v) end end
+        local item={type_='toggle',_rawcb=cb,label=label,value=val,callback=wrappedCb,isNew=isNew or false,tooltip=tooltip, _id=tN..'_'..sN..'_'..id}
+        table.insert(self._tree[tN]._items[sN]._items,item)
+        local ak=tN..sN..tostring(id); self._toggle_anim[ak]=val and 1 or 0
+        self:_RegisterConfigRef(tN,sN,item)
+        return {
+            Set=function(_,v) self._tree[tN]._items[sN]._items[id].value=v; if self._tree[tN]._items[sN]._items[id].callback then self._tree[tN]._items[sN]._items[id].callback(v) end end,
+            AddKeybind=function(_,kv,kcb)
+                local kb={value=kv,callback=kcb,_listening=false,_listening_start=0}
+                self._tree[tN]._items[sN]._items[id].keybind=kb
+                return{Set=function(_,nv)
+                    self._tree[tN]._items[sN]._items[id].keybind.value=nv
+                    if self._tree[tN]._items[sN]._items[id].keybind.callback then self._tree[tN]._items[sN]._items[id].keybind.callback(nv) end
+                end}
+            end,
+            AddColorpicker=function(_,lbl,v2,ow,c2)
+                local cp2={label=lbl,value=v2 or self._theming.accent,overwrite=ow,callback=c2}
+                self._tree[tN]._items[sN]._items[id].colorpicker=cp2
+                return{Set=function(_,nv) self._tree[tN]._items[sN]._items[id].colorpicker.value=nv; if self._tree[tN]._items[sN]._items[id].colorpicker.callback then self._tree[tN]._items[sN]._items[id].colorpicker.callback(nv) end end}
+            end
+        }
+    end
+    function UILib:_Slider(tN,sN,label,val,step,mn,mx,sfx,isNew,cb)
+        if type(label) == "table" then
+            local c = label
+            label = c.Label or c.label; val = c.Value or c.value; step = c.Step or c.step
+            mn = c.Min or c.min; mx = c.Max or c.max; sfx = c.Suffix or c.suffix
+            isNew = c.IsNew or c.isNew; cb = c.Callback or c.callback
+        elseif type(isNew) == "function" then
+            cb = isNew; isNew = false
+        end
+        self._tree = self._tree or {}
+        self._tree[tN] = self._tree[tN] or {_items={}, _searchQuery=""}
+        self._tree[tN]._items[sN] = self._tree[tN]._items[sN] or {_items={}, _count=0}
+        local id=#self._tree[tN]._items[sN]._items+1
+        local function wrappedCb(v) self:_MarkDirty(); if cb then cb(v) end end
+        local item={type_='slider',_rawcb=cb,label=label,value=val,default=val,step=step,min=mn,max=mx,suffix=sfx or '',isNew=isNew or false,callback=wrappedCb, _id=tN..'_'..sN..'_'..id}
+        table.insert(self._tree[tN]._items[sN]._items,item)
+        self:_RegisterConfigRef(tN,sN,item)
+        return{Set=function(_,nv) self._tree[tN]._items[sN]._items[id].value=nv; if self._tree[tN]._items[sN]._items[id].callback then self._tree[tN]._items[sN]._items[id].callback(nv) end end}
+    end
+    function UILib:_Dropdown(tN,sN,label,val,choices,multi,isNew,cb)
+        if type(label) == "table" then
+            local c = label
+            label = c.Label or c.label; val = c.Value or c.value; choices = c.Choices or c.choices
+            multi = c.Multi or c.multi; isNew = c.IsNew or c.isNew; cb = c.Callback or c.callback
+        elseif type(isNew) == "function" then
+            cb = isNew; isNew = false
+        end
+        self._tree = self._tree or {}
+        self._tree[tN] = self._tree[tN] or {_items={}, _searchQuery=""}
+        self._tree[tN]._items[sN] = self._tree[tN]._items[sN] or {_items={}, _count=0}
+        local id=#self._tree[tN]._items[sN]._items+1
+        local function wrappedCb(v) self:_MarkDirty(); if cb then cb(v) end end
+        local item={type_='dropdown',_rawcb=cb,label=label,value=val,choices=choices,multi=multi,isNew=isNew or false,callback=wrappedCb, _id=tN..'_'..sN..'_'..id}
+        table.insert(self._tree[tN]._items[sN]._items,item)
+        self:_RegisterConfigRef(tN,sN,item)
+        return{
+            Set=function(_,nv) self._tree[tN]._items[sN]._items[id].value=nv; if self._tree[tN]._items[sN]._items[id].callback then self._tree[tN]._items[sN]._items[id].callback(nv) end end,
+            UpdateChoices=function(_,nc) self._tree[tN]._items[sN]._items[id].choices=nc end
+        }
+    end
+    function UILib:_Button(tN,sN,label,isNew,cb)
+        if type(label) == "table" then
+            local c = label
+            label = c.Label or c.label; isNew = c.IsNew or c.isNew; cb = c.Callback or c.callback
+        elseif type(isNew) == "function" then
+            cb = isNew; isNew = false
+        end
+        self._tree = self._tree or {}
+        self._tree[tN] = self._tree[tN] or {_items={}, _searchQuery=""}
+        self._tree[tN]._items[sN] = self._tree[tN]._items[sN] or {_items={}, _count=0}
+        local id=#self._tree[tN]._items[sN]._items+1
+        local item={type_='button',label=label,isNew=isNew or false,callback=cb, _id=tN..'_'..sN..'_'..id}
+        table.insert(self._tree[tN]._items[sN]._items,item)
+        return {
+            AddColorpicker=function(_,lbl,v2,ow,c2)
+                local cp2={label=lbl,value=v2 or self._theming.accent,overwrite=ow,callback=c2}
+                self._tree[tN]._items[sN]._items[id].colorpicker=cp2
+                return{Set=function(_,nv) self._tree[tN]._items[sN]._items[id].colorpicker.value=nv; if self._tree[tN]._items[sN]._items[id].colorpicker.callback then self._tree[tN]._items[sN]._items[id].colorpicker.callback(nv) end end}
+            end
+        }
+    end
+    function UILib:_Textbox(tN,sN,label,val,cb)
+        if type(label) == "table" then
+            local c = label
+            label = c.Label or c.label; val = c.Value or c.value; cb = c.Callback or c.callback
+        end
+        self._tree = self._tree or {}
+        self._tree[tN] = self._tree[tN] or {_items={}, _searchQuery=""}
+        self._tree[tN]._items[sN] = self._tree[tN]._items[sN] or {_items={}, _count=0}
+        local id=#self._tree[tN]._items[sN]._items+1
+        local function wrappedCb(v) self:_MarkDirty(); if cb then cb(v) end end
+        local item={type_='textbox',_rawcb=cb,label=label,value=val,callback=wrappedCb, _id=tN..'_'..sN..'_'..id}
+        table.insert(self._tree[tN]._items[sN]._items,item)
+        self:_RegisterConfigRef(tN,sN,item)
+        return{Set=function(_,nv) self._tree[tN]._items[sN]._items[id].value=nv; if self._tree[tN]._items[sN]._items[id].callback then self._tree[tN]._items[sN]._items[id].callback(nv) end end}
+    end
+    function UILib:_Section(tN,sN)
+        self._tree = self._tree or {}
+        self._tree[tN] = self._tree[tN] or {_items={}, _searchQuery=""}
+        self._tree[tN]._items[sN]={_items={},_count=0}
+        self._tree[tN]._secCount=(self._tree[tN]._secCount or 0)+1
+        if not self._tree[tN]._sec_order then self._tree[tN]._sec_order={} end
+        table.insert(self._tree[tN]._sec_order,sN)
+        return{
+            Toggle  =function(_,...) return self:_Toggle(tN,sN,...) end,
+            Slider  =function(_,...) return self:_Slider(tN,sN,...) end,
+            Dropdown=function(_,...) return self:_Dropdown(tN,sN,...) end,
+            Button  =function(_,...) return self:_Button(tN,sN,...) end,
+            Textbox =function(_,...) return self:_Textbox(tN,sN,...) end,
+        }
+    end
+end
+
+-- ══════════════════════════════════════════════════════════════════
+-- PUBLIC API
+-- ══════════════════════════════════════════════════════════════════
+do
+    function UILib:GetMenuSize()          return Vector2.new(self.w,self.h) end
+    function UILib:SetWatermarkEnabled(v) self._watermark_enabled=v end
+    function UILib:SetMenuTitle(t)
+        local str=tostring(t); if #str>20 then str=str:sub(1,20) elseif #str<3 then str=str..string.rep(" ",3-#str) end
+        self.title=str; self._custom_title=str
+    end
+    function UILib:SetMenuPosition(p)     self.x=p.x or self.x; self.y=p.y or self.y end
+    function UILib:SetMenuSize(s)         self.w=s.x or self.w; self.h=s.y or self.h end
+    function UILib:SetMenuKey(k)
+        local key=tostring(k):lower()
+        if self._inputs[key] then
+            self._menu_key=key
+            self:Notification('Menu key set to '..key:upper(),3)
+        else
+            self:Notification('Invalid key: '..key,3)
+        end
+    end
+    function UILib:CenterMenu()
+        local ss=self:_GetScreenSize(); local ms=self:GetMenuSize()
+        self:SetMenuPosition(Vector2.new(ss.x/2-ms.x/2,ss.y/2-ms.y/2))
+    end
+    function UILib:Notification(text,time)
+        local txt=tostring(text)
+        self._notifications = self._notifications or {}
+        for _,n in ipairs(self._notifications) do
+            if n.text==txt then
+                if os.clock() - n._spawned_at < 1 then return end
+                n._spawned_at=os.clock(); n.time=time; return
+            end
+        end
+        if #self._notifications>=5 then
+            table.remove(self._notifications,1)
+        end
+        table.insert(self._notifications,{text=txt,time=time or 3,_id=self._notifications_spawned,_spawned_at=os.clock()})
+        self._notifications_spawned=self._notifications_spawned+1
+    end
+    function UILib:Tab(tabName)
+        self._tree = self._tree or {}
+        self._tree[tabName]={_items={}, _searchQuery=""}
+        self._tab_order = self._tab_order or {}
+        table.insert(self._tab_order,tabName)
+        if not self._open_tab then self._open_tab=tabName; self._tab_fade=1 end
+        return{Section=function(_,sn) return self:_Section(tabName,sn) end}
+    end
+    function UILib:RegisterActivity(a)
+        self._activities = self._activities or {}
+        local id=#self._activities+1; self._activities[id]=a
+        return{Remove=function(_) self._activities[id]=nil end}
+    end
+    function UILib:Unload()
+        self._unloading_sequence = true
+        self._unload_phase = 'sections'
+        self._unload_section_alpha = 1
+    end
+
+    function UILib:CreateSettingsTab(customName)
+        local st=self:Tab(customName or 'Settings')
+        local name=customName or 'Settings'
+        self._tab_order = self._tab_order or {}
+        for i,n in ipairs(self._tab_order) do
+            if n==name then table.remove(self._tab_order,i); break end
+        end
+        table.insert(self._tab_order,name)
+
+        local ms=st:Section('Menu')
+        local mk=ms:Toggle('Menu Key',self._overwrite_menu_key,function(v) self._overwrite_menu_key=v end)
+        mk:AddKeybind(self._menu_key,function(v) self._menu_key=self:_KeyIDToName(v) end)
+        ms:Toggle('Watermark',true,function(v) self:SetWatermarkEnabled(v) end)
+        ms:Toggle('Custom watermark',self._custom_title_enabled,function(v) self._custom_title_enabled=v end)
+
+        ms:Textbox('Watermark text',self.title,function(v)
+            local str=tostring(v); if #str>20 then str=str:sub(1,20) elseif #str<3 then str=str..string.rep(" ",3-#str) end
+            self._custom_title=str
+        end)
+        ms:Button('Unload Script', false, function() self:Unload() end)
+
+        local cs=st:Section('Config & Theme')
+        local themeNames={}
+        for n in pairs(self._themes or {}) do table.insert(themeNames,n) end
+        table.sort(themeNames)
+        cs:Dropdown('Theme',{self._theme_name},themeNames,false,false,function(v)
+            if v and v[1] then self:_ApplyTheme(v[1]) end
+        end)
+
+        cs:Textbox('New config name','',function(v)
+            if v and v~='' then self._config_name=v end
+        end)
+
+        self:_RefreshConfigList()
+        local configChoices=self._config_list
+        if #configChoices==0 then configChoices={'default'} end
+        local configDrop=cs:Dropdown('Saved configs',{self._config_name},configChoices,false,false,function(v)
+            if v and v[1] then self._config_name=v[1] end
+        end)
+
+        cs:Button('Save config',false,function()
+            self:SaveConfig(self._config_name)
+            local fresh=self:_RefreshConfigList()
+            if #fresh==0 then fresh={'default'} end
+            configDrop:UpdateChoices(fresh)
+        end)
+        cs:Button('Load config',false,function() self:LoadConfig(self._config_name) end)
+        cs:Button('Delete config',false,function()
+            self:DeleteConfig(self._config_name)
+            local fresh=self:_RefreshConfigList()
+            if #fresh==0 then fresh={'default'} end
+            configDrop:UpdateChoices(fresh)
+            self._config_name=fresh[1] or 'default'
+        end)
+
+        return st,ms,cs
+    end
+end
+
+local function GetItemHeight(lib, sItem)
+    local iType = sItem.type_
+    if iType == 'toggle' then return lib._font_size + 2 + lib._padding
+    elseif iType == 'slider' then local lsz = cachedTextBounds(lib, sItem.label); return lsz.y + 6 + 18 + lib._padding * 3
+    elseif iType == 'dropdown' then local lsz = cachedTextBounds(lib, sItem.label); return lsz.y * 2 + lib._padding * 4
+    elseif iType == 'button' then local lsz = cachedTextBounds(lib, sItem.label); return lsz.y + lib._padding * 3
+    elseif iType == 'textbox' then return lib._font_size + lib._padding * 2
+    end
+    return 0
+end
+
+local function itemMatchesSearch(lib, sItem)
+    if lib._search_query == "" then return true end
+    return string.find(string.lower(sItem.label), string.lower(lib._search_query), 1, true) ~= nil
+end
+
+-- ══════════════════════════════════════════════════════════════════
+-- STEP
+-- ══════════════════════════════════════════════════════════════════
+function UILib:Step()
+    if self._unloaded then return end
+
+    self._pIdx = { Square = 0, Text = 0, Triangle = 0, Circle = 0, Line = 0 }
+
+    self._tree       = self._tree or {}
+    self._tab_order  = self._tab_order or {}
+    self._sec_scroll = self._sec_scroll or {}
+    self._sec_slide  = self._sec_slide or {}
+    self._inputs     = self._inputs or {}
+    self._item_vis   = self._item_vis or {}
+    self._tab_scroll = self._tab_scroll or {}
+    self._frame_tooltip = nil
+
+    local T=self._theming; local CR=self._corner; local PAD=self._padding
+    local KB_W=self._KB_W
+
+    local now=os.clock()
+    local dt=math.min(now-self._last_step_time,0.05)
+    if self._last_step_time==0 then dt=0.016 end
+    self._last_step_time=now
+    local function _dlp(base) return dlp(base,dt) end
+
+    self:_PollMousePos()
+    self:_AutoSaveTick(dt)
+
+    local _UIS = game:GetService("UserInputService")
+    local focused = false
+    pcall(function() focused = _UIS:GetFocusedTextBox() ~= nil end)
+
+    local rbxActive = true
+    if type(isrbxactive) == 'function' then
+        pcall(function() rbxActive = isrbxactive() end)
+    end
+
+    -- Precache Enums once instead of inside loop
+    if not self._kcCache then
+        self._kcCache = {}
+        for kc, _ in pairs(self._inputs) do
+            if kc == 'm1' then self._kcCache[kc] = Enum.UserInputType.MouseButton1
+            elseif kc == 'm2' then self._kcCache[kc] = Enum.UserInputType.MouseButton2
+            elseif kc == 'mb' then self._kcCache[kc] = Enum.UserInputType.MouseButton3
+            else
+                pcall(function() self._kcCache[kc] = Enum.KeyCode[kc:upper()] end)
+            end
+        end
+    end
+
+    -- Optimized Input Loop: No pcall spam
+    for kc, id2 in pairs(self._inputs) do
+        local hit = false
+        local enumObj = self._kcCache[kc]
+        
+        if enumObj then
+            if kc == 'm1' or kc == 'm2' or kc == 'mb' then
+                hit = _UIS:IsMouseButtonPressed(enumObj)
+            else
+                hit = _UIS:IsKeyDown(enumObj)
+            end
+        end
+
+        if not hit and type(iskeypressed) == 'function' then
+            hit = iskeypressed(id2.id)
+        end
+
+        if not focused and rbxActive and hit then
+            self._inputs[kc].click = (not id2.held and not id2.click)
+            self._inputs[kc].held = true
+        else
+            self._inputs[kc].click = false
+            self._inputs[kc].held = false
+        end
+    end
+
+    local clickFrame  = self:_IsKeyPressed('m1')
+    local mouseHeld   = self:_IsKeyHeld('m1')
+    local ctxFrame    = self:_IsKeyPressed('m2')
+    local mkStr = tostring(self._overwrite_menu_key and self._menu_key or 'f5'):lower()
+    local menuKey = self:_IsKeyPressed(mkStr)
+    local clickConsumed = false
+
+    local syntheticThisFrame=false
+    for kn,k in pairs(self._inputs) do
+        if not _MOUSE_KEYS[kn] and not _MODIFIERS[kn] and not _F_KEYS[kn] and not _NAV_KEYS[kn] and k.click then syntheticThisFrame=true; break end
+    end
+    local realClick=clickFrame and not syntheticThisFrame
+
+    if menuKey then
+        self._menu_open = not self._menu_open
+        if not self._menu_open then
+            self:_RemoveDropdown(); self:_RemoveColorpicker(); self:_RemoveCtxMenu()
+            self:Notification('Menu Minimized ('..mkStr:upper()..' to open)', 3)
+        end
+    end
+
+    if self._unloading_sequence then
+        if self._unload_phase == 'sections' then
+            self._unload_section_alpha = lerp(self._unload_section_alpha or 1, 0, _dlp(0.18))
+            if (self._unload_section_alpha or 0) < 0.04 then
+                self._unload_section_alpha = 0
+                self._unload_phase = 'menu'
+                self._menu_open = false
+            end
+        end
+    end
+
+    local targetScale = (self._menu_open and not (self._unload_phase == 'menu' or self._unload_phase == 'done')) and 1 or 0
+    self._menu_scale=lerp(self._menu_scale,targetScale,_dlp(0.12))
+    local sc=self._menu_scale
+
+    if self._unloading_sequence and self._unload_phase == 'menu' and sc < 0.01 then
+        self._unloaded = true
+        self:_FullWipe()
+        return
+    end
+
+    local wx=self.x; local wy=self.y; local ww=self.w
+    local menuTitle=self._custom_title_enabled and self._custom_title or self.title
+    local TBAH=self:_GetTextBounds(menuTitle).y+PAD*2+4
+
+    if self._search_query ~= "" then
+        self._search_tab_results = {}
+        for _, tabName in ipairs(self._tab_order) do
+            local tabContent = self._tree[tabName]
+            local count = 0
+            if tabContent then
+                for _, secName in ipairs(tabContent._sec_order or {}) do
+                    local secContent = tabContent._items[secName] or {_items={}}
+                    for _, sItem in ipairs(secContent._items or {}) do
+                        if itemMatchesSearch(self, sItem) then
+                            count = count + 1
+                        end
+                    end
+                end
+            end
+            self._search_tab_results[tabName] = count
+        end
+    else
+        self._search_tab_results = {}
+    end
+
+    local targetH = self.h
+    local tabContent = self._tree[self._open_tab]
+    local leftHeights, rightHeights = {}, {}
+    local leftTotalH, rightTotalH = PAD, PAD
+
+    if tabContent then
+        for sIdx, secName in ipairs(tabContent._sec_order or {}) do
+            local secContent = tabContent._items[secName] or {_items={}}
+            local sTsz = cachedTextBounds(self, secName)
+            local cardH = PAD + sTsz.y/2
+            local matchingItems = 0
+
+            for _, sItem in ipairs(secContent._items or {}) do
+                local matches = itemMatchesSearch(self, sItem)
+                if matches then matchingItems = matchingItems + 1 end
+
+                local animKey = "s_anim_" .. sItem._id
+                self._toggle_anim[animKey] = lerp(self._toggle_anim[animKey] or (matches and 1 or 0), matches and 1 or 0, _dlp(0.15))
+                if self._toggle_anim[animKey] > 0.001 then
+                    cardH = cardH + GetItemHeight(self, sItem) * self._toggle_anim[animKey]
+                end
+            end
+
+            local secAnimKey = "sec_anim_" .. self._open_tab .. "_" .. secName
+            local targetSec = matchingItems > 0 and 1 or 0
+            self._toggle_anim[secAnimKey] = lerp(self._toggle_anim[secAnimKey] or targetSec, targetSec, _dlp(0.15))
+            local secAnim = self._toggle_anim[secAnimKey]
+
+            if secAnim > 0.001 then
+                cardH = cardH + (PAD * secAnim)
+                local isMirror = (sIdx % 2 == 0)
+                if isMirror then
+                    table.insert(rightHeights, {name=secName, h=cardH, tsz=sTsz, anim=secAnim})
+                    rightTotalH = rightTotalH + cardH + (sTsz.y/2 + PAD) * secAnim
+                else
+                    table.insert(leftHeights, {name=secName, h=cardH, tsz=sTsz, anim=secAnim})
+                    leftTotalH = leftTotalH + cardH + (sTsz.y/2 + PAD) * secAnim
+                end
+            end
+        end
+        local contentH = math.max(leftTotalH, rightTotalH)
+        local idealH = TBAH + self._tab_h + PAD*3 + contentH + 4
+        targetH = clamp(idealH, TBAH + self._tab_h + PAD*4, self.h)
+    end
+
+    local ss = self:_GetScreenSize()
+    
+    if self._active_dropdown then
+        local ddB = self._active_dropdown
+        local choiceH = self._font_size + 9
+        local displayCount = math.min(#(ddB.choices or {}), 6)
+        local maxPanelH = displayCount * choiceH + PAD
+        local requiredH = (ddB.position.y - wy) + maxPanelH + 12
+        
+        if ddB.position.y + maxPanelH < ss.y - 10 and requiredH > targetH then
+            targetH = requiredH
+        end
+    end
+
+    if self._active_colorpicker and not self._active_colorpicker._closing then
+        local cpB = self._active_colorpicker
+        local requiredH = (cpB.position.y - wy) + 215 + 12
+        
+        if cpB.position.y + 215 < ss.y - 10 and requiredH > targetH then
+            targetH = requiredH
+        end
+    end
+
+    self._current_h = lerp(self._current_h or self.h, targetH, _dlp(0.40))
+    local wh = self._current_h
+
+    if self._menu_open and mouseHeld and self._menu_drag then
+        local mp=self._cached_mouse or Vector2.new()
+        self.x=mp.x-self._menu_drag.x; self.y=mp.y-self._menu_drag.y
+    elseif not mouseHeld then self._menu_drag=nil end
+
+    local wtTxtSz=cachedTextBounds(self,menuTitle)
+    local wtH=wtTxtSz.y+16; local wtW=wtTxtSz.x+44
+    local wtPos=Vector2.new(ss.x-wtW-16,16)
+
+    local globalAlpha = (self._unloading_sequence and self._unload_phase == 'menu') and easeOut(sc) or 1
+
+    if self._watermark_enabled then
+        self:_Draw('rect', T.shadow, 98, 0.20*globalAlpha, wtPos+Vector2.new(2,3), Vector2.new(wtW,wtH), true, CR)
+        self:_Draw('rect', T.surface0, 99, globalAlpha, wtPos, Vector2.new(wtW,wtH), true, CR)
+        self:_Draw('rect', T.border1, 100, globalAlpha, wtPos, Vector2.new(wtW,wtH), false, CR)
+        self:_Draw('circle', T.accent, 101, globalAlpha, wtPos+Vector2.new(12,wtH/2), 3.5, true)
+        self:_Draw('text', T.text, 101, globalAlpha, wtPos+Vector2.new(22,(wtH-self._font_size)/2+1), menuTitle, false, nil, 13)
+    end
+
+    local notifY=16+wtH+10
+    for ni=#self._notifications,1,-1 do
+        local notif=self._notifications[ni]
+        local expiry=notif._spawned_at+notif.time
+        local shouldFade=now>expiry
+        local t=math.max(0,math.min(notif._spawned_at-now+(shouldFade and notif.time+1 or 1),1))
+        local fade=math.abs((shouldFade and 0 or 1)-(t*t*(3-2*t))) * globalAlpha
+        local txtSz=self:_GetTextBounds(notif.text)
+        local nW=txtSz.x+PAD*2+6; local nH=txtSz.y+PAD*1.2
+        local slideX=(nW+40)*(1-easeOut(fade))
+        local nPos=Vector2.new(ss.x-nW-16+slideX,notifY)
+        local alpha=math.max(0,math.min(fade,1))
+
+        self:_Draw('rect', T.shadow, 103, 0.15*alpha, nPos+Vector2.new(2,4), Vector2.new(nW,nH), true, CR+2)
+        self:_Draw('rect', T.surface0, 104, alpha, nPos, Vector2.new(nW,nH), true, CR+2)
+        self:_Draw('rect', T.border1, 105, alpha, nPos, Vector2.new(nW,nH), false, CR+2)
+        self:_Draw('text', T.text, 105, alpha, nPos+Vector2.new(PAD,(nH-self._font_size)/2+1), notif.text, false)
+        notifY=notifY+(nH+6)*fade
+        if now>expiry+1 then table.remove(self._notifications,ni) end
+    end
+
+    if sc<=0.015 then
+        for pType, pool in pairs(self._pool or {}) do
+            for i = (self._pIdx[pType] or 0) + 1, #pool do
+                local obj = pool[i]
+                if obj._Visible ~= false then
+                    obj.Visible = false
+                    obj._Visible = false
+                end
+            end
+        end
+        return
+    end
+
+    local slideY=(1-easeOut(sc))*50; local winOp=easeOut(sc)
+
+    local mouseBlocked = false
+    if self._dd_drag or self._slider_drag or self._tab_scroll_drag then mouseBlocked = true end
+    local ddB = self._active_dropdown
+    if ddB then
+        local panelH = math.min(#(ddB.choices or {}), 6) * (self._font_size + 9) + PAD
+        local ddO = ddB.position
+        local screenB = self:_GetScreenSize()
+        if ddO.y + panelH > screenB.y - 10 then ddO = Vector2.new(ddO.x, ddO.y - panelH - (ddB._srcH or 0)) end
+        if self:_IsMouseWithinBounds(ddO, Vector2.new(ddB.width, panelH)) then mouseBlocked = true end
+    end
+    local cpB = self._active_colorpicker
+    if cpB and not cpB._closing then
+        if self:_IsMouseWithinBounds(cpB.position, Vector2.new(240, 215)) then mouseBlocked = true end
+    end
+    if self._ctx_menu then mouseBlocked = true end
+
+    self:_Draw('rect', T.shadow, 0, 0.12*winOp, Vector2.new(wx-1,wy+slideY+3), Vector2.new(ww+2,wh), true, CR+1)
+    self:_Draw('rect', T.shadow, 0, 0.06*winOp, Vector2.new(wx-3,wy+slideY+6), Vector2.new(ww+6,wh), true, CR+3)
+    self:_Draw('rect', T.body, 1, winOp, Vector2.new(wx,wy+slideY), Vector2.new(ww,wh), true, CR)
+
+    self:_Draw('rect', T.surface0, 20, winOp, Vector2.new(wx+1,wy+slideY+1), Vector2.new(ww-2,TBAH), true, CR-1)
+    self:_Draw('rect', T.border1, 21, winOp, Vector2.new(wx+1,wy+slideY+TBAH), Vector2.new(ww-2,1), true)
+
+    local dotY=wy+slideY+TBAH/2; local dot1X=wx+16; local DOT_R=6
+    self:_Draw('circle', MAC_RED, 22, winOp, Vector2.new(dot1X,dotY), DOT_R, true)
+    self:_Draw('circle', MAC_YEL, 22, winOp, Vector2.new(dot1X+20,dotY), DOT_R, true)
+    self:_Draw('circle', MAC_GRN, 22, winOp, Vector2.new(dot1X+40,dotY), DOT_R, true)
+    self:_Draw('circle', MAC_RED_B, 23, winOp, Vector2.new(dot1X,dotY), DOT_R, false)
+    self:_Draw('circle', MAC_YEL_B, 23, winOp, Vector2.new(dot1X+20,dotY), DOT_R, false)
+    self:_Draw('circle', MAC_GRN_B, 23, winOp, Vector2.new(dot1X+40,dotY), DOT_R, false)
+
+    if realClick and self:_IsMouseWithinBounds(Vector2.new(dot1X-DOT_R,dotY-DOT_R),Vector2.new(DOT_R*2,DOT_R*2)) then
+        self._menu_open = false
+        self:_RemoveDropdown(); self:_RemoveColorpicker(); self:_RemoveCtxMenu()
+        self:Notification('Menu Minimized', 3)
+        clickFrame=false; clickConsumed=true
+    end
+
+    if self._menu_open and sc>0.5 then
+        self:_Draw('text', T.text, 22, winOp, Vector2.new(wx+ww/2,wy+slideY+TBAH/2), menuTitle, false, 'center')
+    end
+
+    self._search_query = self._search_query or ""
+    self._search_typing = self._search_typing or false
+    self._search_w_anim = self._search_w_anim or 22
+
+    local targetSearchW = (self._search_typing or self._search_query ~= "") and 130 or 22
+    self._search_w_anim = lerp(self._search_w_anim, targetSearchW, _dlp(0.20))
+
+    local searchW = self._search_w_anim
+    local searchH = 22
+    local searchX = wx + ww - searchW - 10
+    local searchY = wy + slideY + (TBAH - searchH) / 2
+    local searchPos = Vector2.new(searchX, searchY)
+    local searchSz = Vector2.new(searchW, searchH)
+
+    local searchHover = not mouseBlocked and self:_IsMouseWithinBounds(searchPos, searchSz)
+    if realClick and searchHover then
+        self._search_typing = true
+        clickFrame = false; clickConsumed = true
+    elseif realClick and not clickConsumed then
+        self._search_typing = false
+    end
+
+    if self._search_typing and self:_IsKeyPressed('esc') then
+        self._search_query = ""
+        self._search_typing = false
+    end
+
+    if self._search_typing then
+        local cm = {space=' ', dash='-', colon=':', period='.', comma=',', slash='/', semicolon=';', quote='\'', leftbracket='[', rightbracket=']', backslash='\\', equals='=', minus='-'}
+        local sm = {['1']='!', ['2']='@', ['3']='#', ['4']='$', ['5']='%', ['6']='^', ['7']='&', ['8']='*', ['9']='(', ['0']=')', ['-']='_', ['=']='+', ['[']='{', [']']='}', [';']=':', ['\'\'']='\"', [',']='<', ['.']='>', ['/']='?', ['\\']='|'}
+        local nv = self._search_query; local shift = self:_IsKeyHeld('lshift') or self:_IsKeyHeld('rshift')
+
+        local held_char = nil
+        for char in pairs(self._inputs or {}) do if self:_IsKeyHeld(char) then held_char = char; break end end
+
+        if held_char then
+            if not self._key_repeat[held_char] then self._key_repeat[held_char] = os.clock() + 0.4
+            elseif os.clock() > self._key_repeat[held_char] then
+                self._key_repeat[held_char] = os.clock() + 0.05
+                local mapped = cm[held_char] or held_char
+                if mapped == 'backspace' then nv = nv:sub(1, -2)
+                elseif #mapped == 1 then
+                    if shift and sm[mapped] then mapped = sm[mapped] elseif shift then mapped = mapped:upper() end
+                    if #nv < 24 then nv = nv .. mapped end
+                end
+                self._search_query = nv
+            end
+        else self._key_repeat = {} end
+
+        for char in pairs(self._inputs or {}) do
+            if self:_IsKeyPressed(char) then
+                local mapped = cm[char] or char
+                if mapped == 'enter' then self._search_typing = false; break
+                elseif mapped == 'backspace' then nv = nv:sub(1, -2)
+                elseif #mapped == 1 then
+                    if shift and sm[mapped] then mapped = sm[mapped] elseif shift then mapped = mapped:upper() end
+                    if #nv < 24 then nv = nv .. mapped end
+                end
+                self._search_query = nv
+            end
+        end
+    end
+
+    local textAlpha = clamp((searchW - 22) / (130 - 22), 0, 1)
+    local sBg = lerpC(T.body, T.surface1, textAlpha)
+
+    self:_Draw('rect', sBg, 22, winOp, searchPos, searchSz, true, searchH/2)
+    self:_Draw('rect', self._search_typing and T.accent or T.border1, 23, winOp, searchPos, searchSz, false, searchH/2)
+
+    local iconCX = searchPos.x + 10
+    local iconCY = searchPos.y + searchSz.y/2 - 1
+    local iconCol = lerpC(T.subtext, T.text, textAlpha)
+    self:_Draw('circle', iconCol, 24, winOp, Vector2.new(iconCX, iconCY), 3, false)
+    self:_Draw('line', iconCol, 24, winOp, Vector2.new(iconCX + 2, iconCY + 2), Vector2.new(iconCX + 5, iconCY + 5), 2)
+
+    if textAlpha > 0.05 then
+        local queryDisp = self._search_query
+        if self._search_typing then queryDisp = queryDisp .. (math.floor(os.clock()*2)%2==0 and '|' or '') end
+        if queryDisp == "" and not self._search_typing then queryDisp = "Global search..." end
+
+        local textOffset = 24
+        if self:_GetTextBounds(queryDisp).x > searchSz.x - textOffset - 8 then
+            for i = 1, #queryDisp do
+                local s2 = queryDisp:sub(i)
+                if self:_GetTextBounds(s2).x <= searchSz.x - textOffset - 8 then
+                    queryDisp = s2; break
+                end
+            end
+        end
+
+        local queryCol = (self._search_query ~= "" or self._search_typing) and T.text or T.subtext
+        self:_Draw('text', queryCol, 24, winOp * textAlpha, searchPos + Vector2.new(textOffset, searchSz.y/2 - self._font_size/2), queryDisp, false)
+    end
+
+
+    local bcPos=Vector2.new(wx+1,wy+TBAH+1)
+    local bcPosV=Vector2.new(wx+1,wy+slideY+TBAH+1)
+    local bcSize=Vector2.new(ww-2,wh-TBAH-2)
+    local secTopY=bcPosV.y+self._tab_h+PAD
+    local tabAreaH=bcSize.y-self._tab_h-PAD*2
+    local tabBotY=secTopY+tabAreaH
+
+    local scrollDelta = self._scroll_delta
+    self._scroll_delta = 0
+    pcall(function() if scrollDelta == 0 then local md = getmousedelta(); if md and md.Y ~= 0 then scrollDelta = md.Y > 0 and 18 or -18 end end end)
+
+    if scrollDelta ~= 0 then
+        if self._active_colorpicker then self:_RemoveColorpicker() end
+    end
+
+    local tabCount=#self._tab_order; local TAB_PAD=6
+
+    local tbTotalW = bcSize.x - TAB_PAD*2
+    local tabW = tbTotalW / math.max(1, tabCount)
+    local tbOrig = bcPosV+Vector2.new(TAB_PAD,TAB_PAD)
+    local tbOrigHit = bcPos+Vector2.new(TAB_PAD,TAB_PAD)
+
+    self:_Draw('rect', T.surface1, 20, winOp, tbOrig, Vector2.new(tbTotalW,self._tab_h), true, CR)
+    self:_Draw('rect', T.border1, 21, winOp, tbOrig, Vector2.new(tbTotalW,self._tab_h), false, CR)
+
+    if not self._pill_x then self._pill_x=0 end
+    if not self._pill_target_x then self._pill_target_x=0 end
+
+    if self._tab_changing then
+        self._tab_fade = lerp(self._tab_fade, 0, _dlp(0.60))
+        if self._tab_fade < 0.06 then
+            self._open_tab   = self._next_tab
+            self._tab_changing = false
+            self._tab_fade   = 0
+            self._sec_slide  = {}
+            self._item_vis   = {}
+        end
+    else
+        self._tab_fade = lerp(self._tab_fade, 1, _dlp(0.28))
+    end
+    local cardAlpha = easeOut(self._tab_fade)
+
+    for i,tabName in ipairs(self._tab_order) do
+        local tabPos    = tbOrig + Vector2.new(tabW*(i-1), 0)
+        local tabPosHit = tbOrigHit + Vector2.new(tabW*(i-1), 0)
+        local tabSz     = Vector2.new(tabW, self._tab_h)
+        local isOpen    = self._open_tab == tabName
+
+        local badgeCount = self._search_tab_results[tabName] or 0
+        local tabLblColor = isOpen and T.text or T.subtext
+        self:_Draw('text', tabLblColor, 24, winOp, tabPos+Vector2.new(tabW/2,self._tab_h/2), tabName, false, 'center')
+
+        if self._search_query ~= "" and badgeCount > 0 and not isOpen then
+            local badgeTxtSz = self:_GetTextBounds(tabName, nil, self._font_size)
+            local badgeX = tabPos.x + tabW/2 + badgeTxtSz.x/2 + 6
+            local badgeY = tabPos.y + self._tab_h/2 - 4
+            self:_Draw('circle', T.accent, 25, winOp, Vector2.new(badgeX, badgeY), 3, true)
+        end
+
+        if not isOpen and not mouseBlocked and self:_IsMouseWithinBounds(tabPosHit,tabSz) and clickFrame and not clickConsumed then
+            if not self._tab_changing then
+                self._tab_changing=true; self._next_tab=tabName; self._input_ctx=nil
+                self:_RemoveDropdown(); self:_RemoveColorpicker(); self:_RemoveCtxMenu()
+                self._pill_target_x=tabW*(i-1)
+                clickFrame=false; clickConsumed=true
+            end
+        end
+    end
+
+    self._pill_x=lerp(self._pill_x, self._pill_target_x, _dlp(0.26))
+    local pillDrawX=tbOrig.x+self._pill_x
+    self:_Draw('rect', T.surface0, 22, winOp, Vector2.new(pillDrawX+3,tbOrig.y+3), Vector2.new(tabW-6,self._tab_h-6), true, CR-2)
+    self:_Draw('rect', T.border0, 23, winOp, Vector2.new(pillDrawX+3,tbOrig.y+3), Vector2.new(tabW-6,self._tab_h-6), false, CR-2)
+
+    for _,tabName in ipairs(self._tab_order) do
+        local tabContent2=self._tree[tabName]
+        if tabContent2 and self._open_tab==tabName and self._menu_open and sc>0.5 then
+            self._tab_scroll[tabName] = self._tab_scroll[tabName] or {offset=0, target=0, maxScroll=0}
+            local tScroll = self._tab_scroll[tabName]
+            local showScrollbar = tScroll.maxScroll > 0 and cardAlpha > 0.5
+            if showScrollbar then
+                local SBW = 3
+                local sbX = bcPosV.x + bcSize.x - SBW - 2
+                local trackH = tabAreaH
+                local thumbH = math.max(20, trackH * (trackH / (trackH + tScroll.maxScroll)))
+                local thumbHitBox = Vector2.new(SBW + 16, trackH)
+                local thumbHitPos = Vector2.new(sbX - 8, secTopY)
+
+                local hoverSB = not mouseBlocked and self:_IsMouseWithinBounds(thumbHitPos, thumbHitBox)
+                if mouseHeld then
+                    if (hoverSB or self._tab_scroll_drag == tabName) and clickFrame and not clickConsumed then
+                        self._tab_scroll_drag = tabName
+                        clickFrame = false; clickConsumed = true
+                    end
+                    if self._tab_scroll_drag == tabName then
+                        local mp = self:_GetMousePos()
+                        local pct = clamp((mp.y - secTopY - thumbH/2) / math.max(1, trackH - thumbH), 0, 1)
+                        tScroll.target = pct * tScroll.maxScroll
+                    end
+                else
+                    if self._tab_scroll_drag == tabName then self._tab_scroll_drag = nil end
+                end
+            end
+        end
+    end
+
+    for _,tabName in ipairs(self._tab_order) do
+        local tabContent3=self._tree[tabName]
+        if tabContent3 and self._open_tab==tabName then
+            self._tab_scroll[tabName] = self._tab_scroll[tabName] or {offset=0, target=0, maxScroll=0}
+            local tScroll = self._tab_scroll[tabName]
+            local drawItems=self._menu_open and sc>0.5
+
+            local secW = bcSize.x/2 - PAD*1.5
+            local maxScroll = math.max(0, math.max(leftTotalH, rightTotalH) - tabAreaH + PAD)
+            tScroll.maxScroll = maxScroll
+
+            if drawItems then
+                local showScrollbar = maxScroll > 0 and cardAlpha > 0.5
+                if showScrollbar then
+                    local SBW = 3
+                    local sbX = bcPosV.x + bcSize.x - SBW - 2
+                    local trackH = tabAreaH
+                    local thumbH = math.max(20, trackH * (trackH / (trackH + maxScroll)))
+                    local tOffset = tScroll.offset
+                    local thumbY = secTopY + (trackH - thumbH) * (tOffset / math.max(1, maxScroll))
+
+                    if scrollDelta ~= 0 and not mouseBlocked and self:_IsMouseWithinBounds(bcPosV, bcSize) then
+                        tScroll.target = clamp(tScroll.target - scrollDelta, 0, maxScroll)
+                    end
+                    local sbAlpha = winOp * clamp((cardAlpha - 0.5) / 0.5, 0, 1)
+                    self:_Draw('rect', T.border0, 13, 0.35 * sbAlpha, Vector2.new(sbX,secTopY), Vector2.new(SBW,trackH), true, SBW/2)
+                    self:_Draw('rect', T.subtext, 14, 0.7 * sbAlpha, Vector2.new(sbX,thumbY), Vector2.new(SBW,thumbH), true, SBW/2)
+                elseif scrollDelta ~= 0 and not mouseBlocked and self:_IsMouseWithinBounds(bcPosV, bcSize) then
+                    tScroll.target = clamp(tScroll.target - scrollDelta, 0, maxScroll)
+                end
+            end
+
+            tScroll.offset = lerp(tScroll.offset, tScroll.target, _dlp(0.18))
+            if math.abs(tScroll.offset - tScroll.target) < 0.5 then tScroll.offset = tScroll.target end
+            local tOffset = tScroll.offset
+
+            local function renderColumn(colList, isMirror, colBaseX)
+                local curY = secTopY + PAD - tOffset
+                for _, secInfo in ipairs(colList) do
+                    local secName = secInfo.name
+                    local cardH   = secInfo.h
+                    local sTsz    = secInfo.tsz
+                    local secAnim = secInfo.anim
+
+                    local sdid = 'menu_sec_' .. tabName .. '_' .. secName
+
+                    self._sec_slide = self._sec_slide or {}
+                    if self._sec_slide[sdid] == nil then self._sec_slide[sdid] = 10 end
+                    self._sec_slide[sdid] = lerp(self._sec_slide[sdid], 0, _dlp(0.20))
+                    local slideOff = self._sec_slide[sdid]
+
+                    local finalY = curY + (sTsz.y/2)*secAnim + slideOff
+                    local sPos = Vector2.new(colBaseX, finalY)
+
+                    if drawItems then
+                        local cardTop = sPos.y
+                        local cardBot = sPos.y + cardH
+                        local rectTop = math.max(cardTop, secTopY)
+                        local rectBot = math.min(cardBot, tabBotY)
+                        local rectH   = math.max(0, rectBot - rectTop)
+
+                        local isSecVisible = rectH > 0
+                        local useCR = CR
+
+                        local cardFade = secAnim * cardAlpha
+                        if self._unloading_sequence and self._unload_phase == 'sections' then
+                            cardFade = cardFade * (self._unload_section_alpha or 1)
+                        end
+
+                        if isSecVisible and cardFade > 0.001 then
+                            self:_Draw('rect', T.shadow, 2, 0.10*cardFade*winOp, Vector2.new(sPos.x+2,rectTop+3), Vector2.new(secW,rectH), true, useCR)
+                            self:_Draw('rect', T.surface0, 3, cardFade*winOp, Vector2.new(sPos.x,rectTop), Vector2.new(secW,rectH), true, useCR)
+                            self:_Draw('rect', T.border1, 4, cardFade*winOp, Vector2.new(sPos.x,rectTop), Vector2.new(secW,rectH), false, useCR)
+                        end
+
+                        local titleY   = sPos.y - (sTsz.y/2)*secAnim - 7
+                        local titleBot = titleY + sTsz.y
+                        local FADE_ZONE = 12
+
+                        local titleFade = secAnim * cardAlpha
+                        local titleVisible = (titleBot > secTopY) and (titleY < tabBotY)
+
+                        if titleVisible then
+                            local tDistTop = titleY - secTopY
+                            local tDistBot = tabBotY - titleBot
+                            if tDistTop < FADE_ZONE then titleFade = math.min(titleFade, math.max(0, tDistTop / FADE_ZONE)) end
+                            if tDistBot < FADE_ZONE then titleFade = math.min(titleFade, math.max(0, tDistBot / FADE_ZONE)) end
+                            if tDistTop < 0 or tDistBot < 0 then titleFade = 0 end
+                            if self._unloading_sequence and self._unload_phase == 'sections' then titleFade = titleFade * (self._unload_section_alpha or 1) end
+                        else titleFade = 0 end
+
+                        if titleFade > 0.001 then
+                            self:_Draw('text', T.subtext, 6, winOp*titleFade, Vector2.new(sPos.x+PAD, titleY), secName, false)
+                        end
+
+                        local secContent = tabContent3._items and tabContent3._items[secName] or {_items={}}
+                        local sH = (PAD + sTsz.y/2) * secAnim
+
+                        for siIter, sItem in ipairs(secContent._items or {}) do
+                            local animKey = "s_anim_" .. sItem._id
+                            local sAnim   = self._toggle_anim[animKey] or 0
+
+                            if sAnim > 0.001 then
+                                local iH = GetItemHeight(self, sItem)
+                                local current_iH = iH * sAnim
+
+                                local siOrigBase = Vector2.new(sPos.x+PAD, sPos.y+sH)
+                                local iType = sItem.type_; local iVal = sItem.value; local iCb = sItem.callback
+                                local ak = tabName..secName..tostring(siIter)
+
+                                local itemTop = siOrigBase.y
+                                local itemBot = siOrigBase.y + current_iH - (PAD * sAnim)
+
+                                local itemVisible = isSecVisible and (itemBot >= secTopY) and (itemTop <= tabBotY)
+                                local edgeFade = sAnim * cardAlpha
+
+                                if itemVisible then
+                                    local iDistTop = itemTop - secTopY
+                                    local iDistBot = tabBotY - itemBot
+                                    if iDistTop < FADE_ZONE then edgeFade = math.min(edgeFade, math.max(0, iDistTop / FADE_ZONE)) end
+                                    if iDistBot < FADE_ZONE then edgeFade = math.min(edgeFade, math.max(0, iDistBot / FADE_ZONE)) end
+                                    if iDistTop < 0 or iDistBot < 0 then edgeFade = 0 end
+                                    if self._unloading_sequence and self._unload_phase == 'sections' then edgeFade = edgeFade * (self._unload_section_alpha or 1) end
+                                end
+
+                                if edgeFade <= 0.001 then itemVisible = false end
+
+                                local siid   = sItem._id
+                                local interactable = itemVisible and (edgeFade > 0.4)
+
+                                if not itemVisible then
+                                    self._item_vis[siid] = false
+                                else
+                                    self._item_vis[siid] = true
+                                    local siOrig   = siOrigBase
+                                    local canClick = interactable and clickFrame and not clickConsumed
+                                    local itemOp   = winOp * edgeFade * secAnim
+
+                                    -- ─────────────────────────────────────────────
+                                    -- TOGGLE
+                                    -- ─────────────────────────────────────────────
+                                    if iType == 'toggle' then
+                                        local tgt = iVal and 1 or 0
+                                        local cur = lerp(self._toggle_anim[ak] or tgt, tgt, _dlp(0.10))
+                                        self._toggle_anim[ak] = cur
+                                        local SW = 34; local SH2 = self._font_size + 2
+                                        local itemKB = sItem.keybind; local itemCP = sItem.colorpicker
+                                        local rightReserve = 0
+
+                                        if itemKB then
+                                            rightReserve = KB_W + PAD
+                                            local kbName = (itemKB.value or '?'):upper()
+                                            local kbTxt  = itemKB._listening and '...' or kbName
+                                            local kbFont = 12
+                                            while kbFont > 7 and self:_GetTextBounds(kbTxt, nil, kbFont).x > KB_W - 6 do kbFont = kbFont - 1 end
+                                            local kbOrig = Vector2.new(sPos.x+secW-KB_W-PAD, siOrig.y+(SH2-self._font_size)/2)
+                                            local kbSz   = Vector2.new(KB_W, self._font_size+2)
+                                            local hover  = not mouseBlocked and self:_IsMouseWithinBounds(kbOrig, kbSz)
+                                            local kbBg   = hover and lerpC(T.surface1, T.accent, 0.2) or T.surface1
+                                            if itemKB.value and not itemKB._listening then
+                                                if self:_IsKeyPressed(itemKB.value) then
+                                                    if not sItem.value then self:Notification('Enable '..sItem.label..' first', 3)
+                                                    else local nv = not sItem.value; sItem.value = nv; if iCb then iCb(nv) end end
+                                                end
+                                            end
+                                            self:_Draw('rect', T.shadow, 6, 0.10*itemOp, kbOrig+Vector2.new(1,2), kbSz, true, 6)
+                                            self:_Draw('rect', kbBg, 7, itemOp, kbOrig, kbSz, true, 6)
+                                            self:_Draw('rect', itemKB._listening and T.accent or T.border1, 8, itemOp, kbOrig, kbSz, false, 6)
+
+                                            local kbTxtColor = (hover or itemKB._listening) and T.text or T.subtext
+                                            self:_Draw('text', kbTxtColor, 8, itemOp, kbOrig+Vector2.new(KB_W/2,kbSz.y/2), kbTxt, false, 'center', kbFont)
+
+                                            if hover and canClick then itemKB._listening = true; itemKB._listening_start = os.clock(); clickFrame = false; clickConsumed = true end
+                                            if itemKB._listening then
+                                                local elapsed = os.clock() - itemKB._listening_start
+                                                if elapsed > 6 then
+                                                    itemKB._listening = false
+                                                elseif elapsed > 0.15 then
+                                                    for kn, k in pairs(self._inputs or {}) do
+                                                        if self:_IsKeyPressed(kn) then
+                                                            if kn == 'm1' then itemKB._listening = false
+                                                            else
+                                                                local nv = kn ~= 'backspace' and kn
+                                                                if nv then
+                                                                    for _, ref in ipairs(self._config_refs or {}) do
+                                                                        local other = ref.item
+                                                                        if other ~= sItem and other.keybind and other.keybind.value == nv then
+                                                                            self:Notification('Conflict: '..nv:upper()..' used by '..other.label, 4)
+                                                                        end
+                                                                    end
+                                                                end
+                                                                if itemKB.callback and self._inputs[nv] then itemKB.callback(k.id) end
+                                                                itemKB.value = nv; itemKB._listening = false
+                                                            end
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        elseif itemCP then
+                                            local cpSzEl = Vector2.new(24, 14)
+                                            local cpOEl  = siOrig + Vector2.new(secW - PAD*2 - cpSzEl.x, (SH2 - cpSzEl.y)/2)
+                                            rightReserve = cpSzEl.x + PAD*2
+                                            local hover  = not mouseBlocked and self:_IsMouseWithinBounds(cpOEl, cpSzEl)
+
+                                            self:_Draw('rect', T.border1, 7, itemOp, cpOEl, cpSzEl, true, 4)
+                                            self:_Draw('rect', itemCP.value, 8, itemOp, cpOEl+Vector2.new(1,1), cpSzEl-Vector2.new(2,2), true, 4)
+
+                                            if hover and canClick then self:_SpawnColorpicker(nil, itemCP.label, itemCP.value, function(nv) itemCP.value = nv; if itemCP.callback then itemCP.callback(nv) end end); clickFrame = false; clickConsumed = true end
+                                        end
+
+                                        local labelColor = sItem.unsafe and T.unsafe or (iVal and T.text or T.subtext)
+                                        if not itemCP or not itemCP.overwrite then
+                                            local hover = not mouseBlocked and self:_IsMouseWithinBounds(siOrig, Vector2.new(SW, SH2))
+                                            if hover and canClick then local nv = not iVal; sItem.value = nv; if iCb then iCb(nv) end; clickFrame = false; clickConsumed = true end
+                                            local trkC = lerpC(T.surface1, T.accent, cur)
+                                            self:_Draw('rect', trkC, 7, itemOp, siOrig, Vector2.new(SW, SH2), true, SH2/2)
+                                            self:_Draw('rect', lerpC(T.border1, T.accent, cur), 8, itemOp, siOrig, Vector2.new(SW, SH2), false, SH2/2)
+                                            local kr = (SH2/2)-1; local kx = siOrig.x + kr + 1 + (SW - SH2) * cur; local ky = siOrig.y + SH2/2
+                                            self:_Draw('circle', T.shadow, 8, 0.15*itemOp, Vector2.new(kx, ky+1), kr, true)
+                                            self:_Draw('circle', T.surface0, 9, itemOp, Vector2.new(kx, ky), kr, true)
+                                        else labelColor = T.text end
+
+                                        local lblStr = sItem.label; local truncated = false
+                                        local maxLblW = secW - SW - PAD*2 - rightReserve - (sItem.isNew and 36 or 0)
+                                        while #lblStr > 1 and self:_GetTextBounds(lblStr).x > maxLblW do lblStr = lblStr:sub(1, -2); truncated = true end
+                                        if truncated then lblStr = lblStr:sub(1, -2)..'..' end
+                                        local actualLblSz = self:_GetTextBounds(lblStr)
+                                        local lblPos = siOrig + Vector2.new(SW + PAD, (SH2 - self._font_size)/2)
+                                        self:_Draw('text', labelColor, 7, itemOp, lblPos, lblStr, false)
+
+                                        if interactable and truncated and not mouseBlocked and self:_IsMouseWithinBounds(lblPos, actualLblSz) then
+                                            self._frame_tooltip = {key=siid, text=sItem.label}
+                                        end
+
+                                        if sItem.isNew then
+                                            local newTagPos = lblPos + Vector2.new(actualLblSz.x + 8, -2)
+                                            self:_Draw('rect', T.accent, 8, itemOp, newTagPos, Vector2.new(28, 14), true, 4)
+                                            self:_Draw('text', T.surface0, 9, itemOp, newTagPos+Vector2.new(14, 7), 'NEW', false, 'center', 9)
+                                        end
+
+                                    -- ─────────────────────────────────────────────
+                                    -- SLIDER
+                                    -- ─────────────────────────────────────────────
+                                    elseif iType == 'slider' then
+                                        local sMin  = sItem.min or 0
+                                        local sMax  = sItem.max or 100
+                                        local sStep = sItem.step or 1
+
+                                        local lsz   = self:_GetTextBounds(sItem.label)
+                                        local btnW  = self._font_size
+                                        local trackX = siOrig.x + btnW + PAD
+                                        local trackW = secW - PAD*2 - btnW*2 - PAD*2
+                                        local slO   = Vector2.new(trackX, siOrig.y + lsz.y + PAD)
+                                        local slSz  = Vector2.new(trackW, 6)
+                                        local slLbl = sItem.label; local slTrunc = false
+                                        local maxLblW = secW - PAD*2 - (sItem.isNew and 36 or 0)
+                                        while #slLbl > 1 and self:_GetTextBounds(slLbl).x > maxLblW do slLbl = slLbl:sub(1, -2); slTrunc = true end
+                                        if slTrunc then slLbl = slLbl:sub(1, -2)..'..' end
+                                        local actualLblSz = self:_GetTextBounds(slLbl)
+
+                                        self:_Draw('text', T.subtext, 7, itemOp, siOrig, slLbl, false)
+
+                                        if interactable and slTrunc and not mouseBlocked and self:_IsMouseWithinBounds(siOrig, actualLblSz) then
+                                            self._frame_tooltip = {key=siid, text=sItem.label}
+                                        end
+
+                                        if sItem.isNew then
+                                            local newTagPos = siOrig + Vector2.new(actualLblSz.x + 8, 0)
+                                            self:_Draw('rect', T.accent, 8, itemOp, newTagPos, Vector2.new(28, 14), true, 4)
+                                            self:_Draw('text', T.surface0, 9, itemOp, newTagPos+Vector2.new(14, 7), 'NEW', false, 'center', 9)
+                                        end
+
+                                        local nv = iVal or sMin
+
+                                        local sliderHitPos = slO - Vector2.new(btnW + PAD, slSz.y + PAD)
+                                        local sliderHitSz  = Vector2.new(trackW + (btnW + PAD) * 2, iH)
+                                        local hover = not mouseBlocked and self:_IsMouseWithinBounds(sliderHitPos, sliderHitSz)
+
+                                        if hover and ctxFrame and interactable then
+                                            nv = sItem.default ~= nil and sItem.default or sMin
+                                            sItem.value = nv; if iCb then iCb(nv) end
+                                            self:Notification('Reset to default', 2)
+                                            ctxFrame = false
+                                        end
+
+                                        local trackHover = not mouseBlocked and self:_IsMouseWithinBounds(slO - Vector2.new(0, 6), slSz + Vector2.new(0, 12))
+
+                                        if mouseHeld then
+                                            if interactable and (trackHover or self._slider_drag == siid) and clickFrame and self._slider_drag ~= siid then
+                                                self._slider_drag = siid; clickFrame = false; clickConsumed = true
+                                            end
+                                            if self._slider_drag == siid then
+                                                local pct = clamp((self:_GetMousePos().x - slO.x) / slSz.x, 0, 1)
+                                                nv = sMin + (sMax - sMin) * pct
+                                                nv = math.floor((nv/sStep) + 0.5) * sStep
+                                                nv = clamp(nv, sMin, sMax)
+                                            end
+                                        else
+                                            self._slider_drag = nil
+                                        end
+
+                                        local decCX  = siOrig.x + btnW/2; local incCX = trackX + trackW + PAD + btnW/2
+                                        local btnCY  = slO.y + slSz.y/2
+                                        local decHit = Vector2.new(siOrig.x, btnCY - btnW/2); local incHit = Vector2.new(trackX + trackW + PAD, btnCY - btnW/2)
+                                        local hitSz  = Vector2.new(btnW, btnW)
+
+                                        local decHov = not mouseBlocked and self:_IsMouseWithinBounds(decHit, hitSz)
+                                        local incHov = not mouseBlocked and self:_IsMouseWithinBounds(incHit, hitSz)
+
+                                        self:_Draw('text', decHov and T.text or T.subtext, 7, itemOp, Vector2.new(decCX, btnCY), '-', false, 'center')
+                                        self:_Draw('text', incHov and T.text or T.subtext, 7, itemOp, Vector2.new(incCX, btnCY), '+', false, 'center')
+
+                                        if canClick and not mouseBlocked then
+                                            if decHov then nv = clamp(nv - sStep, sMin, sMax); clickFrame = false; clickConsumed = true
+                                            elseif incHov then nv = clamp(nv + sStep, sMin, sMax); clickFrame = false; clickConsumed = true end
+                                        end
+
+                                        if nv ~= iVal then sItem.value = nv; if iCb then iCb(nv) end end
+
+                                        local fp = clamp((nv - sMin)/(math.max(0.01, sMax - sMin)), 0, 1)
+                                        local sak = siid..'_dv'
+                                        self._slider_disp[sak] = nv
+
+                                        local isDragging = (self._slider_drag == siid)
+                                        local trackBg = (trackHover or isDragging) and lerpC(T.surface1, T.accent, 0.12) or T.surface1
+                                        self:_Draw('rect', trackBg, 7, itemOp, slO, slSz, true, 3)
+                                        self:_Draw('rect', (trackHover or isDragging) and T.border0 or T.border1, 8, itemOp, slO, slSz, false, 3)
+                                        local fillW = math.max(0, slSz.x * fp - 2)
+                                        self:_Draw('rect', T.accent, 9, itemOp, slO+Vector2.new(1,1), Vector2.new(fillW, slSz.y-2), true, 3)
+                                        local thumbX = slO.x + slSz.x * fp; local thumbY = slO.y + slSz.y/2
+                                        local thumbR = isDragging and 7 or 5
+                                        self:_Draw('circle', T.surface0, 10, itemOp, Vector2.new(thumbX, thumbY), thumbR, true)
+                                        self:_Draw('circle', T.accent, 11, itemOp, Vector2.new(thumbX, thumbY), thumbR, false)
+
+                                        local dv = fmtNum(nv)..sItem.suffix
+                                        self:_Draw('text', T.text, 15, itemOp, Vector2.new(thumbX, thumbY+thumbR+6), dv, false, 'center', 11)
+
+                                    -- ─────────────────────────────────────────────
+                                    -- DROPDOWN
+                                    -- ─────────────────────────────────────────────
+                                    elseif iType == 'dropdown' then
+                                        local lsz = self:_GetTextBounds(sItem.label)
+                                        local dO  = Vector2.new(siOrig.x, siOrig.y + lsz.y + PAD)
+                                        local dSz = Vector2.new(secW - PAD*2, lsz.y + PAD)
+                                        local hover = not mouseBlocked and self:_IsMouseWithinBounds(dO, dSz)
+                                        local isThisDropdownOpen = self._active_dropdown and self._active_dropdown_owner == siid
+                                        
+                                        if isThisDropdownOpen then
+                                            self._active_dropdown.position = Vector2.new(dO.x, dO.y + dSz.y)
+                                            self._active_dropdown._srcH = dSz.y
+                                        end
+
+                                        if hover and canClick then
+                                            if isThisDropdownOpen then self:_RemoveDropdown(); self._active_dropdown_owner = nil
+                                            else self:_SpawnDropdown(Vector2.new(dO.x, dO.y + dSz.y), dSz.x, iVal, sItem.choices, sItem.multi, function(nv) sItem.value = nv; if iCb then iCb(nv) end end)
+                                                self._active_dropdown._srcH = dSz.y
+                                                self._active_dropdown_owner = siid end
+                                            clickFrame = false; clickConsumed = true
+                                        end
+                                        local aak = siid..'_arw'
+                                        self._dd_arrow_anim[aak] = lerp(self._dd_arrow_anim[aak] or 0, isThisDropdownOpen and 1 or 0, _dlp(0.40))
+                                        local at = self._dd_arrow_anim[aak]
+                                        local ax = dO.x + dSz.x - PAD - 4; local ay = dO.y + dSz.y/2
+                                        local p1 = Vector2.new(ax - 4, ay + lerp(2, -2, at))
+                                        local p2 = Vector2.new(ax, ay + lerp(-3, 3, at))
+                                        local p3 = Vector2.new(ax + 4, ay + lerp(2, -2, at))
+                                        local dBg = hover and lerpC(T.surface0, T.accent, 0.06) or T.surface0
+                                        self:_Draw('rect', T.shadow, 6, 0.10*itemOp, dO+Vector2.new(1,2), dSz, true, 6)
+                                        self:_Draw('rect', dBg, 7, itemOp, dO, dSz, true, 6)
+                                        self:_Draw('rect', T.border1, 8, itemOp, dO, dSz, false, 6)
+
+                                        local ddColor = (hover or isThisDropdownOpen) and T.text or T.subtext
+                                        self:_Draw('triangle', ddColor, 8, itemOp, true, p1, p2, p3)
+
+                                        local dv = type(iVal)=='table' and table.concat(iVal, ', ') or tostring(iVal or '')
+                                        if self:_GetTextBounds(dv).x > dSz.x - PAD - 14 then dv = tostring(#(iVal or {}))..' item'..(#(iVal or {}) == 1 and '' or 's') end
+                                        self:_Draw('text', ddColor, 8, itemOp, dO+Vector2.new(6, self:_GetTextBounds(dv).y/2 - 1), dv, false)
+
+                                        local maxLblW = secW - PAD*2 - (sItem.isNew and 36 or 0)
+                                        local ddLbl = sItem.label; local ddTrunc = false
+                                        while #ddLbl > 1 and self:_GetTextBounds(ddLbl).x > maxLblW do ddLbl = ddLbl:sub(1, -2); ddTrunc = true end
+                                        if ddTrunc then ddLbl = ddLbl:sub(1, -2)..'..' end
+                                        local actualLblSz = self:_GetTextBounds(ddLbl)
+
+                                        self:_Draw('text', T.subtext, 7, itemOp, siOrig+Vector2.new(PAD, 0), ddLbl, false)
+
+                                        if interactable and ddTrunc and not mouseBlocked and self:_IsMouseWithinBounds(siOrig+Vector2.new(PAD, 0), actualLblSz) then
+                                            self._frame_tooltip = {key=siid..'dd', text=sItem.label}
+                                        end
+
+                                        if sItem.isNew then
+                                            local newTagPos = siOrig+Vector2.new(PAD + actualLblSz.x + 8, -2)
+                                            self:_Draw('rect', T.accent, 8, itemOp, newTagPos, Vector2.new(28, 14), true, 4)
+                                            self:_Draw('text', T.surface0, 9, itemOp, newTagPos+Vector2.new(14, 7), 'NEW', false, 'center', 9)
+                                        end
+
+                                    -- ─────────────────────────────────────────────
+                                    -- BUTTON
+                                    -- ─────────────────────────────────────────────
+                                    elseif iType == 'button' then
+                                        local itemCP = sItem.colorpicker
+                                        local rightReserve = 0
+                                        local btnInnerH = self:_GetTextBounds(sItem.label).y + PAD
+                                        if itemCP then
+                                            local cpSzEl = Vector2.new(24, 14)
+                                            local cpOEl  = siOrig + Vector2.new(secW - PAD*2 - cpSzEl.x, (btnInnerH - cpSzEl.y)/2)
+                                            rightReserve = cpSzEl.x + PAD*2
+                                            local hover  = not mouseBlocked and self:_IsMouseWithinBounds(cpOEl, cpSzEl)
+                                            self:_Draw('rect', T.border1, 7, itemOp, cpOEl, cpSzEl, true, 4)
+                                            self:_Draw('rect', itemCP.value, 8, itemOp, cpOEl+Vector2.new(1,1), cpSzEl-Vector2.new(2,2), true, 4)
+                                            if hover and canClick then self:_SpawnColorpicker(nil, itemCP.label, itemCP.value, function(nv) itemCP.value = nv; if itemCP.callback then itemCP.callback(nv) end end); clickFrame = false; clickConsumed = true end
+                                        end
+
+                                        local bO   = Vector2.new(siOrig.x, siOrig.y)
+                                        local bSz  = Vector2.new(secW - PAD*2 - rightReserve, btnInnerH)
+                                        local hover = not mouseBlocked and self:_IsMouseWithinBounds(bO, bSz)
+                                        if mouseHeld then
+                                            if hover and canClick then self._slider_drag = siid; clickFrame = false; clickConsumed = true; if iCb then iCb() end end
+                                        else self._slider_drag = nil end
+                                        local clicked = mouseHeld and self._slider_drag == siid
+                                        
+                                        local bPressKey = siid..'_bp'
+                                        self._toggle_anim[bPressKey] = lerp(self._toggle_anim[bPressKey] or 0, clicked and 1 or 0, _dlp(0.45))
+                                        local bPress = self._toggle_anim[bPressKey]
+                                        local bInset = math.floor(bPress * 2 + 0.5)
+                                        local bOa  = bO + Vector2.new(bInset, bInset)
+                                        local bSza = bSz - Vector2.new(bInset*2, bInset*2)
+                                        local bBg  = lerpC(hover and lerpC(T.surface0, T.accent, 0.08) or T.surface0, T.accent, bPress * 0.85)
+
+                                        self:_Draw('rect', T.shadow, 6, (1-bPress)*0.10*itemOp, bO+Vector2.new(1,2), bSz, true, 6)
+                                        self:_Draw('rect', bBg, 7, itemOp, bOa, bSza, true, 6)
+                                        self:_Draw('rect', clicked and T.accent or T.border1, 8, itemOp, bOa, bSza, false, 6)
+
+                                        local btColor = (clicked or hover) and T.text or T.subtext
+                                        
+                                        if sItem._last_label == nil then sItem._last_label = sItem.label end
+                                        local lblAnimKey = siid..'_lbl_anim'
+                                        if sItem.label ~= sItem._last_label then
+                                            sItem._old_label = sItem._last_label
+                                            sItem._last_label = sItem.label
+                                            self._toggle_anim[lblAnimKey] = 0
+                                        end
+                                        
+                                        local lblFade = self._toggle_anim[lblAnimKey] or 1
+                                        lblFade = lerp(lblFade, 1, _dlp(0.35))
+                                        self._toggle_anim[lblAnimKey] = lblFade
+
+                                        if lblFade < 0.995 and sItem._old_label then
+                                            local tFade = easeOut(lblFade)
+                                            local oldOp = itemOp * (1 - tFade)
+                                            local oldY = bOa.y + bSza.y/2 - (10 * tFade)
+                                            self:_Draw('text', btColor, 8, oldOp, Vector2.new(bOa.x + bSza.x/2, oldY), sItem._old_label, false, 'center')
+
+                                            local newOp = itemOp * tFade
+                                            local newY = bOa.y + bSza.y/2 + 10 * (1 - tFade)
+                                            self:_Draw('text', btColor, 8, newOp, Vector2.new(bOa.x + bSza.x/2, newY), sItem.label, false, 'center')
+                                        else
+                                            self:_Draw('text', btColor, 8, itemOp, bOa+Vector2.new(bSza.x/2, bSza.y/2), sItem.label, false, 'center')
+                                        end
+
+                                        if sItem.isNew then
+                                            local actualLblSz = self:_GetTextBounds(sItem.label)
+                                            local newTagPos = bOa + Vector2.new(bSza.x/2 + actualLblSz.x/2 + 8, (bSza.y - 14)/2)
+                                            self:_Draw('rect', T.accent, 9, itemOp, newTagPos, Vector2.new(28, 14), true, 4)
+                                            self:_Draw('text', T.surface0, 10, itemOp, newTagPos+Vector2.new(14, 7), 'NEW', false, 'center', 9)
+                                        end
+
+                                    -- ─────────────────────────────────────────────
+                                    -- TEXTBOX
+                                    -- ─────────────────────────────────────────────
+                                    elseif iType == 'textbox' then
+                                        local tbO  = siOrig; local tbSz = Vector2.new(secW - PAD*2, self._font_size + PAD)
+                                        local hover    = not mouseBlocked and self:_IsMouseWithinBounds(tbO, tbSz)
+                                        local isTyping = self._input_ctx == siid
+                                        local cursor   = math.floor(os.clock()*2)%2 == 0 and '|' or ' '
+                                        local hasVal   = iVal and iVal ~= ''
+                                        
+                                        local phKey    = siid..'_ph'
+                                        self._toggle_anim[phKey] = lerp(self._toggle_anim[phKey] or (hasVal and 1 or 0), hasVal and 1 or 0, _dlp(0.18))
+                                        local phAlpha  = self._toggle_anim[phKey]
+                                        local dv = isTyping and ((iVal or '')..cursor) or (hasVal and iVal or sItem.label)..' '
+                                        local vc = (isTyping or hover) and T.text or lerpC(T.subtext, T.text, phAlpha)
+
+                                        if self:_GetTextBounds(dv).x > tbSz.x then
+                                            for i = 1, #dv do local s2 = dv:sub(i); if self:_GetTextBounds(s2).x <= tbSz.x - 4 then dv = s2; break end end
+                                        end
+                                        local vsz = self:_GetTextBounds(dv)
+
+                                        if self:_IsKeyPressed('m1') then
+                                            if canClick and hover then
+                                                self._input_ctx = siid
+                                                self:_RemoveCtxMenu()
+                                                clickFrame = false; clickConsumed = true
+                                            elseif isTyping then
+                                                self._input_ctx = nil; self:_RemoveDropdown(); isTyping = false
+                                            end
+                                        end
+
+                                        if ctxFrame and interactable and hover then
+                                            local mp = self:_GetMousePos()
+                                            self:_SpawnCtxMenu(mp.x, mp.y, siid, sItem)
+                                            ctxFrame = false
+                                        end
+
+                                        if isTyping then
+                                            local cm = {space=' ', dash='-', colon=':', period='.', comma=',', slash='/', semicolon=';', quote='\'', leftbracket='[', rightbracket=']', backslash='\\', equals='=', minus='-'}
+                                            local sm = {['1']='!', ['2']='@', ['3']='#', ['4']='$', ['5']='%', ['6']='^', ['7']='&', ['8']='*', ['9']='(', ['0']=')', ['-']='_', ['=']='+', ['[']='{', [']']='}', [';']=':', ['\'']='\"', [',']='<', ['.']='>', ['/']='?', ['\\']='|'}
+                                            local nv = iVal or ''; local shift = self:_IsKeyHeld('lshift') or self:_IsKeyHeld('rshift')
+
+                                            local held_char = nil
+                                            for char in pairs(self._inputs or {}) do
+                                                if self:_IsKeyHeld(char) then held_char = char; break end
+                                            end
+
+                                            if held_char then
+                                                if not self._key_repeat[held_char] then
+                                                    self._key_repeat[held_char] = os.clock() + 0.4
+                                                elseif os.clock() > self._key_repeat[held_char] then
+                                                    self._key_repeat[held_char] = os.clock() + 0.05
+                                                    local mapped = cm[held_char] or held_char
+                                                    if mapped == 'backspace' then
+                                                        nv = nv:sub(1, -2)
+                                                    elseif #mapped == 1 then
+                                                        if shift and sm[mapped] then mapped = sm[mapped] elseif shift then mapped = mapped:upper() end
+                                                        if #nv < 200 then nv = nv .. mapped end
+                                                    end
+                                                    if sItem.callback then sItem.callback(nv) end; sItem.value = nv
+                                                end
+                                            else
+                                                self._key_repeat = {}
+                                            end
+
+                                            for char in pairs(self._inputs or {}) do
+                                                if self:_IsKeyPressed(char) then
+                                                    local mapped = cm[char] or char
+                                                    if mapped == 'enter' or mapped == 'esc' then self._input_ctx = nil; break
+                                                    elseif mapped == 'backspace' then
+                                                        nv = nv:sub(1, -2)
+                                                    elseif #mapped == 1 then
+                                                        if shift and sm[mapped] then mapped = sm[mapped] elseif shift then mapped = mapped:upper() end
+                                                        if #nv < 200 then nv = nv .. mapped end
+                                                    end
+                                                    if sItem.callback then sItem.callback(nv) end; sItem.value = nv
+                                                end
+                                            end
+                                        end
+
+                                        self:_Draw('rect', isTyping and T.surface0 or T.surface1, 7, itemOp, tbO, tbSz, true, 6)
+                                        self:_Draw('rect', isTyping and T.accent or (hover and T.border0 or T.border1), 8, itemOp, tbO, tbSz, false, 6)
+                                        self:_Draw('text', vc, 8, itemOp, tbO + Vector2.new(6, vsz.y/2 - 2), dv, false)
+                                    end
+                                end
+
+                                sH = sH + current_iH
+                            end
+                        end
+
+                        curY = curY + cardH + (sTsz.y/2 + PAD) * secAnim
+                    end
+                end
+            end
+
+            local secW = bcSize.x/2 - PAD*1.5
+            renderColumn(leftHeights, false, bcPos.x + PAD)
+            renderColumn(rightHeights, true, bcPos.x + PAD*2 + secW)
+        end
+    end
+
+    -- ──────────────────────────────────────────────────────────────
+    -- TEXTBOX CONTEXT MENU (Copy / Clear)
+    -- ──────────────────────────────────────────────────────────────
+    local ctx = self._ctx_menu
+    if ctx then
+        ctx._anim = lerp(ctx._anim or 0, 1, _dlp(0.30))
+        local ctxA  = ctx._anim
+        local itemH = self._font_size + 8
+        local ctxW  = 80
+        local ctxH  = #ctx.items * itemH + 4
+        local ctxX  = ctx.x; local ctxY = ctx.y
+
+        if ctxX + ctxW > wx + ww - 4 then ctxX = wx + ww - ctxW - 4 end
+        if ctxY + ctxH > wy + wh - 4 then ctxY = ctxY - ctxH end
+
+        local ctxPos = Vector2.new(ctxX, ctxY)
+        local ctxSz  = Vector2.new(ctxW, ctxH)
+
+        self:_Draw('rect', T.shadow, 700, 0.18*ctxA*winOp, ctxPos+Vector2.new(2,4), ctxSz, true, 6)
+        self:_Draw('rect', T.surface0, 701, ctxA*winOp, ctxPos, ctxSz, true, 6)
+        self:_Draw('rect', T.border1, 702, ctxA*winOp, ctxPos, ctxSz, false, 6)
+
+        for i, item in ipairs(ctx.items) do
+            local iY    = ctxY + 2 + (i-1)*itemH
+            local iPos  = Vector2.new(ctxX+2, iY)
+            local iSz   = Vector2.new(ctxW-4, itemH)
+            local hover = self:_IsMouseWithinBounds(iPos, iSz)
+
+            if hover then
+                self:_Draw('rect', lerpC(T.surface0, T.accent, 0.18), 703, ctxA*winOp, iPos, iSz, true, 4)
+            end
+            self:_Draw('text', hover and T.text or T.subtext, 704, ctxA*winOp, iPos+Vector2.new(ctxW/2-2, itemH/2), item.label, false, 'center', 12)
+
+            if hover and clickFrame and not clickConsumed then
+                local sItem = ctx.sItem
+                if item.action == 'copy' then
+                    local val = sItem.value or ''
+                    if type(setclipboard) == 'function' then pcall(setclipboard, val) end
+                    self:Notification('Copied to clipboard', 2)
+                elseif item.action == 'clear' then
+                    sItem.value = ''
+                    if sItem.callback then sItem.callback('') end
+                    self:_MarkDirty()
+                    self:Notification('Cleared', 2)
+                end
+                self:_RemoveCtxMenu()
+                clickFrame = false; clickConsumed = true
+            end
+        end
+
+        if (clickFrame or ctxFrame) and not clickConsumed and not self:_IsMouseWithinBounds(ctxPos, ctxSz) then
+            self:_RemoveCtxMenu()
+            clickFrame = false; ctxFrame = false; clickConsumed = true
+        end
+    end
+
+    -- ──────────────────────────────────────────────────────────────
+    -- DYNAMIC ROLL-DOWN DROPDOWN PANEL
+    -- ──────────────────────────────────────────────────────────────
+    local dd = self._active_dropdown
+    if dd then
+        dd._anim = lerp(dd._anim or 0, 1, _dlp(0.20))
+        local ddA = dd._anim
+        local ddO = dd.position
+        local choiceH = self._font_size + 9
+        local maxVisibleChoices = 6
+        local totalChoices = #(dd.choices or {})
+        local displayCount = math.min(totalChoices, maxVisibleChoices)
+        local panelW = dd.width
+        local targetPanelH = displayCount * choiceH + PAD
+        
+        local screenB = self:_GetScreenSize()
+        local flipped = false
+        if ddO.y + targetPanelH > screenB.y - 10 then 
+            flipped = true
+            ddO = Vector2.new(ddO.x, ddO.y - targetPanelH - (dd._srcH or 0)) 
+        end
+
+        local overflows = totalChoices > maxVisibleChoices
+        local maxScroll = math.max(0, totalChoices * choiceH - (targetPanelH - PAD))
+
+        if scrollDelta ~= 0 and self:_IsMouseWithinBounds(ddO, Vector2.new(panelW, targetPanelH)) then
+            dd._scroll_target = clamp((dd._scroll_target or 0) - scrollDelta, 0, maxScroll)
+        end
+        dd._scroll_target = dd._scroll_target or 0
+        dd._scroll_v = lerp(dd._scroll_v or 0, dd._scroll_target, _dlp(0.25))
+        if math.abs(dd._scroll_v - dd._scroll_target) < 0.5 then dd._scroll_v = dd._scroll_target end
+
+        local currentPanelH = math.max(1, targetPanelH * easeOut(ddA))
+        local currentDdO = flipped and Vector2.new(ddO.x, ddO.y + (targetPanelH - currentPanelH)) or ddO
+
+        self:_Draw('rect', T.shadow, 500, 0.15*winOp, currentDdO+Vector2.new(2,4), Vector2.new(panelW, currentPanelH), true, 6)
+        self:_Draw('rect', T.surface0, 501, winOp, currentDdO, Vector2.new(panelW, currentPanelH), true, 6)
+        self:_Draw('rect', T.border1, 502, winOp, currentDdO, Vector2.new(panelW, currentPanelH), false, 6)
+
+        local ddTop = currentDdO.y
+        local ddBot = currentDdO.y + currentPanelH
+
+        local thumbH, sbX, trackH
+        if overflows and currentPanelH > 20 then
+            local SBW = 3
+            sbX = panelW - SBW - 2
+            trackH = currentPanelH - PAD
+            thumbH = math.max(10, trackH * (trackH / (trackH + maxScroll)))
+
+            if mouseHeld then
+                if self:_IsMouseWithinBounds(currentDdO + Vector2.new(sbX - 5, PAD/2), Vector2.new(SBW + 10, trackH)) and clickFrame and not clickConsumed then
+                    self._dd_drag = 'dd_sb'; clickFrame = false; clickConsumed = true
+                end
+                if self._dd_drag == 'dd_sb' then
+                    local mp = self:_GetMousePos()
+                    local pct = clamp((mp.y - (currentDdO.y + PAD/2) - thumbH/2) / math.max(1, trackH - thumbH), 0, 1)
+                    dd._scroll_target = pct * maxScroll
+                end
+            else
+                self._dd_drag = nil
+            end
+
+            local thumbY = PAD/2 + (trackH - thumbH) * (dd._scroll_v / maxScroll)
+            self:_Draw('rect', T.border0, 503, 0.35 * winOp, currentDdO+Vector2.new(sbX,PAD/2), Vector2.new(3,trackH), true, 1.5)
+            self:_Draw('rect', T.subtext, 504, 0.7 * winOp, currentDdO+Vector2.new(sbX,thumbY), Vector2.new(3,thumbH), true, 1.5)
+        end
+
+        for i, choice in ipairs(dd.choices or {}) do
+            local absItemY = (flipped and ddO.y or ddO.y) + PAD/2 + (i-1)*choiceH - dd._scroll_v
+            local itemBot = absItemY + choiceH
+            
+            -- [!] PERFECTED TEXT CLIPPING
+            if itemBot > ddTop and absItemY < ddBot then
+                local edgeFade = 1.0
+                local FADE_ZONE = 3 -- Harder clip zone
+                local distTop = absItemY - ddTop
+                local distBot = ddBot - itemBot
+                if distTop < FADE_ZONE then edgeFade = math.max(0, distTop / FADE_ZONE) end
+                if distBot < FADE_ZONE then edgeFade = math.min(edgeFade, math.max(0, distBot / FADE_ZONE)) end
+                if distTop < 0 or distBot < 0 then edgeFade = 0 end
+
+                if edgeFade > 0.05 then
+                    local found = type(dd.value)=='table' and table.find(dd.value,choice) or false
+                    local cO   = Vector2.new(ddO.x+6, absItemY)
+                    local cSz  = Vector2.new(panelW-(overflows and 16 or 12), choiceH)
+                    local interactable = (edgeFade > 0.4)
+                    local hover = interactable and self:_IsMouseWithinBounds(cO, cSz)
+
+                    if hover then
+                        local hTop = math.max(cO.y+1, ddTop+2)
+                        local hBot = math.min(cO.y+cSz.y-1, ddBot-2)
+                        local hH   = math.max(0, hBot - hTop)
+                        if hH > 0 then
+                            self:_Draw('rect', lerpC(T.surface0,T.accent,0.18), 505, winOp*edgeFade, Vector2.new(cO.x+2, hTop), Vector2.new(cSz.x-4, hH), true, 4)
+                        end
+                    end
+
+                    local cc = hover and T.accent or (found and T.accent or T.text)
+                    self:_Draw('text', cc, 506, winOp*edgeFade, cO+Vector2.new(2,4), choice, false, nil, 12)
+
+                    if hover and clickFrame and not clickConsumed then
+                        if dd.multi then
+                            if type(dd.value)~='table' then dd.value={} end
+                            local fi=table.find(dd.value,choice)
+                            if fi then table.remove(dd.value,fi) else table.insert(dd.value,choice) end
+                        else dd.value={choice} end
+                        if dd.callback then dd.callback(dd.value) end
+                        if not dd.multi then self:_RemoveDropdown() end
+                        clickFrame=false; clickConsumed=true; break
+                    end
+                end
+            end
+        end
+
+        if clickFrame and not clickConsumed and not self:_IsMouseWithinBounds(currentDdO, Vector2.new(panelW, currentPanelH)) then 
+            self:_RemoveDropdown(); self._active_dropdown_owner=nil; clickFrame=false; clickConsumed=true 
+        end
+    end
+
+    -- ──────────────────────────────────────────────────────────────
+    -- COLORPICKER
+    -- ──────────────────────────────────────────────────────────────
+    local cp=self._active_colorpicker
+    if cp then
+        cp._anim = lerp(cp._anim or 0, cp._closing and 0 or 1, _dlp(0.18))
+        local cpf = cp._anim
+        if cp._closing and cpf < 0.05 then
+            self._active_colorpicker = nil
+        else
+            local shouldCancel=true
+            local fullCpSz=Vector2.new(240,215); local cpO=cp.position
+            local cpTsz=self:_GetTextBounds(cp.label)
+            
+            local currentCpSz = Vector2.new(fullCpSz.x, math.max(1, fullCpSz.y * easeOut(cpf)))
+
+            self:_Draw('rect', T.shadow, 600, 0.18*winOp, cpO+Vector2.new(2,4), currentCpSz, true, CR)
+            self:_Draw('rect', T.surface0, 601, winOp, cpO, currentCpSz, true, CR)
+            self:_Draw('rect', T.border1, 602, winOp, cpO, currentCpSz, false, CR)
+            
+            if currentCpSz.y > 20 then
+                self:_Draw('text', T.text, 603, winOp, cpO+Vector2.new(PAD,PAD+1), cp.label, false)
+            end
+
+            if currentCpSz.y > 40 then
+                local curC=Color3.fromHSV(cp._h,cp._s,cp._v)
+                local cpPrevSz = Vector2.new(24, 14)
+                local cpPrevO  = cpO+Vector2.new(fullCpSz.x-PAD-cpPrevSz.x, PAD+1)
+                self:_Draw('rect', T.border1, 603, winOp, cpPrevO, cpPrevSz, true, 4)
+                self:_Draw('rect', curC, 604, winOp, cpPrevO+Vector2.new(1,1), cpPrevSz-Vector2.new(2,2), true, 4)
+                
+                local ppPos=cpO+Vector2.new(PAD,PAD+cpTsz.y+10); local ppSz=Vector2.new(fullCpSz.x-PAD*2, 100)
+                self:_Draw('rect', T.border1, 602, winOp, ppPos, ppSz, false)
+                self:_Draw('rect', T.body, 604, winOp, ppPos, ppSz, true)
+
+                local mp2=self:_GetMousePos()
+                local pSz=ppSz; local hSz=Vector2.new(pSz.x,14)
+                local pPos=ppPos; local hPos=pPos+Vector2.new(0,pSz.y+10)
+                local hexBarPos=hPos+Vector2.new(0,hSz.y+10)
+                local hexSz = Vector2.new(pSz.x, 24)
+
+                if self:_IsMouseWithinBounds(hPos,hSz) and mouseHeld then cp._h=clamp((mp2.x-hPos.x)/math.max(1,hSz.x),0,1); shouldCancel=false; if cp.callback then cp.callback(Color3.fromHSV(cp._h,cp._s,cp._v)) end end
+                if self:_IsMouseWithinBounds(pPos,pSz) and mouseHeld then
+                    cp._s=clamp((mp2.x-pPos.x)/math.max(1,pSz.x),0,1); cp._v=1-clamp((mp2.y-pPos.y)/math.max(1,pSz.y),0,1); shouldCancel=false; if cp.callback then cp.callback(Color3.fromHSV(cp._h,cp._s,cp._v)) end
+                end
+
+                local hueC=Color3.fromHSV(cp._h,1,1)
+                self:_Draw('gradient', nil, 605, winOp, 'horizontal', pPos, pSz, Color3.fromRGB(255,255,255), hueC)
+                self:_Draw('gradient', nil, 606, winOp, 'vertical', pPos, pSz, {R=0,G=0,B=0,A=0}, {R=0,G=0,B=0,A=1})
+                self:_Draw('gradient', nil, 606, winOp, 'horizontal', hPos, hSz, Color3.fromRGB(255,0,0), Color3.fromRGB(255,255,0), Color3.fromRGB(0,255,0), Color3.fromRGB(0,255,255), Color3.fromRGB(0,0,255), Color3.fromRGB(255,0,255), Color3.fromRGB(255,0,0))
+
+                local pickerCirclePos = pPos + Vector2.new(pSz.x * cp._s, pSz.y * (1 - cp._v))
+                self:_Draw('circle', Color3.fromRGB(255,255,255), 607, 0.9 * winOp, pickerCirclePos, 5, false)
+
+                local hueThumbX = hPos.x + hSz.x * cp._h
+                self:_Draw('rect', Color3.fromRGB(255,255,255), 607, winOp, Vector2.new(hueThumbX - 2, hPos.y - 2), Vector2.new(4, hSz.y + 4), true)
+                self:_Draw('rect', Color3.fromRGB(50,50,50), 608, winOp, Vector2.new(hueThumbX - 2, hPos.y - 2), Vector2.new(4, hSz.y + 4), false)
+
+                local hexStr = '#'..string.format('%02X%02X%02X', math.floor(curC.R*255), math.floor(curC.G*255), math.floor(curC.B*255))
+                self:_Draw('rect', T.surface1, 605, winOp, hexBarPos, hexSz, true, 4)
+                self:_Draw('rect', T.border1, 606, winOp, hexBarPos, hexSz, false, 4)
+                self:_Draw('text', T.text, 607, winOp, hexBarPos+Vector2.new(hexSz.x/2, hexSz.y/2), hexStr, false, 'center', 12)
+            end
+
+            if clickFrame and not clickConsumed and not self:_IsMouseWithinBounds(cpO, currentCpSz) then self:_RemoveColorpicker(); clickConsumed=true; clickFrame=false end
+        end
+    end
+
+    -- ──────────────────────────────────────────────────────────────
+    -- TOOLTIP
+    -- ──────────────────────────────────────────────────────────────
+    if self._frame_tooltip then
+        if not self._tooltip or self._tooltip.key ~= self._frame_tooltip.key then
+            self._tooltip = {key = self._frame_tooltip.key, text = self._frame_tooltip.text, timer = 0, _anim = 0}
+        end
+    else
+        self._tooltip = nil
+    end
+
+    if self._tooltip then
+        local tt=self._tooltip; tt.timer=(tt.timer or 0)+dt
+        -- Fade in over 0.15s after the 0.5s delay
+        tt._anim = lerp(tt._anim or 0, tt.timer > 0.50 and 1 or 0, _dlp(0.28))
+        local ttFade = easeOut(tt._anim)
+        if ttFade > 0.01 then
+            local ttTxtSz=self:_GetTextBounds(tt.text)
+            local ttW=ttTxtSz.x+PAD*1.5; local ttH=ttTxtSz.y+PAD*0.8
+            local mp=self:_GetMousePos(); local ttPos=Vector2.new(mp.x+10,mp.y-ttH-6)
+            self:_Draw('rect', T.shadow, 999, 0.18*globalAlpha*ttFade, ttPos+Vector2.new(1,2), Vector2.new(ttW,ttH), true, 6)
+            self:_Draw('rect', T.surface0, 1000, globalAlpha*ttFade, ttPos, Vector2.new(ttW,ttH), true, 6)
+            self:_Draw('rect', T.border1, 1001, globalAlpha*ttFade, ttPos, Vector2.new(ttW,ttH), false, 6)
+            self:_Draw('text', T.text, 1001, globalAlpha*ttFade, ttPos+Vector2.new(PAD*0.75,(ttH-self._font_size)/2+1), tt.text, false)
+        end
+    end
+
+    -- Menu drag (topbar)
+    if realClick and not clickConsumed and not self._menu_drag and self:_IsMouseWithinBounds(Vector2.new(wx, wy), Vector2.new(ww, TBAH)) then
+        local mp = self._cached_mouse or Vector2.new(); self._menu_drag = Vector2.new(mp.x - self.x, mp.y - self.y)
+    end
+
+    -- Pool cleanup
+    for pType, pool in pairs(self._pool or {}) do
+        for i = (self._pIdx[pType] or 0) + 1, #pool do
+            local obj = pool[i]
+            if obj._Visible ~= false then
+                obj.Visible = false
+                obj._Visible = false
+            end
+        end
+    end
+end
+
+return UILib
