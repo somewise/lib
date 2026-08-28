@@ -65,7 +65,7 @@ UILib = {
     _padding = 10,
     _tab_h   = 36,
     _corner  = 10,
-    _theme_name = 'Dark',
+    _theme_name = 'Midnight',
     _themes = {
         Light      = {accent=Color3.fromRGB(0,122,255),  unsafe=Color3.fromRGB(255,59,48),   body=Color3.fromRGB(236,236,236), text=Color3.fromRGB(28,28,28),    subtext=Color3.fromRGB(142,142,147), border1=Color3.fromRGB(198,198,203), border0=Color3.fromRGB(212,212,216), surface1=Color3.fromRGB(218,218,223), surface0=Color3.fromRGB(250,250,252), crust=Color3.fromRGB(175,175,180),  shadow=Color3.fromRGB(150,150,160)},
         Dark       = {accent=Color3.fromRGB(10,132,255),  unsafe=Color3.fromRGB(255,69,58),   body=Color3.fromRGB(28,28,30),   text=Color3.fromRGB(255,255,255), subtext=Color3.fromRGB(99,99,102),   border1=Color3.fromRGB(56,56,58),    border0=Color3.fromRGB(44,44,46),    surface1=Color3.fromRGB(44,44,46),   surface0=Color3.fromRGB(36,36,38),   crust=Color3.fromRGB(18,18,18),     shadow=Color3.fromRGB(5,5,5)},
