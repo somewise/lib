@@ -1,0 +1,3225 @@
+--[[
+                                 dP                         dP oo                                        dP oo                                           dP 
+                                 88                         88                                           88                                              88 
+88d888b. 88d888b. .d8888b. .d888b88 .d8888b. 88d888b. .d888b88 dP .d8888b.    .d8888b. 88d888b.    .d888b88 dP .d8888b. .d8888b. .d8888b. 88d888b. .d888b88 
+88'  `88 88'  `88 88'  `88 88'  `88 88'  `88 88'  `88 88'  `88 88 88ooood8    88'  `88 88'  `88    88'  `88 88 Y8ooooo. 88'  `"" 88'  `88 88'  `88 88'  `88 
+88.  .88 88       88.  .88 88.  .88 88.  .88 88       88.  .88 88 88.  ...    88.  .88 88    88    88.  .88 88       88 88.  ... 88.  .88 88       88.  .88 
+88Y888P' dP       `88888P' `88888P8 `88888P' dP       `88888P8 dP `88888P'    `88888P' dP    dP    `88888P8 dP `88888P' `88888P' `88888P' dP       `88888P8 
+88                                                                                                                                                          
+dP          
+
+]]-- 
+prodordie = {
+		_font_face = Drawing.Fonts.SystemBold,
+		_font_size = 13,
+		_pool = {
+			Square = {},
+			Text = {},
+			Triangle = {},
+			Circle = {},
+			Line = {},
+		},
+		_pool_state = {
+			Square = {},
+			Text = {},
+			Triangle = {},
+			Circle = {},
+			Line = {},
+		},
+		_pIdx = {
+			Square = 0,
+			Text = 0,
+			Triangle = 0,
+			Circle = 0,
+			Line = 0,
+		},
+		_tree = {},
+		_tab_order = {},
+		_menu_open = true,
+		_watermark_enabled = true,
+		_notifications = {},
+		_notifications_spawned = 0,
+		_open_tab = nil,
+		_next_tab = nil,
+		_tab_changing = false,
+		_tab_fade = 1,
+		_search_query = "",
+		_search_typing = false,
+		_search_w_anim = 22,
+		_inputs = {
+			m1 = { id = 1, held = false, click = false },
+			m2 = { id = 2, held = false, click = false },
+			mb = { id = 4, held = false, click = false },
+			backspace = { id = 8, held = false, click = false },
+			tab = { id = 9, held = false, click = false },
+			enter = { id = 13, held = false, click = false },
+			shift = { id = 16, held = false, click = false },
+			ctrl = { id = 17, held = false, click = false },
+			alt = { id = 18, held = false, click = false },
+			pause = { id = 19, held = false, click = false },
+			capslock = { id = 20, held = false, click = false },
+			esc = { id = 27, held = false, click = false },
+			space = { id = 32, held = false, click = false },
+			pageup = { id = 33, held = false, click = false },
+			pagedown = { id = 34, held = false, click = false },
+			["end"] = { id = 35, held = false, click = false },
+			home = { id = 36, held = false, click = false },
+			left = { id = 37, held = false, click = false },
+			up = { id = 38, held = false, click = false },
+			right = { id = 39, held = false, click = false },
+			down = { id = 40, held = false, click = false },
+			insert = { id = 45, held = false, click = false },
+			delete = { id = 46, held = false, click = false },
+			["0"] = { id = 48, held = false, click = false },
+			["1"] = { id = 49, held = false, click = false },
+			["2"] = { id = 50, held = false, click = false },
+			["3"] = { id = 51, held = false, click = false },
+			["4"] = { id = 52, held = false, click = false },
+			["5"] = { id = 53, held = false, click = false },
+			["6"] = { id = 54, held = false, click = false },
+			["7"] = { id = 55, held = false, click = false },
+			["8"] = { id = 56, held = false, click = false },
+			["9"] = { id = 57, held = false, click = false },
+			a = { id = 65, held = false, click = false },
+			b = { id = 66, held = false, click = false },
+			c = { id = 67, held = false, click = false },
+			d = { id = 68, held = false, click = false },
+			e = { id = 69, held = false, click = false },
+			f = { id = 70, held = false, click = false },
+			g = { id = 71, held = false, click = false },
+			h = { id = 72, held = false, click = false },
+			i = { id = 73, held = false, click = false },
+			j = { id = 74, held = false, click = false },
+			k = { id = 75, held = false, click = false },
+			l = { id = 76, held = false, click = false },
+			m = { id = 77, held = false, click = false },
+			n = { id = 78, held = false, click = false },
+			o = { id = 79, held = false, click = false },
+			p = { id = 80, held = false, click = false },
+			q = { id = 81, held = false, click = false },
+			r = { id = 82, held = false, click = false },
+			s = { id = 83, held = false, click = false },
+			t = { id = 84, held = false, click = false },
+			u = { id = 85, held = false, click = false },
+			v = { id = 86, held = false, click = false },
+			w = { id = 87, held = false, click = false },
+			x = { id = 88, held = false, click = false },
+			y = { id = 89, held = false, click = false },
+			z = { id = 90, held = false, click = false },
+			f1 = { id = 112, held = false, click = false },
+			f2 = { id = 113, held = false, click = false },
+			f3 = { id = 114, held = false, click = false },
+			f4 = { id = 115, held = false, click = false },
+			f5 = { id = 116, held = false, click = false },
+			f6 = { id = 117, held = false, click = false },
+			f7 = { id = 118, held = false, click = false },
+			f8 = { id = 119, held = false, click = false },
+			f9 = { id = 120, held = false, click = false },
+			f10 = { id = 121, held = false, click = false },
+			f11 = { id = 122, held = false, click = false },
+			f12 = { id = 123, held = false, click = false },
+		},
+		_slider_drag = nil,
+		_dd_drag = nil,
+		_slider_disp = {},
+		_menu_drag = nil,
+		_input_ctx = nil,
+		_key_repeat = {},
+		_overwrite_menu_key = false,
+		_menu_key = "f5",
+		_active_dropdown = nil,
+		_dropdown_scroll = 0,
+		_dropdown_scroll_v = 0,
+		_active_colorpicker = nil,
+		_copied_color = nil,
+		_activities = {},
+		_toggle_anim = {},
+		_dd_arrow_anim = {},
+		_frame_tooltip = nil,
+		_menu_scale = 0,
+		_current_h = 500,
+		_KB_W = 52,
+		_unloaded = false,
+		_unloading_sequence = false,
+		_unload_phase = "sections",
+		_unload_section_alpha = 1,
+		_last_step_time = 0,
+		_real_m1_click = false,
+		_sec_scroll = {},
+		_sec_slide = {},
+		_item_vis = {},
+		_tab_scroll = {},
+		_config_folder = "prodordie",
+		_config_name = "default",
+		_config_refs = {},
+		_config_callbacks = {},
+		_autosave_dirty = false,
+		_autosave_timer = 0,
+		_autosave_delay = 3,
+		_autosave_last = 0,
+		_config_list = {},
+		_autoload_requested = false,
+		_boot_loaded = false,
+		title = "prodordie",
+		_custom_title_enabled = false,
+		_custom_title = "prodordie",
+		w = 420,
+		h = 500,
+		x = 20,
+		y = 100,
+		_padding = 10,
+		_tab_h = 36,
+		_corner = 10,
+		_theme_name = "Midnight",
+		_themes = {
+			Light = {
+				accent = Color3.fromRGB(0, 122, 255),
+				unsafe = Color3.fromRGB(255, 59, 48),
+				body = Color3.fromRGB(236, 236, 236),
+				text = Color3.fromRGB(28, 28, 28),
+				subtext = Color3.fromRGB(142, 142, 147),
+				border1 = Color3.fromRGB(198, 198, 203),
+				border0 = Color3.fromRGB(212, 212, 216),
+				surface1 = Color3.fromRGB(218, 218, 223),
+				surface0 = Color3.fromRGB(250, 250, 252),
+				crust = Color3.fromRGB(175, 175, 180),
+				shadow = Color3.fromRGB(150, 150, 160),
+			},
+			Dark = {
+				accent = Color3.fromRGB(10, 132, 255),
+				unsafe = Color3.fromRGB(255, 69, 58),
+				body = Color3.fromRGB(28, 28, 30),
+				text = Color3.fromRGB(255, 255, 255),
+				subtext = Color3.fromRGB(99, 99, 102),
+				border1 = Color3.fromRGB(56, 56, 58),
+				border0 = Color3.fromRGB(44, 44, 46),
+				surface1 = Color3.fromRGB(44, 44, 46),
+				surface0 = Color3.fromRGB(36, 36, 38),
+				crust = Color3.fromRGB(18, 18, 18),
+				shadow = Color3.fromRGB(5, 5, 5),
+			},
+			Catppuccin = {
+				accent = Color3.fromRGB(137, 180, 250),
+				unsafe = Color3.fromRGB(243, 139, 168),
+				body = Color3.fromRGB(30, 30, 46),
+				text = Color3.fromRGB(205, 214, 244),
+				subtext = Color3.fromRGB(166, 173, 200),
+				border1 = Color3.fromRGB(54, 58, 79),
+				border0 = Color3.fromRGB(45, 50, 68),
+				surface1 = Color3.fromRGB(49, 50, 68),
+				surface0 = Color3.fromRGB(36, 39, 58),
+				crust = Color3.fromRGB(17, 17, 27),
+				shadow = Color3.fromRGB(5, 5, 10),
+			},
+			Dracula = {
+				accent = Color3.fromRGB(189, 147, 249),
+				unsafe = Color3.fromRGB(255, 85, 85),
+				body = Color3.fromRGB(40, 42, 54),
+				text = Color3.fromRGB(248, 248, 242),
+				subtext = Color3.fromRGB(98, 114, 164),
+				border1 = Color3.fromRGB(68, 71, 90),
+				border0 = Color3.fromRGB(58, 60, 78),
+				surface1 = Color3.fromRGB(68, 71, 90),
+				surface0 = Color3.fromRGB(48, 50, 65),
+				crust = Color3.fromRGB(21, 22, 30),
+				shadow = Color3.fromRGB(5, 5, 8),
+			},
+			Nord = {
+				accent = Color3.fromRGB(136, 192, 208),
+				unsafe = Color3.fromRGB(191, 97, 106),
+				body = Color3.fromRGB(46, 52, 64),
+				text = Color3.fromRGB(236, 239, 244),
+				subtext = Color3.fromRGB(129, 161, 193),
+				border1 = Color3.fromRGB(67, 76, 94),
+				border0 = Color3.fromRGB(59, 66, 82),
+				surface1 = Color3.fromRGB(67, 76, 94),
+				surface0 = Color3.fromRGB(59, 66, 82),
+				crust = Color3.fromRGB(36, 41, 51),
+				shadow = Color3.fromRGB(10, 12, 16),
+			},
+			Rose = {
+				accent = Color3.fromRGB(235, 111, 146),
+				unsafe = Color3.fromRGB(235, 111, 146),
+				body = Color3.fromRGB(25, 23, 36),
+				text = Color3.fromRGB(224, 222, 244),
+				subtext = Color3.fromRGB(110, 106, 134),
+				border1 = Color3.fromRGB(64, 61, 82),
+				border0 = Color3.fromRGB(57, 53, 74),
+				surface1 = Color3.fromRGB(64, 61, 82),
+				surface0 = Color3.fromRGB(42, 39, 60),
+				crust = Color3.fromRGB(14, 12, 23),
+				shadow = Color3.fromRGB(5, 4, 10),
+			},
+			Midnight = {
+				accent = Color3.fromRGB(59, 130, 246),
+				unsafe = Color3.fromRGB(239, 68, 68),
+				body = Color3.fromRGB(17, 17, 19),
+				text = Color3.fromRGB(232, 232, 236),
+				subtext = Color3.fromRGB(90, 90, 98),
+				border1 = Color3.fromRGB(42, 42, 46),
+				border0 = Color3.fromRGB(34, 34, 38),
+				surface1 = Color3.fromRGB(20, 20, 22),
+				surface0 = Color3.fromRGB(26, 26, 29),
+				crust = Color3.fromRGB(13, 13, 15),
+				shadow = Color3.fromRGB(0, 0, 0),
+			},
+		},
+		_theming = nil,
+		_ctx_menu = nil,
+		_search_tab_results = {},
+		_tab_content_alpha = 1,
+		_tab_pill_w_anim = {},
+	};
+local s = Color3.fromRGB(255, 95, 86);
+local w = Color3.fromRGB(196, 68, 62);
+local V = Color3.fromRGB(255, 189, 46);
+local i = Color3.fromRGB(196, 146, 30);
+local E = Color3.fromRGB(39, 201, 63);
+local C = Color3.fromRGB(22, 160, 44);
+prodordie._theming = prodordie._themes[prodordie._theme_name];
+local function Y(s, w)
+	return ((type(s) == "number" and s == s)) and s or (w or 0);
+end;
+local function f(s, w, V)
+	return s + ((w - s)) * V;
+end;
+local function r(s, w, V)
+	if s > V then
+		return V;
+	elseif s < w then
+		return w;
+	else
+		return s;
+	end;
+end;
+local function W(s, w, V)
+	return Color3.new(f(s.R, w.R, V), f(s.G, w.G, V), f(s.B, w.B, V));
+end;
+local function X(s)
+	return 1 - ((1 - s)) * ((1 - s));
+end;
+local function k(s)
+	local w = 0;
+	for s in pairs(s) do
+		w = w + 1;
+	end;
+	return w;
+end;
+local function T(s)
+	s = Y(s);
+	local w = math.floor(s);
+	if s == w then
+		return tostring(w);
+	end;
+	return tostring(math.floor(s * 100 + .5) / 100);
+end;
+local H = {
+		lshift = true,
+		rshift = true,
+		lctrl = true,
+		rctrl = true,
+		lalt = true,
+		ralt = true,
+		shift = true,
+		ctrl = true,
+		alt = true,
+	};
+local y = {
+		f1 = true,
+		f2 = true,
+		f3 = true,
+		f4 = true,
+		f5 = true,
+		f6 = true,
+		f7 = true,
+		f8 = true,
+		f9 = true,
+		f10 = true,
+		f11 = true,
+		f12 = true,
+	};
+local o = {
+		left = true,
+		right = true,
+		up = true,
+		down = true,
+		pageup = true,
+		pagedown = true,
+		home = true,
+		end_ = true,
+		insert = true,
+		delete = true,
+		tab = true,
+		enter = true,
+		backspace = true,
+		esc = true,
+		capslock = true,
+		pause = true,
+		space = true,
+	};
+local a = { m1 = true, m2 = true, mb = true };
+local D = game:GetService("Players");
+local F = {};
+local e = 0;
+local b = 600;
+local function P(s, w, V, i)
+	w = w or "";
+	local E = tostring(V or s._font_face) .. (":" .. (tostring(i or s._font_size) .. (":" .. w)));
+	local C = F[E];
+	if C then
+		return C;
+	end;
+	local Y = s:_GetTextBounds(w, V, i);
+	if e >= b then
+		F = {};
+		e = 0;
+	end;
+	F[E] = Y;
+	e = e + 1;
+	return Y;
+end;
+local function L(s, w)
+	return 1 - ((1 - s)) ^ ((w * 60));
+end;
+local function Q(s, w, V)
+	local i, E = math.max(s, w, V), math.min(s, w, V);
+	local C = i - E;
+	local Y, f, r = 0, 0, i;
+	if i > 0 then
+		f = C / i;
+	end;
+	if C > 0 then
+		if i == s then
+			Y = ((w - V)) / C;
+			if w < V then
+				Y = Y + 6;
+			end;
+		elseif i == w then
+			Y = ((V - s)) / C + 2;
+		elseif i == V then
+			Y = ((s - w)) / C + 4;
+		end;
+		Y = Y / 6;
+	end;
+	return Y, f, r;
+end;
+prodordie._scroll_delta = 0;
+pcall(function()
+	local s = D.LocalPlayer;
+	if s then
+		local w = s:GetMouse();
+		if w then
+			w.WheelForward:Connect(function()
+				prodordie._scroll_delta = prodordie._scroll_delta + 60;
+			end);
+			w.WheelBackward:Connect(function()
+				prodordie._scroll_delta = prodordie._scroll_delta - 60;
+			end);
+		end;
+	end;
+end);
+do
+	local function s()
+		return type(writefile) == "function" and type(readfile) == "function";
+	end;
+	local function w(s)
+		if type(makefolder) == "function" then
+			pcall(makefolder, s);
+		end;
+	end;
+	local function V(s)
+		if type(isfile) == "function" then
+			local w, V = pcall(isfile, s);
+			return w and V;
+		end;
+		return false;
+	end;
+	local function i(s, w)
+		if type(writefile) == "function" then
+			pcall(writefile, s, w);
+		end;
+	end;
+	local function E(s)
+		if type(readfile) == "function" then
+			local w, V = pcall(readfile, s);
+			if w then
+				return V;
+			end;
+		end;
+		return nil;
+	end;
+	local function C(s)
+		if type(listfiles) == "function" then
+			local w, V = pcall(listfiles, s);
+			if w and type(V) == "table" then
+				return V;
+			end;
+		end;
+		return {};
+	end;
+	local function f(s)
+		local w = game:GetService("HttpService");
+		local V, i = pcall(function()
+				return w:JSONEncode(s);
+			end);
+		return V and i or nil;
+	end;
+	local function r(s)
+		local w = game:GetService("HttpService");
+		local V, i = pcall(function()
+				return w:JSONDecode(s);
+			end);
+		return V and i or nil;
+	end;
+	function prodordie._RegisterConfigRef(i, s, w, V)
+		i._config_refs = i._config_refs or {};
+		table.insert(i._config_refs, {
+			tab = s,
+			sec = w,
+			label = V.label,
+			item = V,
+		});
+	end;
+	local function W(s)
+		if not s then
+			return nil;
+		end;
+		return string.format("%02X%02X%02X", math.floor(s.R * 255 + .5), math.floor(s.G * 255 + .5), math.floor(s.B * 255 + .5));
+	end;
+	local function X(s)
+		if not s or #s < 6 then
+			return nil;
+		end;
+		s = s:match("^#?(%x%x%x%x%x%x)$");
+		if not s then
+			return nil;
+		end;
+		return Color3.fromRGB(tonumber(s:sub(1, 2), 16), tonumber(s:sub(3, 4), 16), tonumber(s:sub(5, 6), 16));
+	end;
+	function prodordie._BuildConfigData(s)
+		local w = {};
+		for s, V in ipairs(s._config_refs or {}) do
+			local i = V.tab .. ("/" .. (V.sec .. ("/" .. V.label)));
+			local E = V.item;
+			if E.type_ == "toggle" then
+				w[i] = E.value;
+			elseif E.type_ == "slider" then
+				w[i] = E.value;
+			elseif E.type_ == "dropdown" then
+				w[i] = type(E.value) == "table" and table.concat(E.value, ",") or tostring(E.value or "");
+			elseif E.type_ == "textbox" then
+				w[i] = E.value or "";
+			end;
+			if E.keybind then
+				w[i .. "__kb"] = E.keybind.value or "";
+			end;
+			if E.colorpicker then
+				w[i .. "__cp"] = W(E.colorpicker.value);
+			end;
+		end;
+		w.__theme = s._theme_name;
+		w.__menukey = s._menu_key;
+		return w;
+	end;
+	function prodordie._ApplyConfigData(w, s)
+		if type(s) ~= "table" then
+			return;
+		end;
+		for V, i in ipairs(w._config_refs or {}) do
+			local E = i.tab .. ("/" .. (i.sec .. ("/" .. i.label)));
+			local C = i.item;
+			local Y = s[E];
+			local f = C._rawcb;
+			if Y ~= nil then
+				if C.type_ == "toggle" then
+					C.value = (Y == true or Y == "true");
+					if f then
+						pcall(f, C.value);
+					end;
+					local s = i.tab .. (i.sec .. i.label);
+					w._toggle_anim[s] = C.value and 1 or 0;
+				elseif C.type_ == "slider" then
+					local s = tonumber(Y);
+					if s then
+						C.value = s;
+						if f then
+							pcall(f, s);
+						end;
+					end;
+				elseif C.type_ == "dropdown" then
+					local s = {};
+					for w in (tostring(Y)):gmatch("[^,]+") do
+						table.insert(s, w);
+					end;
+					C.value = s;
+					if f then
+						pcall(f, C.value);
+					end;
+				elseif C.type_ == "textbox" then
+					C.value = tostring(Y);
+					if f then
+						pcall(f, C.value);
+					end;
+				end;
+			end;
+			if C.keybind then
+				local w = s[E .. "__kb"];
+				if w ~= nil then
+					C.keybind.value = tostring(w);
+				end;
+			end;
+			if C.colorpicker then
+				local w = s[E .. "__cp"];
+				if w then
+					local s = X(tostring(w));
+					if s then
+						C.colorpicker.value = s;
+						if C.colorpicker.callback then
+							pcall(C.colorpicker.callback, s);
+						end;
+					end;
+				end;
+			end;
+		end;
+		if s.__theme and w._themes[s.__theme] then
+			w:_ApplyTheme(s.__theme);
+		end;
+		if s.__menukey and w._inputs[s.__menukey] then
+			w._menu_key = s.__menukey;
+		end;
+		for w, V in ipairs(w._config_callbacks or {}) do
+			pcall(V, s);
+		end;
+	end;
+	function prodordie._AutoSaveTick(E, V)
+		if not E._autosave_dirty then
+			return;
+		end;
+		E._autosave_timer = E._autosave_timer + Y(V, .016);
+		if E._autosave_timer < E._autosave_delay then
+			return;
+		end;
+		E._autosave_dirty = false;
+		E._autosave_timer = 0;
+		E._autosave_last = os.clock();
+		if not s() then
+			return;
+		end;
+		w(E._config_folder);
+		local C = E:_BuildConfigData();
+		if E._config_name and E._config_name ~= "default" then
+			C.__savedas = E._config_name;
+		end;
+		local r = f(C);
+		if not r then
+			return;
+		end;
+		i(E._config_folder .. "/_last.json", r);
+	end;
+	function prodordie._RefreshConfigList(s)
+		local w = s:ListConfigs();
+		local V = {};
+		local i = false;
+		for s, w in ipairs(w or {}) do
+			if w ~= "_last" then
+				table.insert(V, w);
+				if w == "default" then
+					i = true;
+				end;
+			end;
+		end;
+		if not i then
+			table.insert(V, 1, "default");
+		end;
+		s._config_list = V;
+		return V;
+	end;
+	function prodordie.SaveConfig(E, V)
+		V = tostring(V or E._config_name or "default");
+		if V == "default" or V == "" then
+			E:Notification("Set a config name first", 5);
+			return;
+		end;
+		if not s() then
+			E:Notification("No filesystem API", 5);
+			return;
+		end;
+		w(E._config_folder);
+		local C = E:_BuildConfigData();
+		C.__savedas = V;
+		local Y = f(C);
+		if not Y then
+			E:Notification("Encode failed", 4);
+			return;
+		end;
+		i(E._config_folder .. ("/" .. (V .. ".json")), Y);
+		i(E._config_folder .. "/_last.json", Y);
+		E._autosave_dirty = false;
+		E._autosave_timer = 0;
+		E._config_name = V;
+		E:_RefreshConfigList();
+		E:Notification("Saved: " .. V, 4);
+	end;
+	function prodordie.LoadConfig(i, w)
+		w = tostring(w or i._config_name or "default");
+		if not s() then
+			i:Notification("No filesystem API", 5);
+			return;
+		end;
+		local C = i._config_folder .. ("/" .. (w .. ".json"));
+		if not V(C) then
+			if w ~= "_last" then
+				i:Notification("Not found: " .. w, 4);
+			end;
+			return;
+		end;
+		local Y = E(C);
+		if not Y then
+			i:Notification("Read failed: " .. w, 4);
+			return;
+		end;
+		local f = r(Y);
+		if not f then
+			i:Notification("Config corrupted, using defaults", 4);
+			if type(delfile) == "function" then
+				pcall(delfile, C);
+			end;
+			return;
+		end;
+		i:_ApplyConfigData(f);
+		if w ~= "_last" then
+			i._config_name = w;
+			i:_RefreshConfigList();
+			i:Notification("Loaded: " .. w, 4);
+		end;
+	end;
+	function prodordie.DeleteConfig(V, w)
+		w = tostring(w or V._config_name or "default");
+		if w == "default" then
+			V:Notification("Cannot delete default config", 4);
+			return;
+		end;
+		if not s() then
+			return;
+		end;
+		local i = V._config_folder .. ("/" .. (w .. ".json"));
+		if type(delfile) == "function" then
+			pcall(delfile, i);
+		end;
+		if V._config_name == w then
+			V._config_name = "default";
+		end;
+		V:_RefreshConfigList();
+		V:Notification("Deleted: " .. w, 4);
+	end;
+	function prodordie.ListConfigs(V)
+		if not s() then
+			return {};
+		end;
+		w(V._config_folder);
+		local i = C(V._config_folder);
+		local E = {};
+		for s, w in ipairs(i or {}) do
+			local V = (tostring(w)):gsub("\\", "/");
+			local i = V:match("([^/]+)%.json$");
+			if i then
+				table.insert(E, i);
+			end;
+		end;
+		return E;
+	end;
+	function prodordie._MarkDirty(s)
+		if not s._autosave_dirty then
+			s._autosave_timer = 0;
+		end;
+		s._autosave_dirty = true;
+	end;
+	function prodordie.AutoLoadConfig(s)
+		s._autoload_requested = true;
+	end;
+	function prodordie._DoAutoLoad(C)
+		if not s() then
+			return;
+		end;
+		local Y = C._config_folder;
+		local W = Y .. "/_last.json";
+		local X = Y .. "/default.json";
+		w(Y);
+		if V(W) then
+			local s = E(W);
+			local w = s and r(s);
+			if w then
+				C:_ApplyConfigData(w);
+				local s = ((w.__savedas and w.__savedas ~= "")) and ("\"" .. (tostring(w.__savedas) .. "\"")) or "last session";
+				C:Notification("Config restored: " .. s, 4);
+				C._config_name = w.__savedas or "default";
+				return;
+			else
+				C:Notification("Config corrupted, using defaults", 4);
+				if type(delfile) == "function" then
+					pcall(delfile, W);
+				end;
+			end;
+		end;
+		if V(X) then
+			local s = E(X);
+			local w = s and r(s);
+			if w then
+				C:_ApplyConfigData(w);
+			end;
+			return;
+		end;
+		local k = C:_BuildConfigData();
+		local T = f(k);
+		if T then
+			i(X, T);
+		end;
+	end;
+end;
+do
+	function prodordie._GetSec(w, s)
+		w._sec_scroll = w._sec_scroll or {};
+		if not w._sec_scroll[s] then
+			w._sec_scroll[s] = { offset = 0, target = 0, maxScroll = 0 };
+		end;
+		return w._sec_scroll[s];
+	end;
+	function prodordie._TickScroll(V, s, w)
+		local i = V:_GetSec(s);
+		i.offset = f(i.offset, i.target, L(.12, w));
+		if math.abs(i.offset - i.target) < .5 then
+			i.offset = i.target;
+		end;
+		return i.offset;
+	end;
+	function prodordie._ScrollSection(V, s, w)
+		local i = V:_GetSec(s);
+		i.target = r(i.target + w, 0, i.maxScroll);
+	end;
+end;
+do
+	function prodordie._KeyIDToName(w, s)
+		for w, V in pairs(w._inputs or {}) do
+			if V.id == s then
+				return w;
+			end;
+		end;
+		return nil;
+	end;
+	function prodordie._IsKeyPressed(w, s)
+		return w._inputs and (w._inputs[s] and w._inputs[s].click);
+	end;
+	function prodordie._IsKeyHeld(w, s)
+		return w._inputs and (w._inputs[s] and w._inputs[s].held);
+	end;
+	function prodordie._GetScreenSize(s)
+		local w = os.clock();
+		if not s._cached_ss or w - ((s._cached_ss_at or 0)) > 1 then
+			local V = Vector2.new(1920, 1080);
+			local i = workspace.CurrentCamera;
+			if i and i.ViewportSize then
+				V = i.ViewportSize;
+			end;
+			s._cached_ss = V;
+			s._cached_ss_at = w;
+		end;
+		return s._cached_ss;
+	end;
+	function prodordie._GetMousePos(s)
+		return s._cached_mouse or Vector2.new();
+	end;
+	function prodordie._PollMousePos(s)
+		local w = D.LocalPlayer;
+		if w then
+			local V = w:GetMouse();
+			if V then
+				local w, i = V.X, V.Y;
+				local E = s._cached_mouse;
+				if not E or E.x ~= w or E.y ~= i then
+					s._cached_mouse = Vector2.new(w, i);
+				end;
+				return;
+			end;
+		end;
+		if not s._cached_mouse then
+			s._cached_mouse = Vector2.new();
+		end;
+	end;
+	function prodordie._IsMouseWithinBounds(V, s, w)
+		local i = V:_GetMousePos();
+		return i.x >= s.x and (i.x <= s.x + w.x and (i.y >= s.y and i.y <= s.y + w.y));
+	end;
+	function prodordie._ApplyTheme(w, s)
+		w._theme_name = s;
+		w._theming = w._themes[s] or w._themes.Light;
+	end;
+end;
+do
+	function prodordie._GetTextBounds(i, s, w, V)
+		if not s or s == "" then
+			return Vector2.new(0, V or i._font_size);
+		end;
+		w = w or i._font_face;
+		V = V or i._font_size;
+		if w == Drawing.Fonts.UI then
+			return Vector2.new((#s * V) * .53846, V);
+		end;
+		return Vector2.new((#s * V) * .58, V);
+	end;
+	function prodordie._Draw(E, s, w, V, i, ...)
+		local C = s == "rect" and "Square" or (s == "text" and "Text" or (s == "circle" and "Circle" or (s == "triangle" and "Triangle" or "Line")));
+		if s == "gradient" then
+			local s, w, C = ...;
+			local Y = { select(4, ...) };
+			local r = #Y - 1;
+			local W = 10;
+			for X = 1, r, 1 do
+				local k, T = Y[X], Y[X + 1];
+				local H, y = math.max(1, C.x) / r, math.max(1, C.y) / r;
+				for Y = 1, W, 1 do
+					local r = ((Y - 1)) / ((W - 1));
+					local o = Color3.new(f(k.R, T.R, r), f(k.G, T.G, r), f(k.B, T.B, r));
+					local a = f(k.A or 1, T.A or 1, r) * i;
+					local D, F;
+					if s == "horizontal" then
+						F = Vector2.new(H / W, C.y);
+						D = Vector2.new((w.x + ((X - 1)) * H) + ((Y - 1)) * F.x, w.y);
+					elseif s == "vertical" then
+						F = Vector2.new(C.x, y / W);
+						D = Vector2.new(w.x, (w.y + ((X - 1)) * y) + ((Y - 1)) * F.y);
+					end;
+					E:_Draw("rect", o, V, a, D, F, true);
+				end;
+			end;
+			return;
+		end;
+		E._pIdx[C] = E._pIdx[C] + 1;
+		local Y = E._pIdx[C];
+		local W = E._pool[C][Y];
+		local X = E._pool_state[C][Y];
+		if not W then
+			W = Drawing.new(C);
+			W.Visible = false;
+			E._pool[C][Y] = W;
+			X = { Visible = false };
+			E._pool_state[C][Y] = X;
+		end;
+		if X.ZIndex ~= V then
+			W.ZIndex = V;
+			X.ZIndex = V;
+		end;
+		if w ~= nil and X.Color ~= w then
+			W.Color = w;
+			X.Color = w;
+		end;
+		local k = r(i, 0, 1);
+		if X.Transparency ~= k then
+			W.Transparency = k;
+			X.Transparency = k;
+		end;
+		if X.Visible ~= true then
+			W.Visible = true;
+			X.Visible = true;
+		end;
+		if s == "rect" then
+			local s, w, V, i = ...;
+			if X.Position ~= s then
+				W.Position = s;
+				X.Position = s;
+			end;
+			if X.Size ~= w then
+				W.Size = w;
+				X.Size = w;
+			end;
+			if X.Filled ~= V then
+				W.Filled = V;
+				X.Filled = V;
+			end;
+			if i and i > 0 then
+				if X.Corner ~= i then
+					W.Corner = i;
+					X.Corner = i;
+				end;
+			else
+				if X.Corner ~= 0 then
+					W.Corner = 0;
+					X.Corner = 0;
+				end;
+			end;
+		elseif s == "text" then
+			local s, w, V, i, C, Y = ...;
+			local f = (i == "center");
+			if X.Center ~= f then
+				W.Center = f;
+				X.Center = f;
+			end;
+			if X.Position ~= s then
+				W.Position = s;
+				X.Position = s;
+			end;
+			if X.Text ~= w then
+				W.Text = w;
+				X.Text = w;
+			end;
+			if X.Outline ~= V then
+				W.Outline = V;
+				X.Outline = V;
+			end;
+			local r = Y or E._font_face;
+			if X.Font ~= r then
+				W.Font = r;
+				X.Font = r;
+			end;
+			local k = C or E._font_size;
+			if X.Size ~= k then
+				W.Size = k;
+				X.Size = k;
+			end;
+		elseif s == "triangle" then
+			local s, w, V, i = ...;
+			if X.Filled ~= s then
+				W.Filled = s;
+				X.Filled = s;
+			end;
+			if X.PointA ~= w then
+				W.PointA = w;
+				X.PointA = w;
+			end;
+			if X.PointB ~= V then
+				W.PointB = V;
+				X.PointB = V;
+			end;
+			if X.PointC ~= i then
+				W.PointC = i;
+				X.PointC = i;
+			end;
+		elseif s == "circle" then
+			local s, w, V = ...;
+			if X.Position ~= s then
+				W.Position = s;
+				X.Position = s;
+			end;
+			if X.Radius ~= w then
+				W.Radius = w;
+				X.Radius = w;
+			end;
+			if X.Filled ~= V then
+				W.Filled = V;
+				X.Filled = V;
+			end;
+		elseif s == "line" then
+			local s, w, V = ...;
+			if X.From ~= s then
+				W.From = s;
+				X.From = s;
+			end;
+			if X.To ~= w then
+				W.To = w;
+				X.To = w;
+			end;
+			local i = V or 1;
+			if X.Thickness ~= i then
+				W.Thickness = i;
+				X.Thickness = i;
+			end;
+		end;
+	end;
+	function prodordie._FullWipe(s)
+		for s, w in pairs(s._pool or {}) do
+			for s, w in ipairs(w) do
+				w.Visible = false;
+				pcall(function()
+					w:Remove();
+				end);
+			end;
+		end;
+		s._pool = {
+				Square = {},
+				Text = {},
+				Triangle = {},
+				Circle = {},
+				Line = {},
+			};
+		s._pool_state = {
+				Square = {},
+				Text = {},
+				Triangle = {},
+				Circle = {},
+				Line = {},
+			};
+	end;
+end;
+do
+	function prodordie._SpawnColorpicker(E, s, w, V, i)
+		local C, Y, f = Q(V.R, V.G, V.B);
+		E._active_colorpicker = {
+				position = s or Vector2.new((E.x + E.w) + E._padding, E.y),
+				label = w,
+				callback = i,
+				_h = C,
+				_s = Y,
+				_v = f,
+				_anim = 0,
+				_closing = false,
+			};
+	end;
+	function prodordie._RemoveColorpicker(s)
+		if s._active_colorpicker then
+			s._active_colorpicker._closing = true;
+		end;
+	end;
+	function prodordie._SpawnDropdown(Y, s, w, V, i, E, C)
+		Y._active_dropdown = {
+				position = s,
+				width = w,
+				value = V,
+				choices = i,
+				multi = E,
+				callback = C,
+				_spawned_at = os.clock(),
+				_anim = 0,
+			};
+		Y._dropdown_scroll_target = 0;
+		Y._dropdown_scroll_v = 0;
+	end;
+	function prodordie._RemoveDropdown(s)
+		s._active_dropdown = nil;
+	end;
+	function prodordie._SpawnCtxMenu(E, s, w, V, i)
+		E._ctx_menu = {
+				x = s,
+				y = w,
+				siid = V,
+				sItem = i,
+				_anim = 0,
+				items = { { label = "Copy", action = "copy" }, { label = "Clear", action = "clear" } },
+			};
+	end;
+	function prodordie._RemoveCtxMenu(s)
+		s._ctx_menu = nil;
+	end;
+end;
+do
+	function prodordie._Toggle(f, s, w, V, i, E, C, Y)
+		if type(V) == "table" then
+			local s = V;
+			V = s.Label or s.label;
+			i = s.Value or s.value;
+			E = s.Callback or s.callback;
+			C = s.IsNew or s.isNew;
+			Y = s.Tooltip or s.tooltip;
+		end;
+		f._tree = f._tree or {};
+		f._tree[s] = f._tree[s] or { _items = {}, _searchQuery = "" };
+		f._tree[s]._items[w] = f._tree[s]._items[w] or { _items = {}, _count = 0 };
+		local r = #f._tree[s]._items[w]._items + 1;
+		local function W(s)
+			f:_MarkDirty();
+			if E then
+				E(s);
+			end;
+		end;
+		local X = s .. ("_" .. (w .. ("_" .. r)));
+		local k = {
+				type_ = "toggle",
+				_rawcb = E,
+				label = V,
+				value = i,
+				callback = W,
+				isNew = C or false,
+				tooltip = Y,
+				_id = X,
+				_anim_key = "s_anim_" .. X,
+			};
+		table.insert(f._tree[s]._items[w]._items, k);
+		local T = s .. (w .. tostring(r));
+		f._toggle_anim[T] = i and 1 or 0;
+		f:_RegisterConfigRef(s, w, k);
+		return { Set = function(V, i)
+				f._tree[s]._items[w]._items[r].value = i;
+				if f._tree[s]._items[w]._items[r].callback then
+					f._tree[s]._items[w]._items[r].callback(i);
+				end;
+			end, AddKeybind = function(V, i, E)
+				local C = {
+						value = i,
+						callback = E,
+						_listening = false,
+						_listening_start = 0,
+					};
+				f._tree[s]._items[w]._items[r].keybind = C;
+				return { Set = function(V, i)
+						f._tree[s]._items[w]._items[r].keybind.value = i;
+						if f._tree[s]._items[w]._items[r].keybind.callback then
+							f._tree[s]._items[w]._items[r].keybind.callback(i);
+						end;
+					end };
+			end, AddColorpicker = function(V, i, E, C, Y)
+				local W = {
+						label = i,
+						value = E or f._theming.accent,
+						overwrite = C,
+						callback = Y,
+					};
+				f._tree[s]._items[w]._items[r].colorpicker = W;
+				return { Set = function(V, i)
+						f._tree[s]._items[w]._items[r].colorpicker.value = i;
+						if f._tree[s]._items[w]._items[r].colorpicker.callback then
+							f._tree[s]._items[w]._items[r].colorpicker.callback(i);
+						end;
+					end };
+			end };
+	end;
+	function prodordie._Slider(X, s, w, V, i, E, C, Y, f, r, W)
+		if type(V) == "table" then
+			local s = V;
+			V = s.Label or s.label;
+			i = s.Value or s.value;
+			E = s.Step or s.step;
+			C = s.Min or s.min;
+			Y = s.Max or s.max;
+			f = s.Suffix or s.suffix;
+			r = s.IsNew or s.isNew;
+			W = s.Callback or s.callback;
+		elseif type(r) == "function" then
+			W = r;
+			r = false;
+		end;
+		X._tree = X._tree or {};
+		X._tree[s] = X._tree[s] or { _items = {}, _searchQuery = "" };
+		X._tree[s]._items[w] = X._tree[s]._items[w] or { _items = {}, _count = 0 };
+		local k = #X._tree[s]._items[w]._items + 1;
+		local function T(s)
+			X:_MarkDirty();
+			if W then
+				W(s);
+			end;
+		end;
+		local H = s .. ("_" .. (w .. ("_" .. k)));
+		local y = {
+				type_ = "slider",
+				_rawcb = W,
+				label = V,
+				value = i,
+				default = i,
+				step = E,
+				min = C,
+				max = Y,
+				suffix = f or "",
+				isNew = r or false,
+				callback = T,
+				_id = H,
+				_anim_key = "s_anim_" .. H,
+			};
+		table.insert(X._tree[s]._items[w]._items, y);
+		X:_RegisterConfigRef(s, w, y);
+		return { Set = function(V, i)
+				X._tree[s]._items[w]._items[k].value = i;
+				if X._tree[s]._items[w]._items[k].callback then
+					X._tree[s]._items[w]._items[k].callback(i);
+				end;
+			end };
+	end;
+	function prodordie._Dropdown(r, s, w, V, i, E, C, Y, f)
+		if type(V) == "table" then
+			local s = V;
+			V = s.Label or s.label;
+			i = s.Value or s.value;
+			E = s.Choices or s.choices;
+			C = s.Multi or s.multi;
+			Y = s.IsNew or s.isNew;
+			f = s.Callback or s.callback;
+		elseif type(Y) == "function" then
+			f = Y;
+			Y = false;
+		end;
+		r._tree = r._tree or {};
+		r._tree[s] = r._tree[s] or { _items = {}, _searchQuery = "" };
+		r._tree[s]._items[w] = r._tree[s]._items[w] or { _items = {}, _count = 0 };
+		local W = #r._tree[s]._items[w]._items + 1;
+		local function X(s)
+			r:_MarkDirty();
+			if f then
+				f(s);
+			end;
+		end;
+		local k = s .. ("_" .. (w .. ("_" .. W)));
+		local T = {
+				type_ = "dropdown",
+				_rawcb = f,
+				label = V,
+				value = i,
+				choices = E,
+				multi = C,
+				isNew = Y or false,
+				callback = X,
+				_id = k,
+				_anim_key = "s_anim_" .. k,
+			};
+		table.insert(r._tree[s]._items[w]._items, T);
+		r:_RegisterConfigRef(s, w, T);
+		return { Set = function(V, i)
+				r._tree[s]._items[w]._items[W].value = i;
+				if r._tree[s]._items[w]._items[W].callback then
+					r._tree[s]._items[w]._items[W].callback(i);
+				end;
+			end, UpdateChoices = function(V, i)
+				r._tree[s]._items[w]._items[W].choices = i;
+			end };
+	end;
+	function prodordie._Button(C, s, w, V, i, E)
+		if type(V) == "table" then
+			local s = V;
+			V = s.Label or s.label;
+			i = s.IsNew or s.isNew;
+			E = s.Callback or s.callback;
+		elseif type(i) == "function" then
+			E = i;
+			i = false;
+		end;
+		C._tree = C._tree or {};
+		C._tree[s] = C._tree[s] or { _items = {}, _searchQuery = "" };
+		C._tree[s]._items[w] = C._tree[s]._items[w] or { _items = {}, _count = 0 };
+		local Y = #C._tree[s]._items[w]._items + 1;
+		local f = s .. ("_" .. (w .. ("_" .. Y)));
+		local r = {
+				type_ = "button",
+				label = V,
+				isNew = i or false,
+				callback = E,
+				_id = f,
+				_anim_key = "s_anim_" .. f,
+			};
+		table.insert(C._tree[s]._items[w]._items, r);
+		return { AddColorpicker = function(V, i, E, f, r)
+				local W = {
+						label = i,
+						value = E or C._theming.accent,
+						overwrite = f,
+						callback = r,
+					};
+				C._tree[s]._items[w]._items[Y].colorpicker = W;
+				return { Set = function(V, i)
+						C._tree[s]._items[w]._items[Y].colorpicker.value = i;
+						if C._tree[s]._items[w]._items[Y].colorpicker.callback then
+							C._tree[s]._items[w]._items[Y].colorpicker.callback(i);
+						end;
+					end };
+			end };
+	end;
+	function prodordie._Textbox(C, s, w, V, i, E)
+		if type(V) == "table" then
+			local s = V;
+			V = s.Label or s.label;
+			i = s.Value or s.value;
+			E = s.Callback or s.callback;
+		end;
+		C._tree = C._tree or {};
+		C._tree[s] = C._tree[s] or { _items = {}, _searchQuery = "" };
+		C._tree[s]._items[w] = C._tree[s]._items[w] or { _items = {}, _count = 0 };
+		local Y = #C._tree[s]._items[w]._items + 1;
+		local function f(s)
+			C:_MarkDirty();
+			if E then
+				E(s);
+			end;
+		end;
+		local r = s .. ("_" .. (w .. ("_" .. Y)));
+		local W = {
+				type_ = "textbox",
+				_rawcb = E,
+				label = V,
+				value = i,
+				callback = f,
+				_id = r,
+				_anim_key = "s_anim_" .. r,
+			};
+		table.insert(C._tree[s]._items[w]._items, W);
+		C:_RegisterConfigRef(s, w, W);
+		return { Set = function(V, i)
+				C._tree[s]._items[w]._items[Y].value = i;
+				if C._tree[s]._items[w]._items[Y].callback then
+					C._tree[s]._items[w]._items[Y].callback(i);
+				end;
+			end };
+	end;
+	function prodordie._Section(V, s, w)
+		V._tree = V._tree or {};
+		V._tree[s] = V._tree[s] or { _items = {}, _searchQuery = "" };
+		V._tree[s]._items[w] = { _items = {}, _count = 0 };
+		V._tree[s]._secCount = ((V._tree[s]._secCount or 0)) + 1;
+		if not V._tree[s]._sec_order then
+			V._tree[s]._sec_order = {};
+		end;
+		table.insert(V._tree[s]._sec_order, w);
+		return {
+			Toggle = function(i, ...)
+				return V:_Toggle(s, w, ...);
+			end,
+			Slider = function(i, ...)
+				return V:_Slider(s, w, ...);
+			end,
+			Dropdown = function(i, ...)
+				return V:_Dropdown(s, w, ...);
+			end,
+			Button = function(i, ...)
+				return V:_Button(s, w, ...);
+			end,
+			Textbox = function(i, ...)
+				return V:_Textbox(s, w, ...);
+			end,
+		};
+	end;
+end;
+do
+	function prodordie.GetMenuSize(s)
+		return Vector2.new(s.w, s.h);
+	end;
+	function prodordie.SetWatermarkEnabled(w, s)
+		w._watermark_enabled = s;
+	end;
+	function prodordie.SetMenuTitle(w, s)
+		local V = tostring(s);
+		if #V > 32 then
+			V = V:sub(1, 32);
+		end;
+		w.title = V;
+		w._custom_title = V;
+	end;
+	function prodordie.SetMenuPosition(w, s)
+		w.x = s.x or w.x;
+		w.y = s.y or w.y;
+	end;
+	function prodordie.SetMenuSize(w, s)
+		w.w = s.x or w.w;
+		w.h = s.y or w.h;
+	end;
+	function prodordie.SetMenuKey(w, s)
+		local V = (tostring(s)):lower();
+		if w._inputs[V] then
+			w._menu_key = V;
+			w:Notification("Menu key set to " .. V:upper(), 3);
+		else
+			w:Notification("Invalid key: " .. V, 3);
+		end;
+	end;
+	function prodordie.CenterMenu(s)
+		local w = s:_GetScreenSize();
+		local V = s:GetMenuSize();
+		s:SetMenuPosition(Vector2.new(w.x / 2 - V.x / 2, w.y / 2 - V.y / 2));
+	end;
+	function prodordie.Notification(V, s, w)
+		local i = tostring(s);
+		V._notifications = V._notifications or {};
+		for s, V in ipairs(V._notifications) do
+			if V.text == i then
+				if os.clock() - V._spawned_at < 1 then
+					return;
+				end;
+				V._spawned_at = os.clock();
+				V.time = w;
+				return;
+			end;
+		end;
+		if #V._notifications >= 6 then
+			table.remove(V._notifications, 1);
+		end;
+		table.insert(V._notifications, {
+			text = i,
+			time = w or 3,
+			_id = V._notifications_spawned,
+			_spawned_at = os.clock(),
+		});
+		V._notifications_spawned = V._notifications_spawned + 1;
+	end;
+	function prodordie.Tab(w, s)
+		w._tree = w._tree or {};
+		w._tree[s] = { _items = {}, _searchQuery = "" };
+		w._tab_order = w._tab_order or {};
+		table.insert(w._tab_order, s);
+		if not w._open_tab then
+			w._open_tab = s;
+			w._tab_fade = 1;
+		end;
+		if not w._autoload_requested and not w._boot_loaded then
+			w:AutoLoadConfig();
+		end;
+		return { Section = function(V, i)
+				return w:_Section(s, i);
+			end };
+	end;
+	function prodordie.RegisterActivity(w, s)
+		w._activities = w._activities or {};
+		local V = #w._activities + 1;
+		w._activities[V] = s;
+		return { Remove = function(s)
+				w._activities[V] = nil;
+			end };
+	end;
+	function prodordie.Unload(s)
+		s._unloading_sequence = true;
+		s._unload_phase = "sections";
+		s._unload_section_alpha = 1;
+	end;
+	function prodordie.CreateSettingsTab(w, s)
+		local V = w:Tab(s or "Settings");
+		local i = s or "Settings";
+		w._tab_order = w._tab_order or {};
+		for s, V in ipairs(w._tab_order) do
+			if V == i then
+				table.remove(w._tab_order, s);
+				break;
+			end;
+		end;
+		table.insert(w._tab_order, i);
+		local E = V:Section("Menu");
+		local C = E:Toggle("Menu Key", w._overwrite_menu_key, function(s)
+				w._overwrite_menu_key = s;
+			end);
+		C:AddKeybind(w._menu_key, function(s)
+			w._menu_key = w:_KeyIDToName(s);
+		end);
+		E:Toggle("Watermark", true, function(s)
+			w:SetWatermarkEnabled(s);
+		end);
+		E:Toggle("Custom watermark", w._custom_title_enabled, function(s)
+			w._custom_title_enabled = s;
+		end);
+		E:Textbox("Watermark text", w.title, function(s)
+			local V = tostring(s);
+			if #V > 32 then
+				V = V:sub(1, 32);
+			end;
+			w._custom_title = V;
+		end);
+		E:Button("Unload Script", false, function()
+			w:Unload();
+		end);
+		local Y = V:Section("Config & Theme");
+		local f = {};
+		for s in pairs(w._themes or {}) do
+			table.insert(f, s);
+		end;
+		table.sort(f);
+		Y:Dropdown("Theme", { w._theme_name }, f, false, false, function(s)
+			if s and s[1] then
+				w:_ApplyTheme(s[1]);
+			end;
+		end);
+		Y:Textbox("New config name", "", function(s)
+			if s and s ~= "" then
+				w._config_name = s;
+			end;
+		end);
+		w:_RefreshConfigList();
+		local r = w._config_list;
+		if #r == 0 then
+			r = { "default" };
+		end;
+		local W = Y:Dropdown("Saved configs", { w._config_name }, r, false, false, function(s)
+				if s and s[1] then
+					w._config_name = s[1];
+				end;
+			end);
+		Y:Button("Save config", false, function()
+			w:SaveConfig(w._config_name);
+			local s = w:_RefreshConfigList();
+			if #s == 0 then
+				s = { "default" };
+			end;
+			W:UpdateChoices(s);
+		end);
+		Y:Button("Load config", false, function()
+			w:LoadConfig(w._config_name);
+		end);
+		Y:Button("Delete config", false, function()
+			w:DeleteConfig(w._config_name);
+			local s = w:_RefreshConfigList();
+			if #s == 0 then
+				s = { "default" };
+			end;
+			W:UpdateChoices(s);
+			w._config_name = s[1] or "default";
+		end);
+		return V, E, Y;
+	end;
+end;
+local function h(s, w)
+	local V = w.type_;
+	if V == "toggle" then
+		return (s._font_size + 2) + s._padding;
+	elseif V == "slider" then
+		local V = P(s, w.label);
+		return ((V.y + 6) + 18) + s._padding * 3;
+	elseif V == "dropdown" then
+		local V = P(s, w.label);
+		return V.y * 2 + s._padding * 4;
+	elseif V == "button" then
+		local V = P(s, w.label);
+		return V.y + s._padding * 3;
+	elseif V == "textbox" then
+		return s._font_size + s._padding * 2;
+	end;
+	return 0;
+end;
+local function R(s, w)
+	local V = s._search_lower;
+	if not V or V == "" then
+		return true;
+	end;
+	if not w._lower_label then
+		w._lower_label = w.label:lower();
+	end;
+	return w._lower_label:find(V, 1, true) ~= nil;
+end;
+function prodordie.Step(Y)
+	if Y._unloaded then
+		return;
+	end;
+	Y._pIdx = {
+			Square = 0,
+			Text = 0,
+			Triangle = 0,
+			Circle = 0,
+			Line = 0,
+		};
+	Y._tree = Y._tree or {};
+	Y._tab_order = Y._tab_order or {};
+	Y._sec_scroll = Y._sec_scroll or {};
+	Y._sec_slide = Y._sec_slide or {};
+	Y._inputs = Y._inputs or {};
+	Y._item_vis = Y._item_vis or {};
+	Y._tab_scroll = Y._tab_scroll or {};
+	Y._frame_tooltip = nil;
+	local k = Y._theming;
+	local D = Y._corner;
+	local F = Y._padding;
+	local e = Y._KB_W;
+	local b = os.clock();
+	local Q = math.min(b - Y._last_step_time, .05);
+	if Y._last_step_time == 0 then
+		Q = .016;
+	end;
+	Y._last_step_time = b;
+	local function z(s)
+		return L(s, Q);
+	end;
+	if Y._tab_changing then
+		Y._tab_fade = f(Y._tab_fade, 0, z(.45));
+		if Y._tab_fade < .02 then
+			Y._open_tab = Y._next_tab;
+			Y._tab_changing = false;
+			Y._tab_fade = 0;
+			Y._sec_slide = {};
+			Y._item_vis = {};
+		end;
+	else
+		Y._tab_fade = f(Y._tab_fade, 1, z(.18));
+	end;
+	local U = X(Y._tab_fade);
+	Y:_PollMousePos();
+	if Y._autoload_requested and not Y._boot_loaded then
+		Y._boot_loaded = true;
+		Y._autoload_requested = false;
+		task.spawn(function()
+			Y:_DoAutoLoad();
+		end);
+	end;
+	Y:_AutoSaveTick(Q);
+	local q = game:GetService("UserInputService");
+	local t = false;
+	pcall(function()
+		t = q:GetFocusedTextBox() ~= nil;
+	end);
+	local S = true;
+	if type(isrbxactive) == "function" then
+		pcall(function()
+			S = isrbxactive();
+		end);
+	end;
+	if not Y._kcCache then
+		Y._kcCache = {};
+		for s, w in pairs(Y._inputs) do
+			if s == "m1" then
+				Y._kcCache[s] = Enum.UserInputType.MouseButton1;
+			elseif s == "m2" then
+				Y._kcCache[s] = Enum.UserInputType.MouseButton2;
+			elseif s == "mb" then
+				Y._kcCache[s] = Enum.UserInputType.MouseButton3;
+			else
+				pcall(function()
+					Y._kcCache[s] = Enum.KeyCode[s:upper()];
+				end);
+			end;
+		end;
+	end;
+	for s, w in pairs(Y._inputs) do
+		local V = false;
+		if type(iskeypressed) == "function" then
+			pcall(function()
+				V = iskeypressed(w.id);
+			end);
+		else
+			local w = Y._kcCache[s];
+			if w then
+				if s == "m1" or s == "m2" or s == "mb" then
+					V = q:IsMouseButtonPressed(w) == true;
+				else
+					V = q:IsKeyDown(w) == true;
+				end;
+			end;
+		end;
+		if not t and (S and V) then
+			Y._inputs[s].click = (not w.held and not w.click);
+			Y._inputs[s].held = true;
+		else
+			Y._inputs[s].click = false;
+			Y._inputs[s].held = false;
+		end;
+	end;
+	local I = Y:_IsKeyPressed("m1");
+	local n = Y:_IsKeyHeld("m1");
+	local l = Y:_IsKeyPressed("m2");
+	local G = (tostring(Y._overwrite_menu_key and Y._menu_key or "f5")):lower();
+	local u = Y:_IsKeyPressed(G);
+	local v = false;
+	local B = false;
+	for s, w in pairs(Y._inputs) do
+		if not a[s] and (not H[s] and (not y[s] and (not o[s] and w.click))) then
+			B = true;
+			break;
+		end;
+	end;
+	local d = I and not B;
+	if u then
+		Y._menu_open = not Y._menu_open;
+		if not Y._menu_open then
+			Y:_RemoveDropdown();
+			Y:_RemoveColorpicker();
+			Y:_RemoveCtxMenu();
+			Y:Notification("Menu Minimized (" .. (G:upper() .. " to open)"), 3);
+		end;
+	end;
+	if Y._unloading_sequence then
+		if Y._unload_phase == "sections" then
+			Y._unload_section_alpha = f(Y._unload_section_alpha or 1, 0, z(.18));
+			if ((Y._unload_section_alpha or 0)) < .04 then
+				Y._unload_section_alpha = 0;
+				Y._unload_phase = "menu";
+				Y._menu_open = false;
+			end;
+		end;
+	end;
+	local Z = ((Y._menu_open and not ((Y._unload_phase == "menu" or Y._unload_phase == "done")))) and 1 or 0;
+	local A = Y._menu_scale;
+	if A ~= Z then
+		A = f(A, Z, z(.12));
+		if math.abs(A - Z) < .002 then
+			A = Z;
+		end;
+		Y._menu_scale = A;
+	end;
+	if Y._unloading_sequence and (Y._unload_phase == "menu" and A < .01) then
+		Y._unloaded = true;
+		Y:_FullWipe();
+		return;
+	end;
+	local J = Y.x;
+	local p = Y.y;
+	local c = Y.w;
+	local K = Y._custom_title_enabled and Y._custom_title or Y.title;
+	local m = ((Y:_GetTextBounds(K)).y + F * 2) + 4;
+	local j = Y._search_query;
+	if j ~= Y._search_query_last then
+		Y._search_query_last = j;
+		Y._search_lower = j ~= "" and j:lower() or "";
+		local s = {};
+		if j ~= "" then
+			local w = Y._search_lower;
+			for V, i in ipairs(Y._tab_order) do
+				local E = Y._tree[i];
+				local C = 0;
+				if E then
+					for s, V in ipairs(E._sec_order or {}) do
+						local i = E._items[V] or { _items = {} };
+						for s, V in ipairs(i._items or {}) do
+							if not V._lower_label then
+								V._lower_label = V.label:lower();
+							end;
+							if V._lower_label:find(w, 1, true) then
+								C = C + 1;
+							end;
+						end;
+					end;
+				end;
+				s[i] = C;
+			end;
+		end;
+		Y._search_tab_results = s;
+	end;
+	if not Y._pill_x then
+		Y._pill_x = 0;
+	end;
+	if not Y._pill_target_x then
+		Y._pill_target_x = 0;
+	end;
+	local M = Y.h;
+	local g = Y._tree[Y._open_tab];
+	local N, O = {}, {};
+	local x, si = F, F;
+	if g then
+		for s, w in ipairs(g._sec_order or {}) do
+			local V = g._items[w] or { _items = {} };
+			local i = P(Y, w);
+			local E = F + i.y / 2;
+			local C = 0;
+			for s, w in ipairs(V._items or {}) do
+				local V = R(Y, w);
+				if V then
+					C = C + 1;
+				end;
+				local i = w._anim_key;
+				local r = V and 1 or 0;
+				local W = Y._toggle_anim[i];
+				if W == nil then
+					W = r;
+				end;
+				if W ~= r then
+					W = f(W, r, z(.15));
+				end;
+				Y._toggle_anim[i] = W;
+				if W > .001 then
+					E = E + h(Y, w) * W;
+				end;
+			end;
+			local r = "sec_anim_" .. (Y._open_tab .. ("_" .. w));
+			local W = C > 0 and 1 or 0;
+			Y._toggle_anim[r] = f(Y._toggle_anim[r] or W, W, z(.15));
+			local X = Y._toggle_anim[r];
+			if X > .001 then
+				E = E + (F * X);
+				local V = (s % 2 == 0);
+				if V then
+					table.insert(O, {
+						name = w,
+						h = E,
+						tsz = i,
+						anim = X,
+					});
+					si = (si + E) + ((i.y / 2 + F)) * X;
+				else
+					table.insert(N, {
+						name = w,
+						h = E,
+						tsz = i,
+						anim = X,
+					});
+					x = (x + E) + ((i.y / 2 + F)) * X;
+				end;
+			end;
+		end;
+		local s = math.max(x, si);
+		local w = (((m + Y._tab_h) + F * 3) + s) + 4;
+		M = r(w, (m + Y._tab_h) + F * 4, Y.h);
+	end;
+	local wi = Y:_GetScreenSize();
+	if Y._active_dropdown then
+		local s = Y._active_dropdown;
+		local w = Y._font_size + 9;
+		local V = math.min(#((s.choices or {})), 6);
+		local i = V * w + F;
+		local E = (((s.position.y - p)) + i) + 12;
+		if s.position.y + i < wi.y - 10 and E > M then
+			M = E;
+		end;
+	end;
+	if Y._active_colorpicker and not Y._active_colorpicker._closing then
+		local s = Y._active_colorpicker;
+		local w = (((s.position.y - p)) + 215) + 12;
+		if s.position.y + 215 < wi.y - 10 and w > M then
+			M = w;
+		end;
+	end;
+	local Vi = Y._current_h or Y.h;
+	if Vi ~= M then
+		Vi = f(Vi, M, z(.22));
+		if math.abs(Vi - M) < .5 then
+			Vi = M;
+		end;
+		Y._current_h = Vi;
+	end;
+	local ii = Vi;
+	local Ei = Vector2.new(c - 2, (M - m) - 2);
+	local Ci = (Ei.y - Y._tab_h) - F * 2;
+	local Yi = math.max(0, (math.max(x, si) - Ci) + F);
+	if Y._menu_open and (n and Y._menu_drag) then
+		local s = Y._cached_mouse or Vector2.new();
+		Y.x = s.x - Y._menu_drag.x;
+		Y.y = s.y - Y._menu_drag.y;
+	elseif not n then
+		Y._menu_drag = nil;
+	end;
+	local fi = P(Y, K);
+	local ri = fi.y + 16;
+	local Wi = fi.x + 44;
+	local Xi = Vector2.new((wi.x - Wi) - 16, 16);
+	local ki = ((Y._unloading_sequence and Y._unload_phase == "menu")) and X(A) or 1;
+	if Y._watermark_enabled then
+		Y:_Draw("rect", k.shadow, 98, .2 * ki, Xi + Vector2.new(2, 3), Vector2.new(Wi, ri), true, D);
+		Y:_Draw("rect", k.surface0, 99, ki, Xi, Vector2.new(Wi, ri), true, D);
+		Y:_Draw("rect", k.border1, 100, ki, Xi, Vector2.new(Wi, ri), false, D);
+		Y:_Draw("circle", k.accent, 101, ki, Xi + Vector2.new(12, ri / 2), 3.5, true);
+		Y:_Draw("text", k.text, 101, ki, Xi + Vector2.new(22, ((ri - Y._font_size)) / 2 + 1), K, false, nil, 13);
+	end;
+	local Ti = (16 + ri) + 10;
+	for s = #Y._notifications, 1, -1 do
+		local w = Y._notifications[s];
+		local V = w._spawned_at + w.time;
+		local i = b > V;
+		local E = math.max(0, math.min((w._spawned_at - b) + ((i and w.time + 1 or 1)), 1));
+		local C = math.abs(((i and 0 or 1)) - ((E * E) * ((3 - 2 * E)))) * ki;
+		local f = Y:_GetTextBounds(w.text);
+		local r = (f.x + F * 2) + 6;
+		local W = f.y + F * 1.2;
+		local T = ((r + 40)) * ((1 - X(C)));
+		local H = Vector2.new(((wi.x - r) - 16) + T, Ti);
+		local y = math.max(0, math.min(C, 1));
+		Y:_Draw("rect", k.shadow, 103, .15 * y, H + Vector2.new(2, 4), Vector2.new(r, W), true, D + 2);
+		Y:_Draw("rect", k.surface0, 104, y, H, Vector2.new(r, W), true, D + 2);
+		Y:_Draw("rect", k.border1, 105, y, H, Vector2.new(r, W), false, D + 2);
+		Y:_Draw("text", k.text, 105, y, H + Vector2.new(F, ((W - Y._font_size)) / 2 + 1), w.text, false);
+		Ti = Ti + ((W + 6)) * C;
+		if b > V + 1 then
+			table.remove(Y._notifications, s);
+		end;
+	end;
+	if A <= .015 then
+		for s, w in pairs(Y._pool or {}) do
+			for V = ((Y._pIdx[s] or 0)) + 1, #w, 1 do
+				local i = w[V];
+				local E = Y._pool_state[s][V];
+				if E and E.Visible ~= false then
+					pcall(function()
+						i.Visible = false;
+					end);
+					E.Visible = false;
+				end;
+			end;
+		end;
+		return;
+	end;
+	local Hi = ((1 - X(A))) * 50;
+	local yi = X(A);
+	local oi = false;
+	if Y._dd_drag or Y._slider_drag or Y._tab_scroll_drag then
+		oi = true;
+	end;
+	local ai = Y._active_dropdown;
+	if ai then
+		local s = math.min(#((ai.choices or {})), 6) * ((Y._font_size + 9)) + F;
+		local w = ai.position;
+		local V = Y:_GetScreenSize();
+		if w.y + s > V.y - 10 then
+			w = Vector2.new(w.x, (w.y - s) - ((ai._srcH or 0)));
+		end;
+		if Y:_IsMouseWithinBounds(w, Vector2.new(ai.width, s)) then
+			oi = true;
+		end;
+	end;
+	local Di = Y._active_colorpicker;
+	if Di and not Di._closing then
+		if Y:_IsMouseWithinBounds(Di.position, Vector2.new(240, 215)) then
+			oi = true;
+		end;
+	end;
+	if Y._ctx_menu then
+		oi = true;
+	end;
+	Y:_Draw("rect", k.shadow, 0, .12 * yi, Vector2.new(J - 1, (p + Hi) + 3), Vector2.new(c + 2, ii), true, D + 1);
+	Y:_Draw("rect", k.shadow, 0, .06 * yi, Vector2.new(J - 3, (p + Hi) + 6), Vector2.new(c + 6, ii), true, D + 3);
+	Y:_Draw("rect", k.body, 1, yi, Vector2.new(J, p + Hi), Vector2.new(c, ii), true, D);
+	Y:_Draw("rect", k.surface0, 20, yi, Vector2.new(J + 1, (p + Hi) + 1), Vector2.new(c - 2, m), true, D - 1);
+	Y:_Draw("rect", k.border1, 21, yi, Vector2.new(J + 1, (p + Hi) + m), Vector2.new(c - 2, 1), true);
+	local Fi = (p + Hi) + m / 2;
+	local ei = J + 16;
+	local bi = 6;
+	Y:_Draw("circle", s, 22, yi, Vector2.new(ei, Fi), bi, true);
+	Y:_Draw("circle", V, 22, yi, Vector2.new(ei + 20, Fi), bi, true);
+	Y:_Draw("circle", E, 22, yi, Vector2.new(ei + 40, Fi), bi, true);
+	Y:_Draw("circle", w, 23, yi, Vector2.new(ei, Fi), bi, false);
+	Y:_Draw("circle", i, 23, yi, Vector2.new(ei + 20, Fi), bi, false);
+	Y:_Draw("circle", C, 23, yi, Vector2.new(ei + 40, Fi), bi, false);
+	if d and Y:_IsMouseWithinBounds(Vector2.new(ei - bi, Fi - bi), Vector2.new(bi * 2, bi * 2)) then
+		Y._menu_open = false;
+		Y:_RemoveDropdown();
+		Y:_RemoveColorpicker();
+		Y:_RemoveCtxMenu();
+		Y:Notification("Menu Minimized", 3);
+		I = false;
+		v = true;
+	end;
+	if Y._menu_open and A > .5 then
+		Y:_Draw("text", k.text, 22, yi, Vector2.new(J + c / 2, (p + Hi) + m / 2), K, false, "center");
+	end;
+	Y._search_query = Y._search_query or "";
+	Y._search_typing = Y._search_typing or false;
+	Y._search_w_anim = Y._search_w_anim or 22;
+	local Pi = ((Y._search_typing or Y._search_query ~= "")) and 130 or 22;
+	Y._search_w_anim = f(Y._search_w_anim, Pi, z(.2));
+	local Li = Y._search_w_anim;
+	local Qi = 22;
+	local hi = ((J + c) - Li) - 10;
+	local Ri = (p + Hi) + ((m - Qi)) / 2;
+	local zi = Vector2.new(hi, Ri);
+	local Ui = Vector2.new(Li, Qi);
+	local qi = not oi and Y:_IsMouseWithinBounds(zi, Ui);
+	if d and qi then
+		Y._search_typing = true;
+		I = false;
+		v = true;
+	elseif d and not v then
+		Y._search_typing = false;
+	end;
+	if Y._search_typing and Y:_IsKeyPressed("esc") then
+		Y._search_query = "";
+		Y._search_typing = false;
+	end;
+	if Y._search_typing then
+		local s = {
+				space = " ",
+				dash = "-",
+				colon = ":",
+				period = ".",
+				comma = ",",
+				slash = "/",
+				semicolon = ";",
+				quote = "\'",
+				leftbracket = "[",
+				rightbracket = "]",
+				backslash = "\\",
+				equals = "=",
+				minus = "-",
+			};
+		local w = {
+				["1"] = "!",
+				["2"] = "@",
+				["3"] = "#",
+				["4"] = "$",
+				["5"] = "%",
+				["6"] = "^",
+				["7"] = "&",
+				["8"] = "*",
+				["9"] = "(",
+				["0"] = ")",
+				["-"] = "_",
+				["="] = "+",
+				["["] = "{",
+				["]"] = "}",
+				[";"] = ":",
+				["\'\'"] = "\"",
+				[","] = "<",
+				["."] = ">",
+				["/"] = "?",
+				["\\"] = "|",
+			};
+		local V = Y._search_query;
+		local i = Y:_IsKeyHeld("lshift") or Y:_IsKeyHeld("rshift");
+		local E = nil;
+		for s in pairs(Y._inputs or {}) do
+			if Y:_IsKeyHeld(s) then
+				E = s;
+				break;
+			end;
+		end;
+		if E then
+			if not Y._key_repeat[E] then
+				Y._key_repeat[E] = os.clock() + .4;
+			elseif os.clock() > Y._key_repeat[E] then
+				Y._key_repeat[E] = os.clock() + .05;
+				local C = s[E] or E;
+				if C == "backspace" then
+					V = V:sub(1, -2);
+				elseif #C == 1 then
+					if i and w[C] then
+						C = w[C];
+					elseif i then
+						C = C:upper();
+					end;
+					if #V < 24 then
+						V = V .. C;
+					end;
+				end;
+				Y._search_query = V;
+			end;
+		else
+			Y._key_repeat = {};
+		end;
+		for E in pairs(Y._inputs or {}) do
+			if Y:_IsKeyPressed(E) then
+				local C = s[E] or E;
+				if C == "enter" then
+					Y._search_typing = false;
+					break;
+				elseif C == "backspace" then
+					V = V:sub(1, -2);
+				elseif #C == 1 then
+					if i and w[C] then
+						C = w[C];
+					elseif i then
+						C = C:upper();
+					end;
+					if #V < 24 then
+						V = V .. C;
+					end;
+				end;
+				Y._search_query = V;
+			end;
+		end;
+	end;
+	local ti = r(((Li - 22)) / (108), 0, 1);
+	local Si = W(k.body, k.surface1, ti);
+	Y:_Draw("rect", Si, 22, yi, zi, Ui, true, Qi / 2);
+	Y:_Draw("rect", Y._search_typing and k.accent or k.border1, 23, yi, zi, Ui, false, Qi / 2);
+	local Ii = zi.x + 10;
+	local ni = (zi.y + Ui.y / 2) - 1;
+	local li = W(k.subtext, k.text, ti);
+	Y:_Draw("circle", li, 24, yi, Vector2.new(Ii, ni), 3, false);
+	Y:_Draw("line", li, 24, yi, Vector2.new(Ii + 2, ni + 2), Vector2.new(Ii + 5, ni + 5), 2);
+	if ti > .05 then
+		local s = Y._search_query;
+		if Y._search_typing then
+			s = s .. ((math.floor(os.clock() * 2) % 2 == 0 and "|" or ""));
+		end;
+		if s == "" and not Y._search_typing then
+			s = "Global search...";
+		end;
+		local w = 24;
+		if (Y:_GetTextBounds(s)).x > (Ui.x - w) - 8 then
+			for V = 1, #s, 1 do
+				local i = s:sub(V);
+				if (Y:_GetTextBounds(i)).x <= (Ui.x - w) - 8 then
+					s = i;
+					break;
+				end;
+			end;
+		end;
+		local V = ((Y._search_query ~= "" or Y._search_typing)) and k.text or k.subtext;
+		Y:_Draw("text", V, 24, yi * ti, zi + Vector2.new(w, Ui.y / 2 - Y._font_size / 2), s, false);
+	end;
+	local Gi = Vector2.new(J + 1, (p + m) + 1);
+	local ui = Vector2.new(J + 1, ((p + Hi) + m) + 1);
+	local vi = Vector2.new(c - 2, (ii - m) - 2);
+	local Bi = (ui.y + Y._tab_h) + F;
+	local di = (vi.y - Y._tab_h) - F * 2;
+	local Zi = Bi + di;
+	local Ai = Y._scroll_delta;
+	Y._scroll_delta = 0;
+	pcall(function()
+		if Ai == 0 then
+			local s = getmousedelta();
+			if s and s.Y ~= 0 then
+				Ai = s.Y > 0 and 18 or -18;
+			end;
+		end;
+	end);
+	if Ai ~= 0 then
+		if Y._active_colorpicker then
+			Y:_RemoveColorpicker();
+		end;
+	end;
+	local Ji = #Y._tab_order;
+	local pi = 6;
+	local ci = vi.x - pi * 2;
+	local Ki = ci / math.max(1, Ji);
+	local mi = ui + Vector2.new(pi, pi);
+	local ji = Gi + Vector2.new(pi, pi);
+	Y:_Draw("rect", k.surface1, 20, yi, mi, Vector2.new(ci, Y._tab_h), true, D);
+	Y:_Draw("rect", k.border1, 21, yi, mi, Vector2.new(ci, Y._tab_h), false, D);
+	for s, w in ipairs(Y._tab_order) do
+		local V = mi + Vector2.new(Ki * ((s - 1)), 0);
+		local i = ji + Vector2.new(Ki * ((s - 1)), 0);
+		local E = Vector2.new(Ki, Y._tab_h);
+		local C = Y._open_tab == w;
+		local f = Y._search_tab_results[w] or 0;
+		local r = C and k.text or k.subtext;
+		Y:_Draw("text", r, 24, yi, V + Vector2.new(Ki / 2, Y._tab_h / 2), w, false, "center");
+		if Y._search_query ~= "" and (f > 0 and not C) then
+			local s = Y:_GetTextBounds(w, nil, Y._font_size);
+			local i = ((V.x + Ki / 2) + s.x / 2) + 6;
+			local E = (V.y + Y._tab_h / 2) - 4;
+			Y:_Draw("circle", k.accent, 25, yi, Vector2.new(i, E), 3, true);
+		end;
+		if not C and (not oi and (Y:_IsMouseWithinBounds(i, E) and (I and not v))) then
+			if not Y._tab_changing then
+				Y._tab_changing = true;
+				Y._next_tab = w;
+				Y._input_ctx = nil;
+				Y:_RemoveDropdown();
+				Y:_RemoveColorpicker();
+				Y:_RemoveCtxMenu();
+				Y._pill_target_x = Ki * ((s - 1));
+				I = false;
+				v = true;
+			end;
+		end;
+	end;
+	Y._pill_x = f(Y._pill_x, Y._pill_target_x, z(.16));
+	local Mi = mi.x + Y._pill_x;
+	Y:_Draw("rect", k.surface0, 22, yi, Vector2.new(Mi + 3, mi.y + 3), Vector2.new(Ki - 6, Y._tab_h - 6), true, D - 2);
+	Y:_Draw("rect", k.border0, 23, yi, Vector2.new(Mi + 3, mi.y + 3), Vector2.new(Ki - 6, Y._tab_h - 6), false, D - 2);
+	for s, w in ipairs(Y._tab_order) do
+		local V = Y._tree[w];
+		if V and (Y._open_tab == w and (Y._menu_open and A > .5)) then
+			Y._tab_scroll[w] = Y._tab_scroll[w] or { offset = 0, target = 0, maxScroll = 0 };
+			local s = Y._tab_scroll[w];
+			local V = math.max(x, si);
+			s.maxScroll = math.max(0, (V - di) + F);
+			local i = Yi > 0 and (s.maxScroll > 0 and U > .75);
+			if i then
+				local V = 3;
+				local i = ((ui.x + vi.x) - V) - 2;
+				local E = di;
+				local C = math.max(20, E * ((E / ((E + s.maxScroll)))));
+				local f = Vector2.new(V + 16, E);
+				local W = Vector2.new(i - 8, Bi);
+				local X = not oi and Y:_IsMouseWithinBounds(W, f);
+				if n then
+					if ((X or Y._tab_scroll_drag == w)) and (I and not v) then
+						Y._tab_scroll_drag = w;
+						I = false;
+						v = true;
+					end;
+					if Y._tab_scroll_drag == w then
+						local w = Y:_GetMousePos();
+						local V = r((((w.y - Bi) - C / 2)) / math.max(1, E - C), 0, 1);
+						s.target = V * s.maxScroll;
+					end;
+				else
+					if Y._tab_scroll_drag == w then
+						Y._tab_scroll_drag = nil;
+					end;
+				end;
+			end;
+		end;
+	end;
+	for s, w in ipairs(Y._tab_order) do
+		local V = Y._tree[w];
+		if V and Y._open_tab == w then
+			Y._tab_scroll[w] = Y._tab_scroll[w] or { offset = 0, target = 0, maxScroll = 0 };
+			local s = Y._tab_scroll[w];
+			local i = Y._menu_open and A > .5;
+			local E = vi.x / 2 - F * 1.5;
+			local C = math.max(x, si);
+			local H = math.max(0, (C - di) + F);
+			s.maxScroll = H;
+			if i then
+				local w = Yi > 0 and (H > 0 and U > .75);
+				if w then
+					local w = 3;
+					local V = ((ui.x + vi.x) - w) - 2;
+					local i = di;
+					local E = math.max(20, i * ((i / ((i + H)))));
+					local C = s.offset;
+					local f = Bi + ((i - E)) * ((C / math.max(1, H)));
+					if Ai ~= 0 and (not oi and Y:_IsMouseWithinBounds(ui, vi)) then
+						s.target = r(s.target - Ai, 0, H);
+					end;
+					local W = yi * r(((U - .75)) / .25, 0, 1);
+					Y:_Draw("rect", k.border0, 13, .35 * W, Vector2.new(V, Bi), Vector2.new(w, i), true, w / 2);
+					Y:_Draw("rect", k.subtext, 14, .7 * W, Vector2.new(V, f), Vector2.new(w, E), true, w / 2);
+				elseif Ai ~= 0 and (not oi and Y:_IsMouseWithinBounds(ui, vi)) then
+					s.target = r(s.target - Ai, 0, H);
+				end;
+			end;
+			if s.offset ~= s.target then
+				s.offset = f(s.offset, s.target, z(.18));
+				if math.abs(s.offset - s.target) < .5 then
+					s.offset = s.target;
+				end;
+			end;
+			local y = s.offset;
+			local function o(s, C, H)
+				local o = (Bi + F) - y;
+				for s, C in ipairs(s) do
+					local y = C.name;
+					local a = C.h;
+					local b = C.tsz;
+					local L = C.anim;
+					local Q = "menu_sec_" .. (w .. ("_" .. y));
+					Y._sec_slide = Y._sec_slide or {};
+					if Y._sec_slide[Q] == nil then
+						Y._sec_slide[Q] = 10;
+					end;
+					local R = Y._sec_slide[Q];
+					if R ~= 0 then
+						R = f(R, 0, z(.14));
+						if math.abs(R) < .25 then
+							R = 0;
+						end;
+						Y._sec_slide[Q] = R;
+					end;
+					local q = R;
+					local t = (o + ((b.y / 2)) * L) + q;
+					local S = Vector2.new(H, t);
+					if i then
+						local s = S.y;
+						local i = S.y + a;
+						local C = math.max(s, Bi);
+						local H = math.min(i, Zi);
+						local Q = math.max(0, H - C);
+						local R = Q > 0;
+						local q = D;
+						local t = L * U;
+						if Y._unloading_sequence and Y._unload_phase == "sections" then
+							t = t * ((Y._unload_section_alpha or 1));
+						end;
+						if R and t > .001 then
+							Y:_Draw("rect", k.shadow, 2, (.1 * t) * yi, Vector2.new(S.x + 2, C + 3), Vector2.new(E, Q), true, q);
+							Y:_Draw("rect", k.surface0, 3, t * yi, Vector2.new(S.x, C), Vector2.new(E, Q), true, q);
+							Y:_Draw("rect", k.border1, 4, t * yi, Vector2.new(S.x, C), Vector2.new(E, Q), false, q);
+						end;
+						local G = (S.y - ((b.y / 2)) * L) - 7;
+						local u = G + b.y;
+						local B = 12;
+						local d = L * U;
+						local Z = (u > Bi) and (G < Zi);
+						if Z then
+							local s = G - Bi;
+							local w = Zi - u;
+							if s < B then
+								d = math.min(d, math.max(0, s / B));
+							end;
+							if w < B then
+								d = math.min(d, math.max(0, w / B));
+							end;
+							if s < 0 or w < 0 then
+								d = 0;
+							end;
+							if Y._unloading_sequence and Y._unload_phase == "sections" then
+								d = d * ((Y._unload_section_alpha or 1));
+							end;
+						else
+							d = 0;
+						end;
+						if d > .001 then
+							Y:_Draw("text", k.subtext, 6, yi * d, Vector2.new(S.x + F, G), y, false);
+						end;
+						local A = V._items and V._items[y] or { _items = {} };
+						local J = ((F + b.y / 2)) * L;
+						for s, V in ipairs(A._items or {}) do
+							local i = V._anim_key;
+							local C = Y._toggle_anim[i] or 0;
+							if C > .001 then
+								local i = h(Y, V);
+								local H = i * C;
+								local o = Vector2.new(S.x + F, S.y + J);
+								local a = V.type_;
+								local D = V.value;
+								local b = V.callback;
+								local Q = w .. (y .. tostring(s));
+								local q = o.y;
+								local t = (o.y + H) - (F * C);
+								local G = R and ((t >= Bi) and (q <= Zi));
+								local u = C * U;
+								if G then
+									local s = q - Bi;
+									local w = Zi - t;
+									if s < B then
+										u = math.min(u, math.max(0, s / B));
+									end;
+									if w < B then
+										u = math.min(u, math.max(0, w / B));
+									end;
+									if s < 0 or w < 0 then
+										u = 0;
+									end;
+									if Y._unloading_sequence and Y._unload_phase == "sections" then
+										u = u * ((Y._unload_section_alpha or 1));
+									end;
+								end;
+								if u <= .001 then
+									G = false;
+								end;
+								local d = V._id;
+								local Z = G and (u > .4);
+								if not G then
+									Y._item_vis[d] = false;
+								else
+									Y._item_vis[d] = true;
+									local s = o;
+									local w = Z and (I and not v);
+									local C = (yi * u) * L;
+									if a == "toggle" then
+										local i = D and 1 or 0;
+										local r = Y._toggle_anim[Q];
+										if r == nil then
+											r = i;
+										elseif r ~= i then
+											r = f(r, i, z(.1));
+										end;
+										Y._toggle_anim[Q] = r;
+										local X = 34;
+										local T = Y._font_size + 2;
+										local H = V.keybind;
+										local y = V.colorpicker;
+										local o = 0;
+										if H then
+											o = e + F;
+											local i = ((H.value or "?")):upper();
+											local f = H._listening and "..." or i;
+											local r = 12;
+											while r > 7 and (Y:_GetTextBounds(f, nil, r)).x > e - 6 do
+												r = r - 1;
+											end;
+											local X = Vector2.new(((S.x + E) - e) - F, s.y + ((T - Y._font_size)) / 2);
+											local y = Vector2.new(e, Y._font_size + 2);
+											local a = not oi and Y:_IsMouseWithinBounds(X, y);
+											local D = a and W(k.surface1, k.accent, .2) or k.surface1;
+											if H.value and not H._listening then
+												if Y:_IsKeyPressed(H.value) then
+													if not V.value then
+														Y:Notification("Enable " .. (V.label .. " first"), 3);
+													else
+														local s = not V.value;
+														V.value = s;
+														if b then
+															b(s);
+														end;
+													end;
+												end;
+											end;
+											Y:_Draw("rect", k.shadow, 6, .1 * C, X + Vector2.new(1, 2), y, true, 6);
+											Y:_Draw("rect", D, 7, C, X, y, true, 6);
+											Y:_Draw("rect", H._listening and k.accent or k.border1, 8, C, X, y, false, 6);
+											local P = ((a or H._listening)) and k.text or k.subtext;
+											Y:_Draw("text", P, 8, C, X + Vector2.new(e / 2, y.y / 2), f, false, "center", r);
+											if a and w then
+												H._listening = true;
+												H._listening_start = os.clock();
+												I = false;
+												v = true;
+											end;
+											if H._listening then
+												local s = os.clock() - H._listening_start;
+												if s > 6 then
+													H._listening = false;
+												elseif s > .15 then
+													for s, w in pairs(Y._inputs or {}) do
+														if Y:_IsKeyPressed(s) then
+															if s == "m1" then
+																H._listening = false;
+															else
+																local i = s ~= "backspace" and s;
+																if i then
+																	for s, w in ipairs(Y._config_refs or {}) do
+																		local E = w.item;
+																		if E ~= V and (E.keybind and E.keybind.value == i) then
+																			Y:Notification("Conflict: " .. (i:upper() .. (" used by " .. E.label)), 4);
+																		end;
+																	end;
+																end;
+																if H.callback and Y._inputs[i] then
+																	H.callback(w.id);
+																end;
+																H.value = i;
+																H._listening = false;
+															end;
+														end;
+													end;
+												end;
+											end;
+										elseif y then
+											local V = Vector2.new(24, 14);
+											local i = s + Vector2.new((E - F * 2) - V.x, ((T - V.y)) / 2);
+											o = V.x + F * 2;
+											local f = not oi and Y:_IsMouseWithinBounds(i, V);
+											Y:_Draw("rect", k.border1, 7, C, i, V, true, 4);
+											Y:_Draw("rect", y.value, 8, C, i + Vector2.new(1, 1), V - Vector2.new(2, 2), true, 4);
+											if f and w then
+												Y:_SpawnColorpicker(nil, y.label, y.value, function(s)
+													y.value = s;
+													if y.callback then
+														y.callback(s);
+													end;
+												end);
+												I = false;
+												v = true;
+											end;
+										end;
+										local a = V.unsafe and k.unsafe or (D and k.text or k.subtext);
+										if not y or not y.overwrite then
+											local i = not oi and Y:_IsMouseWithinBounds(s, Vector2.new(X, T));
+											if i and w then
+												local s = not D;
+												V.value = s;
+												if b then
+													b(s);
+												end;
+												I = false;
+												v = true;
+											end;
+											local E = W(k.surface1, k.accent, r);
+											Y:_Draw("rect", E, 7, C, s, Vector2.new(X, T), true, T / 2);
+											Y:_Draw("rect", W(k.border1, k.accent, r), 8, C, s, Vector2.new(X, T), false, T / 2);
+											local f = (T / 2) - 1;
+											local H = ((s.x + f) + 1) + ((X - T)) * r;
+											local y = s.y + T / 2;
+											Y:_Draw("circle", k.shadow, 8, .15 * C, Vector2.new(H, y + 1), f, true);
+											Y:_Draw("circle", k.surface0, 9, C, Vector2.new(H, y), f, true);
+										else
+											a = k.text;
+										end;
+										local P = V.label;
+										local L = false;
+										local h = (((E - X) - F * 2) - o) - ((V.isNew and 36 or 0));
+										while #P > 1 and (Y:_GetTextBounds(P)).x > h do
+											P = P:sub(1, -2);
+											L = true;
+										end;
+										if L then
+											P = P:sub(1, -2) .. "..";
+										end;
+										local R = Y:_GetTextBounds(P);
+										local U = s + Vector2.new(X + F, ((T - Y._font_size)) / 2);
+										Y:_Draw("text", a, 7, C, U, P, false);
+										if Z and (L and (not oi and Y:_IsMouseWithinBounds(U, R))) then
+											Y._frame_tooltip = { key = d, text = V.label };
+										end;
+										if V.isNew then
+											local s = U + Vector2.new(R.x + 8, -2);
+											Y:_Draw("rect", k.accent, 8, C, s, Vector2.new(28, 14), true, 4);
+											Y:_Draw("text", k.surface0, 9, C, s + Vector2.new(14, 7), "NEW", false, "center", 9);
+										end;
+									elseif a == "slider" then
+										local f = V.min or 0;
+										local X = V.max or 100;
+										local H = V.step or 1;
+										local y = Y:_GetTextBounds(V.label);
+										local o = Y._font_size;
+										local a = (s.x + o) + F;
+										local e = ((E - F * 2) - o * 2) - F * 2;
+										local P = Vector2.new(a, (s.y + y.y) + F);
+										local L = Vector2.new(e, 6);
+										local Q = V.label;
+										local h = false;
+										local R = (E - F * 2) - ((V.isNew and 36 or 0));
+										while #Q > 1 and (Y:_GetTextBounds(Q)).x > R do
+											Q = Q:sub(1, -2);
+											h = true;
+										end;
+										if h then
+											Q = Q:sub(1, -2) .. "..";
+										end;
+										local z = Y:_GetTextBounds(Q);
+										Y:_Draw("text", k.subtext, 7, C, s, Q, false);
+										if Z and (h and (not oi and Y:_IsMouseWithinBounds(s, z))) then
+											Y._frame_tooltip = { key = d, text = V.label };
+										end;
+										if V.isNew then
+											local w = s + Vector2.new(z.x + 8, 0);
+											Y:_Draw("rect", k.accent, 8, C, w, Vector2.new(28, 14), true, 4);
+											Y:_Draw("text", k.surface0, 9, C, w + Vector2.new(14, 7), "NEW", false, "center", 9);
+										end;
+										local U = D or f;
+										local q = P - Vector2.new(o + F, L.y + F);
+										local t = Vector2.new(e + ((o + F)) * 2, i);
+										local S = not oi and Y:_IsMouseWithinBounds(q, t);
+										if S and (l and Z) then
+											U = V.default ~= nil and V.default or f;
+											V.value = U;
+											if b then
+												b(U);
+											end;
+											Y:Notification("Reset to default", 2);
+											l = false;
+										end;
+										local G = not oi and Y:_IsMouseWithinBounds(P - Vector2.new(0, 6), L + Vector2.new(0, 12));
+										if n then
+											if Z and (((G or Y._slider_drag == d)) and (I and Y._slider_drag ~= d)) then
+												Y._slider_drag = d;
+												I = false;
+												v = true;
+											end;
+											if Y._slider_drag == d then
+												local s = r((((Y:_GetMousePos()).x - P.x)) / L.x, 0, 1);
+												U = f + ((X - f)) * s;
+												U = math.floor((U / H) + .5) * H;
+												U = r(U, f, X);
+											end;
+										else
+											Y._slider_drag = nil;
+										end;
+										local u = s.x + o / 2;
+										local B = ((a + e) + F) + o / 2;
+										local A = P.y + L.y / 2;
+										local J = Vector2.new(s.x, A - o / 2);
+										local p = Vector2.new((a + e) + F, A - o / 2);
+										local c = Vector2.new(o, o);
+										local K = not oi and Y:_IsMouseWithinBounds(J, c);
+										local m = not oi and Y:_IsMouseWithinBounds(p, c);
+										Y:_Draw("text", K and k.text or k.subtext, 7, C, Vector2.new(u, A), "-", false, "center");
+										Y:_Draw("text", m and k.text or k.subtext, 7, C, Vector2.new(B, A), "+", false, "center");
+										if w and not oi then
+											if K then
+												U = r(U - H, f, X);
+												I = false;
+												v = true;
+											elseif m then
+												U = r(U + H, f, X);
+												I = false;
+												v = true;
+											end;
+										end;
+										if U ~= D then
+											V.value = U;
+											if b then
+												b(U);
+											end;
+										end;
+										local j = r(((U - f)) / (math.max(.01, X - f)), 0, 1);
+										local M = d .. "_dv";
+										Y._slider_disp[M] = U;
+										local g = (Y._slider_drag == d);
+										local N = ((G or g)) and W(k.surface1, k.accent, .12) or k.surface1;
+										Y:_Draw("rect", N, 7, C, P, L, true, 3);
+										Y:_Draw("rect", ((G or g)) and k.border0 or k.border1, 8, C, P, L, false, 3);
+										local O = math.max(0, L.x * j - 2);
+										Y:_Draw("rect", k.accent, 9, C, P + Vector2.new(1, 1), Vector2.new(O, L.y - 2), true, 3);
+										local x = P.x + L.x * j;
+										local si = P.y + L.y / 2;
+										local wi = g and 7 or 5;
+										Y:_Draw("circle", k.surface0, 10, C, Vector2.new(x, si), wi, true);
+										Y:_Draw("circle", k.accent, 11, C, Vector2.new(x, si), wi, false);
+										local Vi = T(U) .. V.suffix;
+										Y:_Draw("text", k.text, 15, C, Vector2.new(x, (si + wi) + 6), Vi, false, "center", 11);
+									elseif a == "dropdown" then
+										local i = Y:_GetTextBounds(V.label);
+										local r = Vector2.new(s.x, (s.y + i.y) + F);
+										local X = Vector2.new(E - F * 2, i.y + F);
+										local T = not oi and Y:_IsMouseWithinBounds(r, X);
+										local H = Y._active_dropdown and Y._active_dropdown_owner == d;
+										if H then
+											Y._active_dropdown.position = Vector2.new(r.x, r.y + X.y);
+											Y._active_dropdown._srcH = X.y;
+										end;
+										if T and w then
+											if H then
+												Y:_RemoveDropdown();
+												Y._active_dropdown_owner = nil;
+											else
+												Y:_SpawnDropdown(Vector2.new(r.x, r.y + X.y), X.x, D, V.choices, V.multi, function(s)
+													V.value = s;
+													if b then
+														b(s);
+													end;
+												end);
+												Y._active_dropdown._srcH = X.y;
+												Y._active_dropdown_owner = d;
+											end;
+											I = false;
+											v = true;
+										end;
+										local y = d .. "_arw";
+										Y._dd_arrow_anim[y] = f(Y._dd_arrow_anim[y] or 0, H and 1 or 0, z(.25));
+										local o = Y._dd_arrow_anim[y];
+										local a = math.floor(((r.x + X.x) - F) - 4);
+										local e = math.floor(r.y + X.y / 2);
+										local L = Vector2.new(math.floor(f(a + 2, a - 3, o) + .5), math.floor(f(e - 3, e - 2, o) + .5));
+										local Q = Vector2.new(math.floor(f(a + 2, a + 3, o) + .5), math.floor(f(e + 3, e - 2, o) + .5));
+										local h = Vector2.new(math.floor(f(a - 3, a, o) + .5), math.floor(f(e, e + 3, o) + .5));
+										local R = T and W(k.surface0, k.accent, .06) or k.surface0;
+										Y:_Draw("rect", k.shadow, 6, .1 * C, r + Vector2.new(1, 2), X, true, 6);
+										Y:_Draw("rect", R, 7, C, r, X, true, 6);
+										Y:_Draw("rect", k.border1, 8, C, r, X, false, 6);
+										Y:_Draw("triangle", k.subtext, 8, C, true, L, Q, h);
+										local U = type(D) == "table" and table.concat(D, ", ") or tostring(D or "");
+										local q = false;
+										if U == "" then
+											U = ((V.choices and V.choices[1])) and tostring(V.choices[1]) or "";
+											q = true;
+										end;
+										if (Y:_GetTextBounds(U)).x > (X.x - F) - 14 then
+											if q then
+												local s = (X.x - F) - 26;
+												while #U > 1 and (Y:_GetTextBounds(U)).x > s do
+													U = U:sub(1, -2);
+												end;
+												U = U .. "..";
+											else
+												local s = type(D) == "table" and #((D or {})) or 1;
+												U = tostring(s) .. (" item" .. ((s == 1 and "" or "s")));
+											end;
+										end;
+										local t = q and k.subtext or k.text;
+										Y:_Draw("text", t, 8, C, r + Vector2.new(6, (Y:_GetTextBounds(U)).y / 2 - 1), U, false);
+										local S = (E - F * 2) - ((V.isNew and 36 or 0));
+										local n = V.label;
+										local l = false;
+										local G = (P(Y, n)).x;
+										if G > S then
+											local s = S / math.max(1, G);
+											n = n:sub(1, math.max(1, math.floor(#n * s) - 2)) .. "..";
+											l = true;
+										end;
+										local u = P(Y, n);
+										Y:_Draw("text", k.subtext, 7, C, s + Vector2.new(F, 0), n, false);
+										if Z and (l and (not oi and Y:_IsMouseWithinBounds(s + Vector2.new(F, 0), u))) then
+											Y._frame_tooltip = { key = d .. "dd", text = V.label };
+										end;
+										if V.isNew then
+											local w = s + Vector2.new((F + u.x) + 8, -2);
+											Y:_Draw("rect", k.accent, 8, C, w, Vector2.new(28, 14), true, 4);
+											Y:_Draw("text", k.surface0, 9, C, w + Vector2.new(14, 7), "NEW", false, "center", 9);
+										end;
+									elseif a == "button" then
+										local i = V.colorpicker;
+										local r = 0;
+										local T = (Y:_GetTextBounds(V.label)).y + F;
+										if i then
+											local V = Vector2.new(24, 14);
+											local f = s + Vector2.new((E - F * 2) - V.x, ((T - V.y)) / 2);
+											r = V.x + F * 2;
+											local W = not oi and Y:_IsMouseWithinBounds(f, V);
+											Y:_Draw("rect", k.border1, 7, C, f, V, true, 4);
+											Y:_Draw("rect", i.value, 8, C, f + Vector2.new(1, 1), V - Vector2.new(2, 2), true, 4);
+											if W and w then
+												Y:_SpawnColorpicker(nil, i.label, i.value, function(s)
+													i.value = s;
+													if i.callback then
+														i.callback(s);
+													end;
+												end);
+												I = false;
+												v = true;
+											end;
+										end;
+										local H = Vector2.new(s.x, s.y);
+										local y = Vector2.new((E - F * 2) - r, T);
+										local o = not oi and Y:_IsMouseWithinBounds(H, y);
+										if n then
+											if o and w then
+												Y._slider_drag = d;
+												I = false;
+												v = true;
+												if b then
+													b();
+												end;
+											end;
+										else
+											Y._slider_drag = nil;
+										end;
+										local a = n and Y._slider_drag == d;
+										local D = d .. "_bp";
+										Y._toggle_anim[D] = f(Y._toggle_anim[D] or 0, a and 1 or 0, z(.45));
+										local e = Y._toggle_anim[D];
+										local P = math.floor(e * 2 + .5);
+										local L = H + Vector2.new(P, P);
+										local Q = y - Vector2.new(P * 2, P * 2);
+										local h = W(o and W(k.surface0, k.accent, .08) or k.surface0, k.accent, e * .85);
+										Y:_Draw("rect", k.shadow, 6, (((1 - e)) * .1) * C, H + Vector2.new(1, 2), y, true, 6);
+										Y:_Draw("rect", h, 7, C, L, Q, true, 6);
+										Y:_Draw("rect", a and k.accent or k.border1, 8, C, L, Q, false, 6);
+										local R = ((a or o)) and k.text or k.subtext;
+										if V._last_label == nil then
+											V._last_label = V.label;
+										end;
+										local U = d .. "_lbl_anim";
+										if V.label ~= V._last_label then
+											V._old_label = V._last_label;
+											V._last_label = V.label;
+											Y._toggle_anim[U] = 0;
+										end;
+										local q = Y._toggle_anim[U] or 1;
+										q = f(q, 1, z(.35));
+										Y._toggle_anim[U] = q;
+										if q < .995 and V._old_label then
+											local s = X(q);
+											local w = C * ((1 - s));
+											local i = (L.y + Q.y / 2) - (10 * s);
+											Y:_Draw("text", R, 8, w, Vector2.new(L.x + Q.x / 2, i), V._old_label, false, "center");
+											local E = C * s;
+											local f = (L.y + Q.y / 2) + 10 * ((1 - s));
+											Y:_Draw("text", R, 8, E, Vector2.new(L.x + Q.x / 2, f), V.label, false, "center");
+										else
+											Y:_Draw("text", R, 8, C, L + Vector2.new(Q.x / 2, Q.y / 2), V.label, false, "center");
+										end;
+										if V.isNew then
+											local s = Y:_GetTextBounds(V.label);
+											local w = L + Vector2.new((Q.x / 2 + s.x / 2) + 8, ((Q.y - 14)) / 2);
+											Y:_Draw("rect", k.accent, 9, C, w, Vector2.new(28, 14), true, 4);
+											Y:_Draw("text", k.surface0, 10, C, w + Vector2.new(14, 7), "NEW", false, "center", 9);
+										end;
+									elseif a == "textbox" then
+										local i = s;
+										local r = Vector2.new(E - F * 2, Y._font_size + F);
+										local X = not oi and Y:_IsMouseWithinBounds(i, r);
+										local T = Y._input_ctx == d;
+										local H = math.floor(os.clock() * 2) % 2 == 0 and "|" or " ";
+										local y = D and D ~= "";
+										local o = d .. "_ph";
+										Y._toggle_anim[o] = f(Y._toggle_anim[o] or (y and 1 or 0), y and 1 or 0, z(.18));
+										local a = Y._toggle_anim[o];
+										local e = T and (((D or "")) .. H) or ((y and D or V.label)) .. " ";
+										local b = ((T or X)) and k.text or W(k.subtext, k.text, a);
+										if (Y:_GetTextBounds(e)).x > r.x then
+											local s, w, V = 1, #e, #e;
+											while s < w do
+												local V = math.floor(((s + w)) / 2);
+												if (Y:_GetTextBounds(e:sub(V))).x <= r.x - 4 then
+													w = V;
+												else
+													s = V + 1;
+												end;
+											end;
+											e = e:sub(s);
+										end;
+										local P = Y:_GetTextBounds(e);
+										if Y:_IsKeyPressed("m1") then
+											if w and X then
+												Y._input_ctx = d;
+												Y:_RemoveCtxMenu();
+												I = false;
+												v = true;
+											elseif T then
+												Y._input_ctx = nil;
+												Y:_RemoveDropdown();
+												T = false;
+											end;
+										end;
+										if l and (Z and X) then
+											local s = Y:_GetMousePos();
+											Y:_SpawnCtxMenu(s.x, s.y, d, V);
+											l = false;
+										end;
+										if T then
+											local s = {
+													space = " ",
+													dash = "-",
+													colon = ":",
+													period = ".",
+													comma = ",",
+													slash = "/",
+													semicolon = ";",
+													quote = "\'",
+													leftbracket = "[",
+													rightbracket = "]",
+													backslash = "\\",
+													equals = "=",
+													minus = "-",
+												};
+											local w = {
+													["1"] = "!",
+													["2"] = "@",
+													["3"] = "#",
+													["4"] = "$",
+													["5"] = "%",
+													["6"] = "^",
+													["7"] = "&",
+													["8"] = "*",
+													["9"] = "(",
+													["0"] = ")",
+													["-"] = "_",
+													["="] = "+",
+													["["] = "{",
+													["]"] = "}",
+													[";"] = ":",
+													["\'"] = "\"",
+													[","] = "<",
+													["."] = ">",
+													["/"] = "?",
+													["\\"] = "|",
+												};
+											local i = D or "";
+											local E = Y:_IsKeyHeld("lshift") or Y:_IsKeyHeld("rshift");
+											local C = nil;
+											for s in pairs(Y._inputs or {}) do
+												if Y:_IsKeyHeld(s) then
+													C = s;
+													break;
+												end;
+											end;
+											if C then
+												if not Y._key_repeat[C] then
+													Y._key_repeat[C] = os.clock() + .4;
+												elseif os.clock() > Y._key_repeat[C] then
+													Y._key_repeat[C] = os.clock() + .05;
+													local f = s[C] or C;
+													if f == "backspace" then
+														i = i:sub(1, -2);
+													elseif #f == 1 then
+														if E and w[f] then
+															f = w[f];
+														elseif E then
+															f = f:upper();
+														end;
+														if #i < 200 then
+															i = i .. f;
+														end;
+													end;
+													if V.callback then
+														V.callback(i);
+													end;
+													V.value = i;
+												end;
+											else
+												Y._key_repeat = {};
+											end;
+											for C in pairs(Y._inputs or {}) do
+												if Y:_IsKeyPressed(C) then
+													local f = s[C] or C;
+													if f == "enter" or f == "esc" then
+														Y._input_ctx = nil;
+														break;
+													elseif f == "backspace" then
+														i = i:sub(1, -2);
+													elseif #f == 1 then
+														if E and w[f] then
+															f = w[f];
+														elseif E then
+															f = f:upper();
+														end;
+														if #i < 200 then
+															i = i .. f;
+														end;
+													end;
+													if V.callback then
+														V.callback(i);
+													end;
+													V.value = i;
+												end;
+											end;
+										end;
+										Y:_Draw("rect", T and k.surface0 or k.surface1, 7, C, i, r, true, 6);
+										Y:_Draw("rect", T and k.accent or (X and k.border0 or k.border1), 8, C, i, r, false, 6);
+										Y:_Draw("text", b, 8, C, i + Vector2.new(6, P.y / 2 - 2), e, false);
+									end;
+								end;
+								J = J + H;
+							end;
+						end;
+						o = (o + a) + ((b.y / 2 + F)) * L;
+					end;
+				end;
+			end;
+			local a = vi.x / 2 - F * 1.5;
+			o(N, false, Gi.x + F);
+			o(O, true, (Gi.x + F * 2) + a);
+		end;
+	end;
+	local gi = Y._ctx_menu;
+	if gi then
+		gi._anim = f(gi._anim or 0, 1, z(.3));
+		local s = gi._anim;
+		local w = Y._font_size + 8;
+		local V = 80;
+		local i = #gi.items * w + 4;
+		local E = gi.x;
+		local C = gi.y;
+		if E + V > (J + c) - 4 then
+			E = ((J + c) - V) - 4;
+		end;
+		if C + i > (p + ii) - 4 then
+			C = C - i;
+		end;
+		local r = Vector2.new(E, C);
+		local X = Vector2.new(V, i);
+		Y:_Draw("rect", k.shadow, 700, (.18 * s) * yi, r + Vector2.new(2, 4), X, true, 6);
+		Y:_Draw("rect", k.surface0, 701, s * yi, r, X, true, 6);
+		Y:_Draw("rect", k.border1, 702, s * yi, r, X, false, 6);
+		for i, f in ipairs(gi.items) do
+			local r = (C + 2) + ((i - 1)) * w;
+			local X = Vector2.new(E + 2, r);
+			local T = Vector2.new(V - 4, w);
+			local H = Y:_IsMouseWithinBounds(X, T);
+			if H then
+				Y:_Draw("rect", W(k.surface0, k.accent, .18), 703, s * yi, X, T, true, 4);
+			end;
+			Y:_Draw("text", H and k.text or k.subtext, 704, s * yi, X + Vector2.new(V / 2 - 2, w / 2), f.label, false, "center", 12);
+			if H and (I and not v) then
+				local s = gi.sItem;
+				if f.action == "copy" then
+					local w = s.value or "";
+					if type(setclipboard) == "function" then
+						pcall(setclipboard, w);
+					end;
+					Y:Notification("Copied to clipboard", 2);
+				elseif f.action == "clear" then
+					s.value = "";
+					if s.callback then
+						s.callback("");
+					end;
+					Y:_MarkDirty();
+					Y:Notification("Cleared", 2);
+				end;
+				Y:_RemoveCtxMenu();
+				I = false;
+				v = true;
+			end;
+		end;
+		if ((I or l)) and (not v and not Y:_IsMouseWithinBounds(r, X)) then
+			Y:_RemoveCtxMenu();
+			I = false;
+			l = false;
+			v = true;
+		end;
+	end;
+	local Ni = Y._active_dropdown;
+	if Ni then
+		Ni._anim = f(Ni._anim or 0, 1, z(.15));
+		local s = Ni._anim;
+		local w = Ni.position;
+		local V = Y._font_size + 9;
+		local i = 6;
+		local E = #((Ni.choices or {}));
+		local C = math.min(E, i);
+		local T = Ni.width;
+		local H = C * V + F;
+		local y = Y:_GetScreenSize();
+		local o = false;
+		if w.y + H > y.y - 10 then
+			o = true;
+			w = Vector2.new(w.x, (w.y - H) - ((Ni._srcH or 0)));
+		end;
+		local a = E > i;
+		local D = math.max(0, E * V - ((H - F)));
+		if Ai ~= 0 and Y:_IsMouseWithinBounds(w, Vector2.new(T, H)) then
+			Ni._scroll_target = r(((Ni._scroll_target or 0)) - Ai, 0, D);
+		end;
+		Ni._scroll_target = Ni._scroll_target or 0;
+		Ni._scroll_v = f(Ni._scroll_v or 0, Ni._scroll_target, z(.25));
+		if math.abs(Ni._scroll_v - Ni._scroll_target) < .5 then
+			Ni._scroll_v = Ni._scroll_target;
+		end;
+		local e = math.max(1, H * X(s));
+		local b = o and Vector2.new(w.x, w.y + ((H - e))) or w;
+		Y:_Draw("rect", k.shadow, 500, .15 * yi, b + Vector2.new(2, 4), Vector2.new(T, e), true, 6);
+		Y:_Draw("rect", k.surface0, 501, yi, b, Vector2.new(T, e), true, 6);
+		Y:_Draw("rect", k.border1, 502, yi, b, Vector2.new(T, e), false, 6);
+		local P = b.y;
+		local L = b.y + e;
+		local Q, h, R;
+		if a and e > 20 then
+			local s = 3;
+			h = (T - s) - 2;
+			R = e - F;
+			Q = math.max(10, R * ((R / ((R + D)))));
+			if n then
+				if Y:_IsMouseWithinBounds(b + Vector2.new(h - 5, F / 2), Vector2.new(s + 10, R)) and (I and not v) then
+					Y._dd_drag = "dd_sb";
+					I = false;
+					v = true;
+				end;
+				if Y._dd_drag == "dd_sb" then
+					local s = Y:_GetMousePos();
+					local w = r((((s.y - ((b.y + F / 2))) - Q / 2)) / math.max(1, R - Q), 0, 1);
+					Ni._scroll_target = w * D;
+				end;
+			else
+				Y._dd_drag = nil;
+			end;
+			local w = F / 2 + ((R - Q)) * ((Ni._scroll_v / D));
+			Y:_Draw("rect", k.border0, 503, .35 * yi, b + Vector2.new(h, F / 2), Vector2.new(3, R), true, 1.5);
+			Y:_Draw("rect", k.subtext, 504, .7 * yi, b + Vector2.new(h, w), Vector2.new(3, Q), true, 1.5);
+		end;
+		for s, i in ipairs(Ni.choices or {}) do
+			local E = ((((o and w.y or w.y)) + F / 2) + ((s - 1)) * V) - Ni._scroll_v;
+			local C = E + V;
+			if C > P and E < L then
+				local s = 1;
+				local f = 3;
+				local r = E - P;
+				local X = L - C;
+				if r < f then
+					s = math.max(0, r / f);
+				end;
+				if X < f then
+					s = math.min(s, math.max(0, X / f));
+				end;
+				if r < 0 or X < 0 then
+					s = 0;
+				end;
+				if s > .05 then
+					local C = type(Ni.value) == "table" and table.find(Ni.value, i) or false;
+					local f = Vector2.new(w.x + 6, E);
+					local r = Vector2.new(T - ((a and 16 or 12)), V);
+					local X = (s > .4);
+					local H = X and Y:_IsMouseWithinBounds(f, r);
+					if H then
+						local w = math.max(f.y + 1, P + 2);
+						local V = math.min((f.y + r.y) - 1, L - 2);
+						local i = math.max(0, V - w);
+						if i > 0 then
+							Y:_Draw("rect", W(k.surface0, k.accent, .18), 505, yi * s, Vector2.new(f.x + 2, w), Vector2.new(r.x - 4, i), true, 4);
+						end;
+					end;
+					local y = H and k.text or (C and k.text or k.subtext);
+					Y:_Draw("text", y, 506, yi * s, f + Vector2.new(2, 4), i, false, nil, 12);
+					if H and (I and not v) then
+						if Ni.multi then
+							if type(Ni.value) ~= "table" then
+								Ni.value = {};
+							end;
+							local s = table.find(Ni.value, i);
+							if s then
+								table.remove(Ni.value, s);
+							else
+								table.insert(Ni.value, i);
+							end;
+						else
+							Ni.value = { i };
+						end;
+						if Ni.callback then
+							Ni.callback(Ni.value);
+						end;
+						if not Ni.multi then
+							Y:_RemoveDropdown();
+						end;
+						I = false;
+						v = true;
+						break;
+					end;
+				end;
+			end;
+		end;
+		if I and (not v and not Y:_IsMouseWithinBounds(b, Vector2.new(T, e))) then
+			Y:_RemoveDropdown();
+			Y._active_dropdown_owner = nil;
+			I = false;
+			v = true;
+		end;
+	end;
+	local Oi = Y._active_colorpicker;
+	if Oi then
+		Oi._anim = f(Oi._anim or 0, Oi._closing and 0 or 1, z(.15));
+		local s = Oi._anim;
+		if Oi._closing and s < .05 then
+			Y._active_colorpicker = nil;
+		else
+			local w = true;
+			local V = Vector2.new(240, 215);
+			local i = Oi.position;
+			local E = Y:_GetTextBounds(Oi.label);
+			local C = Vector2.new(V.x, math.max(1, V.y * X(s)));
+			Y:_Draw("rect", k.shadow, 600, .18 * yi, i + Vector2.new(2, 4), C, true, D);
+			Y:_Draw("rect", k.surface0, 601, yi, i, C, true, D);
+			Y:_Draw("rect", k.border1, 602, yi, i, C, false, D);
+			if C.y > 20 then
+				Y:_Draw("text", k.text, 603, yi, i + Vector2.new(F, F + 1), Oi.label, false);
+			end;
+			if C.y > 40 then
+				local s = Color3.fromHSV(Oi._h, Oi._s, Oi._v);
+				local C = Vector2.new(24, 14);
+				local f = i + Vector2.new((V.x - F) - C.x, F + 1);
+				Y:_Draw("rect", k.border1, 603, yi, f, C, true, 4);
+				Y:_Draw("rect", s, 604, yi, f + Vector2.new(1, 1), C - Vector2.new(2, 2), true, 4);
+				local W = i + Vector2.new(F, (F + E.y) + 10);
+				local X = Vector2.new(V.x - F * 2, 100);
+				Y:_Draw("rect", k.border1, 602, yi, W, X, false);
+				Y:_Draw("rect", k.body, 604, yi, W, X, true);
+				local T = Y:_GetMousePos();
+				local H = X;
+				local y = Vector2.new(H.x, 14);
+				local o = W;
+				local a = o + Vector2.new(0, H.y + 10);
+				local D = a + Vector2.new(0, y.y + 10);
+				local e = Vector2.new(H.x, 24);
+				if Y:_IsMouseWithinBounds(a, y) and n then
+					local s = r(((T.x - a.x)) / math.max(1, y.x), 0, 1);
+					if s ~= Oi._h then
+						Oi._h = s;
+						if Oi.callback then
+							Oi.callback(Color3.fromHSV(Oi._h, Oi._s, Oi._v));
+						end;
+					end;
+					w = false;
+				end;
+				if Y:_IsMouseWithinBounds(o, H) and n then
+					local s = r(((T.x - o.x)) / math.max(1, H.x), 0, 1);
+					local V = 1 - r(((T.y - o.y)) / math.max(1, H.y), 0, 1);
+					if s ~= Oi._s or V ~= Oi._v then
+						Oi._s = s;
+						Oi._v = V;
+						if Oi.callback then
+							Oi.callback(Color3.fromHSV(Oi._h, Oi._s, Oi._v));
+						end;
+					end;
+					w = false;
+				end;
+				local b = Color3.fromHSV(Oi._h, 1, 1);
+				Y:_Draw("gradient", nil, 605, yi, "horizontal", o, H, Color3.fromRGB(255, 255, 255), b);
+				Y:_Draw("gradient", nil, 606, yi, "vertical", o, H, {
+					R = 0,
+					G = 0,
+					B = 0,
+					A = 0,
+				}, {
+					R = 0,
+					G = 0,
+					B = 0,
+					A = 1,
+				});
+				Y:_Draw("gradient", nil, 606, yi, "horizontal", a, y, Color3.fromRGB(255, 0, 0), Color3.fromRGB(255, 255, 0), Color3.fromRGB(0, 255, 0), Color3.fromRGB(0, 255, 255), Color3.fromRGB(0, 0, 255), Color3.fromRGB(255, 0, 255), Color3.fromRGB(255, 0, 0));
+				local P = o + Vector2.new(H.x * Oi._s, H.y * ((1 - Oi._v)));
+				Y:_Draw("circle", Color3.fromRGB(255, 255, 255), 607, .9 * yi, P, 5, false);
+				local L = a.x + y.x * Oi._h;
+				Y:_Draw("rect", Color3.fromRGB(255, 255, 255), 607, yi, Vector2.new(L - 2, a.y - 2), Vector2.new(4, y.y + 4), true);
+				Y:_Draw("rect", Color3.fromRGB(50, 50, 50), 608, yi, Vector2.new(L - 2, a.y - 2), Vector2.new(4, y.y + 4), false);
+				local Q = "#" .. string.format("%02X%02X%02X", math.floor(s.R * 255), math.floor(s.G * 255), math.floor(s.B * 255));
+				Y:_Draw("rect", k.surface1, 605, yi, D, e, true, 4);
+				Y:_Draw("rect", k.border1, 606, yi, D, e, false, 4);
+				Y:_Draw("text", k.text, 607, yi, D + Vector2.new(e.x / 2, e.y / 2), Q, false, "center", 12);
+			end;
+			if I and (not v and not Y:_IsMouseWithinBounds(i, C)) then
+				Y:_RemoveColorpicker();
+				v = true;
+				I = false;
+			end;
+		end;
+	end;
+	if Y._frame_tooltip then
+		if not Y._tooltip or Y._tooltip.key ~= Y._frame_tooltip.key then
+			Y._tooltip = {
+					key = Y._frame_tooltip.key,
+					text = Y._frame_tooltip.text,
+					timer = 0,
+					_anim = 0,
+				};
+		end;
+	else
+		Y._tooltip = nil;
+	end;
+	if Y._tooltip then
+		local s = Y._tooltip;
+		s.timer = ((s.timer or 0)) + Q;
+		s._anim = f(s._anim or 0, s.timer > .5 and 1 or 0, z(.28));
+		local w = X(s._anim);
+		if w > .01 then
+			local V = Y:_GetTextBounds(s.text);
+			local i = V.x + F * 1.5;
+			local E = V.y + F * .8;
+			local C = Y:_GetMousePos();
+			local f = Vector2.new(C.x + 10, (C.y - E) - 6);
+			Y:_Draw("rect", k.shadow, 999, (.18 * ki) * w, f + Vector2.new(1, 2), Vector2.new(i, E), true, 6);
+			Y:_Draw("rect", k.surface0, 1000, ki * w, f, Vector2.new(i, E), true, 6);
+			Y:_Draw("rect", k.border1, 1001, ki * w, f, Vector2.new(i, E), false, 6);
+			Y:_Draw("text", k.text, 1001, ki * w, f + Vector2.new(F * .75, ((E - Y._font_size)) / 2 + 1), s.text, false);
+		end;
+	end;
+	if d and (not v and (not Y._menu_drag and Y:_IsMouseWithinBounds(Vector2.new(J, p), Vector2.new(c, m)))) then
+		local s = Y._cached_mouse or Vector2.new();
+		Y._menu_drag = Vector2.new(s.x - Y.x, s.y - Y.y);
+	end;
+	for s, w in pairs(Y._pool or {}) do
+		for V = ((Y._pIdx[s] or 0)) + 1, #w, 1 do
+			local i = w[V];
+			local E = Y._pool_state[s][V];
+			if E and E.Visible ~= false then
+				pcall(function()
+					i.Visible = false;
+				end);
+				E.Visible = false;
+			end;
+		end;
+	end;
+end;
+return prodordie;
